@@ -13,9 +13,25 @@ import java.util.Date;
  * @author willi
  */
 public class CustomerBean implements Serializable{
-    private String password, name,email;
+    private String password, name,email,title,phone;
     private Date joined, DOB;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
     public String getEmail() {
         return email;
     }
