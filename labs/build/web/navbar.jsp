@@ -13,4 +13,7 @@
     <li class="nav-item">
         <a href="account_view.jsp"><div class="nav-link nav-fill navButt"><h5>View all accounts test</h5></div></a>
     </li>
+    <li class="nav-item">
+        <a href="Management.jsp"><div class="nav-link nav-fill navButt"><h5>Management</h5></div></a>
+    </li>
 </ul>
