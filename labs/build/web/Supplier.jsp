@@ -27,10 +27,8 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron" href=".">View Supplier List</div>
-                    <div class=>
                          <div class="jumbotron">Add to Supplier List</div>
                          <div class="jumbotron">Delete from Supplier List</div>
-                    </div> 
                 </div>
             </div>
         </div>
