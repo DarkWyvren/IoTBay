@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.annotation.WebServlet;
-import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.DBManager;
 
 /**
