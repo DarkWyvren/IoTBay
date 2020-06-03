@@ -12,7 +12,7 @@ import java.sql.Connection;
  * @author willi
  */
 public class DB {
-    protected String URL = "jdbc:derby://localhost:1527/";
+    protected String URL = "jdbc:derby://localhost:1527/usersdb";
     protected String db = "usersdb";
     protected String dbuser=  "isduser";
     protected String dbpass = "admin";

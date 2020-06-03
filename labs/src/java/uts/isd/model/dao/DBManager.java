@@ -27,12 +27,16 @@ public class DBManager {
     }
 
     //Find user by email and password in the database   
+    public CustomerBean findCustomer(String emaild) throws SQLException {  
+        return findCustomer(emaild, "");
+    }
     public CustomerBean findCustomer(String email, String password) throws SQLException {   
-        String query = "SELECT * FROM CUSTOMERDB WHERE  Email="+email+" AND Password = "+password;
+        String query = "SELECT * FROM APP.CUSTOMERDB WHERE  Email='"+email+"'"+ (password.length()>0? " AND Password = '"+password+"'":"");
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String cust_email = rs.getString(2);
             String cust_password = rs.getString(3);
+            System.out.println(cust_email+","+cust_password);
             if(cust_email.equals(email)&& cust_password.equals(password)){
                 CustomerBean cb = new CustomerBean();
                 cb.setEmail(cust_email);
@@ -40,9 +44,9 @@ public class DBManager {
                 cb.setName(rs.getString(4));
                 
                 String[] dt = rs.getString(5).split("/");
-                String b= dt[2]+"-"+dt[1]+"-"+dt[0];
+                System.out.println(Arrays.toString(dt));
                 
-                cb.setDOB(Date.valueOf(b));
+                cb.setDOB(Date.valueOf(rs.getString(5)));
                 return cb;
             }
         }
