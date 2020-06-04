@@ -13,13 +13,15 @@ public class Supplier implements Serializable {
     private String Companyemail;
     private String CompanyType;
     private int ConNumber;
+    private int status;
 
-    public Supplier(String ContactName, String CompanyAddress, String Companyemail, String CompanyType, int ConNumber) {
+    public Supplier(String ContactName, String CompanyAddress, String Companyemail, String CompanyType, int ConNumber, int status) {
         this.ContactName = ContactName;
         this.CompanyAddress = CompanyAddress;
         this.Companyemail = Companyemail;
         this.CompanyType = CompanyType;
         this.ConNumber = ConNumber;
+        this.status = status;
     }
 
     public String getContactName() {
@@ -61,4 +63,15 @@ public class Supplier implements Serializable {
     public void setConNumber(int ConNumber) {
         this.ConNumber = ConNumber;
     }   
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
 }
+
+

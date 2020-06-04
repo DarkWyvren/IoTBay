@@ -23,12 +23,13 @@
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="navbar.jsp" />
+                     <jsp:include page="SupplierNavBar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                    <div class="jumbotron" href=".">View Supplier List</div>
-                         <div class="jumbotron">Add to Supplier List</div>
-                         <div class="jumbotron">Delete from Supplier List</div>
+                    <div class="jumbotron"><a href="SupplierList.jsp">View Supplier List</a></div>
+                    <div class="jumbotron"><a href="SupplierAdd.jsp">Add New Supplier</a></div>
+                    <div class="jumbotron"><a href="SupplierUpdate.jsp">Update Supplier List</a></div>
+                    <hidden value="Supplier">"Supplier List"</hidden>
                 </div>
             </div>
         </div>

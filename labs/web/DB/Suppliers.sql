@@ -14,8 +14,6 @@ CREATE TABLE SUPPLIERDB (
     ComNumber int,
     ComType varchar(128),
     emailaddress varchar(128),
+    status int,
     PRIMARY KEY(SupplierID)
 );
-
-alter table supplierdb
-add emailaddress varchar(128);

@@ -10,6 +10,7 @@ package uts.isd.model.dao;
  * @author willi
  */
 import uts.isd.model.CustomerBean;
+import uts.isd.model.Supplier;
 import java.sql.*;
 import java.util.Arrays;
 
@@ -76,5 +77,9 @@ public class DBManager {
 
     }
 
+    //cxan view supplier info
+    //Add a supplier into the db
+    //Update a Suppliers information
+    //delete a supplier from db
 
 }
