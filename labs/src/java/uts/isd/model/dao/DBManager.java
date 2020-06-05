@@ -12,6 +12,7 @@ package uts.isd.model.dao;
 import uts.isd.model.CustomerBean;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import javax.swing.text.DateFormatter;
@@ -90,7 +91,7 @@ public class DBManager {
 //code for add-operation       
 //VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
       SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyy");
-      SimpleDateFormat timeformat = new SimpleDateFormat("H:m:s");
+      SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
       java.util.Date d =  new java.util.Date();
       String values=
               ""
@@ -126,7 +127,19 @@ public class DBManager {
       cb.setLoggedout(d);
     }
     
-    
+    public ArrayList<CustomerAccessLogBean> listCustomerLoginRecord(int cid) throws SQLException {                   
+        ArrayList<CustomerAccessLogBean> result = new ArrayList<>();
+      String query = "SELECT * FROM APP.CUSTOMER_SESSION WHERE  Customer_ID="+cid;
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+             CustomerAccessLogBean cb = new CustomerAccessLogBean();
+                cb.setCustomerid(cid);
+                cb.setLoggedin(Date.valueOf(rs.getString(2)));
+                cb.setLoggedout(rs.getString(4)==null?cb.getLoggedin():Date.valueOf(rs.getString(4)));
+                result.add(cb);
+        }
+        return result;
+    }
 
     //update a user details in the database   
     public void updateCustomer(CustomerBean cb) throws SQLException {       

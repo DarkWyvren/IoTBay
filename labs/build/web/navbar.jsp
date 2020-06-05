@@ -77,9 +77,9 @@
             </div>
         </form>
     </li>
-    <%if(accountsesh!=null){%>
+    <%if(!cust.getName().equals("Guest")){%>
     <li class="nav-item">
-        <a href="accesslogs.jsp">
+        <a href="accessLogs">
             <div class="nav-fill navButt bg-light" style="color: #404040">
                 <div style="margin: 25px; width:100%;">
                     <svg class="bi bi-card-text" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
