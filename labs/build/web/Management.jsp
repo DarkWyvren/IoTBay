@@ -26,7 +26,7 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                          <div class="jumbotron">Catalogue Management</div>
-                         <div class="jumbotron">Staff Information</div>
+                         <div class="jumbotron"><a href="Staff.jsp">Staff Information</div>
                          <div class="jumbotron"><a href="Supplier.jsp">Supplier Information Management</a></div>
                 </div>
             </div>
