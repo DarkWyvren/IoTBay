@@ -10,6 +10,7 @@ package uts.isd.model.dao;
  * @author willi
  */
 import uts.isd.model.CustomerBean;
+import uts.isd.model.ProductBean;
 import java.sql.*;
 import java.util.Arrays;
 
@@ -76,5 +77,67 @@ public class DBManager {
 
     }
 
+    
+
+    //Find Product by ID in the database   
+    
+    // public CustomerBean findCustomer(String emaild) throws SQLException {  
+    //    return findCustomer(emaild, "");
+    // }
+    
+
+    public ProductBean findProduct(String Product_ID) throws SQLException {   
+        String query = "SELECT * FROM APP.PRODUCTDB WHERE  Product_ID='"+Product_ID;
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+            String prod_id = rs.getString(2);
+            System.out.println(prod_id);
+            if(prod_id.equals(Product_ID)){
+                ProductBean pb = new ProductBean();
+                pb.setID(prod_id);
+                pb.setName(rs.getString(4));
+                pb.setPrice(rs.getDouble(5));
+                pb.setCategory(rs.getString(6));
+                pb.setSupplier(rs.getString(7));
+                
+                String[] dt = rs.getString(5).split("/");
+                System.out.println(Arrays.toString(dt));
+                
+                return pb;
+            }
+        }
+       //setup the select sql query string       
+       //execute this query using the statement field       
+       //add the results to a ResultSet       
+       //search the ResultSet for a user using the parameters               
+       return null;   
+    }
+    
+    
+    
+    
+    
+    //delete a product from the database   
+    public void deleteProduct(String ID) throws SQLException{       
+       //code for delete-operation   
+
+    }
+    
+    
+    //add a product from the database   
+    public void addProduct(String ID, String name, String price, String supplierid) throws SQLException{       
+       //code for add-operation   
+        st.executeUpdate("sql query");
+
+    }
+    
+    
+    //update a product from the database   
+    public void updateProduct(String ID, String name, String price, String supplierid) throws SQLException{       
+       //code for update-operation   
+
+    }
+    
+    
 
 }
