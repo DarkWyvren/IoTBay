@@ -14,13 +14,13 @@
         <a href="Management.jsp"><div class="nav-link nav-fill navButt"><h5>Go back to Management</h5></div></a>
     </li>
     <li class="nav-item">
-        <a href="Supplier.jsp"><div class="nav-link nav-fill navButt"><h5>Go back to Supplier Options</h5></div></a>
+        <a href="Supplier.jsp"><div class="nav-link nav-fill navButt"><h5>Supply List</h5></div></a>
     </li>
     <li class="nav-item">
-        <a href="Supplier.jsp"><div class="nav-link nav-fill navButt"><h5>Go back to Supplier Options</h5></div></a>
+        <a href="SupplierAdd.jsp"><div class="nav-link nav-fill navButt"><h5>Add to Supplier</h5></div></a>
     </li>
     <li class="nav-item">
-        <a href="Supplier.jsp"><div class="nav-link nav-fill navButt"><h5>Go back to Supplier Options</h5></div></a>
+        <a href="SupplierUpdate.jsp"><div class="nav-link nav-fill navButt"><h5>Update Supplier</h5></div></a>
     </li>
     
 </ul>

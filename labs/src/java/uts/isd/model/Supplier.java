@@ -10,20 +10,20 @@ import java.io.Serializable;
 public class Supplier implements Serializable {
     private String ContactName;
     private String CompanyAddress;
-    private String Companyemail;
+    private String CompanyEmail;
     private String CompanyType;
     private int ConNumber;
-    private int status;
+    private int Status;
 
-    public Supplier(String ContactName, String CompanyAddress, String Companyemail, String CompanyType, int ConNumber, int status) {
+   /* public Supplier (String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) {
         this.ContactName = ContactName;
         this.CompanyAddress = CompanyAddress;
-        this.Companyemail = Companyemail;
+        this.CompanyEmail = CompanyEmail;
         this.CompanyType = CompanyType;
         this.ConNumber = ConNumber;
-        this.status = status;
+        this.Status = Status;
     }
-
+*/
     public String getContactName() {
         return ContactName;
     }
@@ -41,11 +41,11 @@ public class Supplier implements Serializable {
     }
 
     public String getCompanyemail() {
-        return Companyemail;
+        return CompanyEmail;
     }
 
     public void setCompanyemail(String Companyemail) {
-        this.Companyemail = Companyemail;
+        this.CompanyEmail = Companyemail;
     }
 
     public String getCompanyType() {
@@ -65,11 +65,11 @@ public class Supplier implements Serializable {
     }   
 
     public int getStatus() {
-        return status;
+        return Status;
     }
 
     public void setStatus(int status) {
-        this.status = status;
+        this.Status = status;
     }
 
 }
