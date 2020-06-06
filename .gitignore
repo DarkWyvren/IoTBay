@@ -21,3 +21,4 @@ labs/dist/labs.war
 labs/nbproject/private/private.properties
 labs/nbproject/project.properties
 /labs/dist/
+*.class

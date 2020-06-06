@@ -6,6 +6,7 @@
 /**
  * Author:  mood35-Laptop
  */
+DROP TABLE SUPPLIERDB;
 
 CREATE TABLE SUPPLIERDB (
     SupplierID int NOT NULL,
