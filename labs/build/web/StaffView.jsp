@@ -22,17 +22,21 @@
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="navbar.jsp" />
+                     <jsp:include page="StaffNavbar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                 </h1> View Staff info </h1>
-                     <table id="profile_table">
-            <thead id="profile_table thead">
+                     <div class="jumbotron">
+                         <input type="text" id="myInput" onkeyup="myFunc()" placeholder="Search for names.." title="Type in a name">
+                        <input type="text" placeholder="Search by Position">
+                     <table>
+            <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Password</th>
                     <th>Date of birth</th>
+                    <th>Position</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,9 +45,11 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
+                     </div>
                 </div>
             </div>
         </div>

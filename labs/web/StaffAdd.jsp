@@ -22,10 +22,11 @@
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="navbar.jsp" />
+                     <jsp:include page="StaffNavbar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                 </h1> Add Staff info </h1>
+                     <div class="jumbotron">
                      <table>
                          <tr><td>Name:</td><td><input type="text" placeholder="Enter Name" name="name"></td></tr>
                          <tr><td>Email:</td><td><input type="email" placeholder="Enter Name" name="name"></td></tr>
@@ -33,7 +34,10 @@
                          <tr><td>Address:</td><td><input type="text" placeholder="Enter Name" name="name"></td></tr>
                          <tr><td>Phone:</td><td><input type="int" placeholder="Enter Name" name="name"></td></tr>
                          <tr><td>Dob:</td><td><input type="date" placeholder="Enter Name" name="name"></td></tr>
+                         <tr><td></td><td><input type="submit" value="Register"> </td></tr>
+                          <tr><td><input type="checkbox" name="TermsCondition" > I have Read the Terms and Conditions</td><td></td></tr>
                      </table>
+                     </div>
                 </div>
             </div>
         </div>

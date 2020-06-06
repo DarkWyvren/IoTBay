@@ -10,6 +10,7 @@ FullName varchar (128),
 DOB DATE,
 Address varchar (255),
 Phone int,
+Position varchar (128),
 
 PRIMARY KEY(ID)
 );

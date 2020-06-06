@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assignment1;
+package uts.isd.model;
+
+import java.io.Serializable;
 
 /**
  *
@@ -17,8 +19,9 @@ public class Staff {
     private String Dob;
     private String Address;
     private int Phone;
+    private String Position;
     
-    public Staff(int Id, String Email, String Password, String FullName, String Dob, String Address, int Phone)
+    public Staff(int Id, String Email, String Password, String FullName, String Dob, String Address, int Phone, String Position)
             {
                 this.Id = Id;
                 this.Email = Email;
@@ -27,7 +30,16 @@ public class Staff {
                 this.Password = Password;
                 this.Phone = Phone;
                 this.FullName = FullName;
+                this.Position = Position;
             }
+
+    public String getPosition() {
+        return Position;
+    }
+
+    public void setPosition(String Position) {
+        this.Position = Position;
+    }
 
     public int getId() {
         return Id;

@@ -22,7 +22,7 @@
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="navbar.jsp" />
+                     <jsp:include page="StaffNavbar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron" href="."><a href="StaffView.jsp">View Staff List</div>
