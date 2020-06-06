@@ -18,20 +18,50 @@
          <script src="lib/jquery/jquery-3.5.0.min.js"></script>
         <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     </head>
-    <body>
+    
         <div class="container">
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="navbar.jsp" />
+                     <jsp:include page="SupplierNavBar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                    <div class="jumbotron" href=".">View Supplier List</div>
-                         <div class="jumbotron">Add to Supplier List</div>
-                         <div class="jumbotron">Delete from Supplier List</div>
+                    <div class="jumbotron">
+                       <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+                        <input type="text" placeholder="Search by Type">
+                        <div>
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Address</th>
+                                    <th>Number</th>
+                                    <th>Type</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a role="button" href="SupplierEdit">Edit</a>
+                                        <a role="button" href="SupplierEdit">Delete</a>
+                                    </td>   
+                                </tr>
+                                
+                            </tbody>
+                            
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>
-       
-      </body>
+      
 </html>

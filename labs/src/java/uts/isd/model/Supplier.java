@@ -8,26 +8,26 @@ import java.io.Serializable;
  * @author mood35-Laptop
  */
 public class Supplier implements Serializable {
-    private String ContactName;
+    private String CompanyName;
     private String CompanyAddress;
-    private String Companyemail;
     private String CompanyType;
-    private int ConNumber;
+    private String CompanyEmail;
+    private int CompanyStatus;
 
-    public Supplier(String ContactName, String CompanyAddress, String Companyemail, String CompanyType, int ConNumber) {
-        this.ContactName = ContactName;
-        this.CompanyAddress = CompanyAddress;
-        this.Companyemail = Companyemail;
-        this.CompanyType = CompanyType;
-        this.ConNumber = ConNumber;
+    public Supplier (String CNAME, String CADDRESS, String CTYPE, String CEMAIL, int CSTATUS) {
+        this.CompanyName = CNAME;
+        this.CompanyAddress = CADDRESS;
+        this.CompanyEmail = CTYPE;
+        this.CompanyType = CEMAIL;
+        this.CompanyStatus = CSTATUS;
     }
 
-    public String getContactName() {
-        return ContactName;
+    public String getCompanyName() {
+        return CompanyName;
     }
 
-    public void setContactName(String ContactName) {
-        this.ContactName = ContactName;
+    public void setCompanyName(String CompanyName) {
+        this.CompanyName = CompanyName;
     }
 
     public String getCompanyAddress() {
@@ -38,14 +38,6 @@ public class Supplier implements Serializable {
         this.CompanyAddress = CompanyAddress;
     }
 
-    public String getCompanyemail() {
-        return Companyemail;
-    }
-
-    public void setCompanyemail(String Companyemail) {
-        this.Companyemail = Companyemail;
-    }
-
     public String getCompanyType() {
         return CompanyType;
     }
@@ -54,11 +46,21 @@ public class Supplier implements Serializable {
         this.CompanyType = CompanyType;
     }
 
-    public int getConNumber() {
-        return ConNumber;
+    public String getCompanyEmail() {
+        return CompanyEmail;
     }
 
-    public void setConNumber(int ConNumber) {
-        this.ConNumber = ConNumber;
-    }   
+    public void setCompanyEmail(String CompanyEmail) {
+        this.CompanyEmail = CompanyEmail;
+    }
+
+    public int getCompanyStatus() {
+        return CompanyStatus;
+    }
+
+    public void setCompanyStatus(int CompanyStatus) {
+        this.CompanyStatus = CompanyStatus;
+    }
+
+    
 }
