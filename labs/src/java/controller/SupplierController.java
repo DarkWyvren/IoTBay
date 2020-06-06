@@ -5,6 +5,7 @@ package controller;
    import java.io.IOException;
    import java.sql.Connection;
    import java.sql.SQLException;
+   import java.util.Scanner;
    import java.util.logging.Level;
    import java.util.logging.Logger;
    import javax.servlet.ServletException;
@@ -18,13 +19,9 @@ package controller;
  
 
    public class SupplierController extends HttpServlet {
-
-       private DBConnector db;
-
-       private DBManager manager;
-
+       private DBConnector db; // db 
+       private DBManager manager; // 
        private Connection conn;
-
        
        @Override //Create and instance of DBConnector for the deployment session
 
@@ -44,14 +41,12 @@ package controller;
       
 
        @Override //Add the DBConnector, DBManager, Connection instances to the session
+       
 
-       protected void doGet(HttpServletRequest request, HttpServletResponse response)
-
-               throws ServletException, IOException {
-
-           response.setContentType("text/html;charset=UTF-8");       
+       protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
            HttpSession session = request.getSession();
+           
 
            conn = db.openConnection();       
 
@@ -82,4 +77,11 @@ package controller;
                Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
            }
        }
+        
+        
+    private void runQueries() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+   
    }

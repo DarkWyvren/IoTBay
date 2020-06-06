@@ -30,7 +30,6 @@
                             <tr>
                                 <th>Company Name</th>
                                 <th>Address</th>
-                                <th>Number</th>
                                 <th>Company Type</th>
                                 <th>Email</th>
                                 <th>Status</th>

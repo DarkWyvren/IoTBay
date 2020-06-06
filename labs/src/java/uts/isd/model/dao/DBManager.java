@@ -78,6 +78,14 @@ public class DBManager {
     }
 
 
+    
+    
+    
+    
+    
+    
+    
+
 //PRODUCT 
     //Find Product by ID in the database   
     
@@ -161,38 +169,32 @@ public class DBManager {
      }
     
         //find supplier from db
-    /* public Supplier findSupplier(String ContactName, String CompanyEmail) throws SQLException {   
+     public Supplier findSupplier(String ContactName, String CompanyEmail) throws SQLException {   
         String query = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND EMAILADDRESS = '"+CompanyEmail+"'");
         ResultSet rs = st.executeQuery(query);
+        
         while(rs.next()){
-            String Com_Name = rs.getString(2);
-            String Com_Email = rs.getString(3);
-            System.out.println(Com_Name+","+Com_Email);
-            if(Com_Name.equals(ContactName)&& Com_Email.equals(CompanyEmail)){
-                Supplier sb = new Supplier();
-                sb.setContactName(Com_Name);
-                sb.setCompanyemail(Com_Email);
-                
-                return sb;
-
+            String C_Name = rs.getString(2);
+            String C_Email = rs.getString(3);
+            System.out.println(C_Name+","+C_Email);
+            
+            if(C_Name.equals(ContactName)&& C_Email.equals(CompanyEmail)){
+                String C_Address = rs.getString(3);
+                String C_Type = rs.getString(4);
+                int C_Status = rs.getInt(6);
+                return new Supplier (C_Name, C_Address, C_Type, C_Email, C_Status); 
             }
-        }
-       //setup the select sql query string       
-       //execute this query using the statement field       
-       //add the results to a ResultSet       
-       //search the ResultSet for a user using the parameters               
+        }         
        return null;   
-
     }
-    */
        
     //Add a supplier into the db
-    public void addSupplier (String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) throws SQLException {
-        st.executeUpdate("INSERT INTO SUPPLIERDB" + "VALUES ("+ContactName+", "+CompanyAddress+", "+ConNumber+", "+CompanyType+", "+CompanyEmail+", "+Status+")");
+    public void addSupplier (String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int CompanyStatus) throws SQLException {
+        st.executeUpdate("INSERT INTO SUPPLIERDB" + "VALUES ("+CompanyName+", "+CompanyAddress+", "+CompanyType+", "+CompanyEmail+", "+CompanyStatus+")");
     }
     //Update a Suppliers information
-    public void updateSupplier (String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) throws SQLException {
-        st.executeUpdate("INSERT INTO SUPPLIERDB SET CONTACTNAME ="+ContactName+", SET COMADDRESS  "+CompanyAddress+", SET COMNUMBER "+ConNumber+", SET COMTYPE "+CompanyType+", SET STATUS "+Status+" WHERE EMAILADDRESS ='"+CompanyEmail+"'");
+    public void updateSupplier (String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int Status) throws SQLException {
+        st.executeUpdate("INSERT INTO SUPPLIERDB SET SupName ="+CompanyName+", SET SupAddress  "+CompanyAddress+", SET SupType "+CompanyType+",SET SupEmail "+CompanyEmail+", SET SupStatus "+Status+" WHERE SupEmail ='"+CompanyEmail+"'");
     }
     //delete a supplier from db
     public void deleteSupplier(String CompanyEmail) throws SQLException{
@@ -200,5 +202,46 @@ public class DBManager {
   
     }
    
+    public Arraylist<Supplier> fetchSupplierList() throws SQLException{
+            String fetch = "SELECT * FROM APP.SUPPLIERDB";
+            ResultSet rs = st.executeQuery(fetch);
+            Arraylist<Supplier> temp = new Arraylist();
+            while(rs.next()){
+            String C_Name = rs.getString(2);
+            String C_Address = rs.getString(3);
+            String C_Type = rs.getString(4);
+            String C_Email = rs.getString(5);
+            int C_Status = rs.getInt(6);
+            temp.add(new Supplier(C_Name, C_Address, C_Type, C_Email, C_Status));
+        } 
+            
+            return temp;
+    }
 
+    private static class Arraylist<T> {
+
+        public Arraylist() {
+        }
+
+        private void add(Supplier supplier) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+    
+    //check if supplier exists using company name and type
+    public boolean checkSupplier(String ContactName, String CompanyType) throws SQLException{
+       String fetch = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND COMTYPE = '"+CompanyType+"'");
+       ResultSet rs = st.executeQuery(fetch);
+       
+        while(rs.next()){
+            String C_Name = rs.getString(2);
+            String C_Type = rs.getString(4);
+            if(C_Name.equals(ContactName) && C_Type.equals(CompanyType)){
+                return true;
+            }
+        }
+        return false; 
+    }
+    
+    
 }

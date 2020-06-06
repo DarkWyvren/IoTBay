@@ -9,11 +9,10 @@
 
 CREATE TABLE SUPPLIERDB (
     SupplierID int NOT NULL,
-    ContactName varchar(128) NOT NULL,
-    ComAddress varchar(128) NOT NULL,
-    ComNumber int,
-    ComType varchar(128),
-    emailaddress varchar(128),
-    status int,
+    SupName varchar(128) NOT NULL,
+    SupAddress varchar(128) NOT NULL,
+    SupType varchar(128),
+    SupEmail varchar(128),
+    SupStatus int,
     PRIMARY KEY(SupplierID)
 );

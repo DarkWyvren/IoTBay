@@ -27,17 +27,19 @@
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
                         <h1>Update</h1> 
+                        <form method="post" action="">
                         <table> 
-                            <tr><td>Company Name: </td><td><input type="text" value= "${Supplier.ContactName}" placeholder="Enter Company Name" name="CName"></td></tr>
+                            <tr><td>Company Name: </td><td><input type="text" value= "${Supplier.CompanyName}" placeholder="Enter Company Name" name="CName"></td></tr>
                             <tr><td>Address: </td><td><input type="text" value= "${Supplier.CompanyAddress}" placeholder="Enter Address" name="CAddress"></td></tr>
-                            <tr><td>Number:  </td><td><input type="int" value= "${Supplier.ConNumber}" placeholder="Enter Phone Number" name="CNumber"></td></tr>
                             <tr><td>Company Type: </td><td><input type="text" value= "${Supplier.CompanyType}" placeholder="Enter Company Type" name="CType"></td></tr>
                             <tr><td>Email: </td><td><input type="email" value= "${Supplier.CompanyEmail}" placeholder="Enter Email" name="CEmail"></td></tr>
+                            <tr><td>Status: </td><td><input type="email" value= "${Supplier.CompanyStatus}" placeholder="" name="CStatus"></td></tr>
+                            
                             <tr><td></td><td><input type="reset"> <input class="btn  btn-primary btn-lg" type="submit" value="Update"> </td></tr>
                         </table>  
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
       </body>
 </html>

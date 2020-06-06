@@ -39,9 +39,25 @@
                                     <th>Email</th>
                                     <th>Status</th>
                                     <th></th>
-                                    <th></th>
                                 </tr>
-                            </thead> 
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a role="button" href="SupplierEdit">Edit</a>
+                                        <a role="button" href="SupplierEdit">Delete</a>
+                                    </td>   
+                                </tr>
+                                
+                            </tbody>
+                            
                         </div>
                     </div>                    
                 </div>
