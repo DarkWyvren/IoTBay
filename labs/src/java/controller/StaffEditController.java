@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,33 +14,29 @@ import uts.isd.model.dao.DBManager;
  *
  * @author Danny16
  */
-public class StaffAddController extends HttpServlet
-{
-      protected void doget(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-      {
+public class StaffEditController extends HttpServlet{
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         HttpSession session = request.getSession();
-        String FullName = request.getParameter("FullName");
-        String Address = request.getParameter("Address");
-        String Position = request.getParameter("Position");
-        String Email = request.getParameter("Email");
-        
+        String Name = request.getParameter("StaffName");
+        String Email = request.getParameter("StaffEmail");
+           
         DBManager manager = (DBManager) session.getAttribute ("manager");
         Staff staff = null;  
-        
+
         try {
-            staff = manager.findStaff(FullName, Email);
+            staff = manager.findStaff(Name, Email);
             if (staff != null){
-                session.setAttribute("ExistErr", "Staff does not exist in Database");
+               session.setAttribute("ContactName", staff);
                request.getRequestDispatcher("StaffEdit.jsp").include(request, response);
-               
             } else {
-               
-               session.setAttribute("FullName", staff);
+               session.setAttribute("ExistErr", "Staff does not exist in Database");
                request.getRequestDispatcher("StaffEdit.jsp").include(request, response);
             }
         } catch (SQLException ex) {
                Logger.getLogger(StaffEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.getRequestDispatcher("StaffEdit.jsp").include(request, response);
-      }
+    }   
+    
 }

@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Delete Staff Information Page</title>
+        <title>Edit Staff Information Page</title>
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
        <script src="lib/jquery/jquery-3.5.0.min.js"></script>
@@ -25,7 +25,16 @@
                      <jsp:include page="StaffNavbar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                </h1> Delete Staff info </h1>
+                </h1> Edit Staff info </h1>
+                     <form method="post" action="">
+                        <table> 
+                            <tr><td>Staff Name: </td><td><input type="text" value= "${Staff.FullName}" placeholder="Enter Company Name" name="SName"></td></tr>
+                            <tr><td>Address: </td><td><input type="text" value= "${Staff.Address}" placeholder="Enter Address" name="SAddress"></td></tr>
+                            <tr><td>Position: </td><td><input type="text" value= "${Staff.Position}" placeholder="Enter Company Type" name="SPosition"></td></tr>
+                            <tr><td>Email: </td><td><input type="email" value= "${Staff.Email}" placeholder="Enter Email" name="SEmail"></td></tr>
+                            
+                            <tr><td></td><td><input type="reset"> <input class="btn  btn-primary btn-lg" type="submit" value="Update"> </td></tr>
+                        </table>
                 </div>
             </div>
         </div>

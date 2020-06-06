@@ -13,6 +13,7 @@ import uts.isd.model.CustomerBean;
 import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
 import uts.isd.model.OrderBean;
+import uts.isd.model.Staff;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -390,5 +391,48 @@ public class DBManager {
     public void deleteOrder(String Order_ID) throws SQLException{       
        //code for delete-operation   
        st.executeUpdate("DELETE FROM APP.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
+    }
+    
+    
+    
+    
+    
+    
+    
+    //STAFF INFO
+        //find staff from db
+     public Staff findStaff(String Name, String SPosition) throws SQLException 
+     {   
+        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+Name+"'"+ (" AND EMAILADDRESS = '"+SPosition+"'");
+        ResultSet rs = st.executeQuery(query);
+        
+        while(rs.next()){
+            String FullName = rs.getString(2);
+            String Position = rs.getString(3);
+            System.out.println(Name+","+Position);
+            
+            if(FullName.equals(Name)&& Position.equals(SPosition))
+            {
+                int Id = rs.getInt(3);
+                String Password = rs.getString(4);
+                String Address = rs.getString(5);
+                String Email = rs.getString(6);
+                int Phone = rs.getInt(7);
+                return new Staff (Id, Name, Password, Address, Position, Phone, Email); 
+            }
+        }         
+       return null;   
+    }
+       //Add a supplier into the db
+    public void addStaff (String Name, String Address, String Position, String Email) throws SQLException {
+        st.executeUpdate("INSERT INTO STAFFDB" + "VALUES ('"+ Name +"', '"+ Address +", "+ Position +", "+ Email +",");
+    }
+    //Update a Suppliers information
+    public void updateStaff (String Name, String Address, String Position, String Email) throws SQLException {
+        st.executeUpdate("INSERT INTO STAFFDB SET SupName ="+Name+", SET SupAddress  "+Address+", SET SupType "+Position+",SET SupEmail "+Email+",");
+    }
+    //delete a supplier from db
+    public void deleteStaff(String Email) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.STAFF WHERE EMAILADDRESS ='"+Email+"'");
     }
 }
