@@ -233,21 +233,21 @@ public class DBManager {
         return null;   
     }
     //Add a order-data into the database   
-    public void addOrder(String email, String name, String password, String gender, String favcol) throws SQLException {                   
-//code for add-operation       
-      st.executeUpdate("sql query");   
+    public void addOrder(String Customer_ID, String Date_Of_Order, String Address, String Status, String Product_ID, String Quanity) throws SQLException {                   
+    //code for add-operation       
+      st.executeUpdate("INSERT INTO APP.ORDERDB" + "VALUES ("+Customer_ID+", "+Date_Of_Order+", "+Address+", "+Status+", "+Product_ID+", "+Quanity+")");   
 
     }
 
     //update a order details in the database   
-    public void updateOrder( String email, String name, String password, String gender, String favcol) throws SQLException {       
+    public void updateOrder(String Customer_ID, String Date_Of_Order, String Address, String Status, String Product_ID, String Quanity) throws SQLException {       
        //code for update-operation   
-
-    }       
-
+       st.executeUpdate("INSERT INTO APP.ORDERDB SET Customer_ID ="+Customer_ID+", SET Customer_ID ="+Date_Of_Order+", SET Customer_ID ="+Address+", SET Customer_ID ="+Status+", SET Customer_ID ="+Product_ID+", SET Customer_ID ='"+Quanity+"'"); 
+    }   
+   
     //delete a order from the database   
-    public void deleteOrder(String email) throws SQLException{       
+    public void deleteOrder(String Order_ID) throws SQLException{       
        //code for delete-operation   
-
+       st.executeUpdate("DELETE FROM APP.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
     }
 }
