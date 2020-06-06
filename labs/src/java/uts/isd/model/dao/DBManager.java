@@ -12,6 +12,7 @@ package uts.isd.model.dao;
 import uts.isd.model.CustomerBean;
 import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
+import uts.isd.model.OrderBean;
 import java.sql.*;
 import java.util.Arrays;
 
@@ -199,6 +200,54 @@ public class DBManager {
         st.executeUpdate("DELETE FROM APP.SUPPLIER WHERE EMAILADDRESS ='"+CompanyEmail+"'");
   
     }
-   
+    
+    
+    
+    //Order Management [MVC]
+    //Find all orders based on Date_Of_Order
+    public OrderBean findOrder(String Date_Of_Order) throws SQLException {  
+        return findOrder(Date_Of_Order, "");
+    }
+    //Find the specific order using Date_Of_Order and Order_ID
+    public OrderBean findOrder(String Date_Of_Order, String Order_ID) throws SQLException {   
+        String query = "SELECT * FROM APP.ORDERDB WHERE Date_Of_Order='"+Date_Of_Order+"' AND Order_ID = '"+Order_ID;
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+            String order_date = rs.getString(3);
+            String ord_id = rs.getString(1);
+            System.out.println(order_date+","+ord_id);
+            if(order_date.equals(Date_Of_Order)&& ord_id.equals(Order_ID)){
+                OrderBean ob = new OrderBean();
+                ob.setOrderId(ord_id);
+                ob.setAddress(rs.getString(4));
+                ob.setStatus(rs.getString(5));
+                ob.setQuanity(rs.getString(7));
+                
+                String[] dt = rs.getString(3).split("/");
+                System.out.println(Arrays.toString(dt));
+                
+                ob.setDOO(Date.valueOf(rs.getString(3)));
+                return ob;
+            }
+        }            
+        return null;   
+    }
+    //Add a order-data into the database   
+    public void addOrder(String email, String name, String password, String gender, String favcol) throws SQLException {                   
+//code for add-operation       
+      st.executeUpdate("sql query");   
 
+    }
+
+    //update a order details in the database   
+    public void updateOrder( String email, String name, String password, String gender, String favcol) throws SQLException {       
+       //code for update-operation   
+
+    }       
+
+    //delete a order from the database   
+    public void deleteOrder(String email) throws SQLException{       
+       //code for delete-operation   
+
+    }
 }
