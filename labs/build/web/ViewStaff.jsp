@@ -26,6 +26,24 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                 </h1> View Staff info </h1>
+                     <table id="profile_table">
+            <thead id="profile_table thead">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Date of birth</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
                 </div>
             </div>
         </div>

@@ -26,6 +26,14 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                 </h1> Add Staff info </h1>
+                     <table>
+                         <tr><td>Name:</td><td><input type="text" placeholder="Enter Name" name="name"></td></tr>
+                         <tr><td>Email:</td><td><input type="email" placeholder="Enter Name" name="name"></td></tr>
+                         <tr><td>Password:</td><td><input type="password" placeholder="Enter Name" name="name"></td></tr>
+                         <tr><td>Address:</td><td><input type="text" placeholder="Enter Name" name="name"></td></tr>
+                         <tr><td>Phone:</td><td><input type="int" placeholder="Enter Name" name="name"></td></tr>
+                         <tr><td>Dob:</td><td><input type="date" placeholder="Enter Name" name="name"></td></tr>
+                     </table>
                 </div>
             </div>
         </div>
