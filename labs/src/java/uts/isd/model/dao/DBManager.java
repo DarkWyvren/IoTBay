@@ -12,6 +12,7 @@ package uts.isd.model.dao;
 import uts.isd.model.CustomerBean;
 import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
+import uts.isd.model.OrderBean;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -296,6 +297,54 @@ public class DBManager {
         st.executeUpdate("DELETE FROM APP.SUPPLIER WHERE EMAILADDRESS ='"+CompanyEmail+"'");
   
     }
-   
+    
+    
+    
+    //Order Management [MVC]
+    //Find all orders based on Date_Of_Order
+    public OrderBean findOrder(String Date_Of_Order) throws SQLException {  
+        return findOrder(Date_Of_Order, "");
+    }
+    //Find the specific order using Date_Of_Order and Order_ID
+    public OrderBean findOrder(String Date_Of_Order, String Order_ID) throws SQLException {   
+        String query = "SELECT * FROM APP.ORDERDB WHERE Date_Of_Order='"+Date_Of_Order+"' AND Order_ID = '"+Order_ID;
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+            String order_date = rs.getString(3);
+            String ord_id = rs.getString(1);
+            System.out.println(order_date+","+ord_id);
+            if(order_date.equals(Date_Of_Order)&& ord_id.equals(Order_ID)){
+                OrderBean ob = new OrderBean();
+                ob.setOrderId(ord_id);
+                ob.setAddress(rs.getString(4));
+                ob.setStatus(rs.getString(5));
+                ob.setQuanity(rs.getString(7));
+                
+                String[] dt = rs.getString(3).split("/");
+                System.out.println(Arrays.toString(dt));
+                
+                ob.setDOO(Date.valueOf(rs.getString(3)));
+                return ob;
+            }
+        }            
+        return null;   
+    }
+    //Add a order-data into the database   
+    public void addOrder(String Customer_ID, String Date_Of_Order, String Address, String Status, String Product_ID, String Quanity) throws SQLException {                   
+    //code for add-operation       
+      st.executeUpdate("INSERT INTO APP.ORDERDB" + "VALUES ("+Customer_ID+", "+Date_Of_Order+", "+Address+", "+Status+", "+Product_ID+", "+Quanity+")");   
 
+    }
+
+    //update a order details in the database   
+    public void updateOrder(String Customer_ID, String Date_Of_Order, String Address, String Status, String Product_ID, String Quanity) throws SQLException {       
+       //code for update-operation   
+       st.executeUpdate("INSERT INTO APP.ORDERDB SET Customer_ID ="+Customer_ID+", SET Customer_ID ="+Date_Of_Order+", SET Customer_ID ="+Address+", SET Customer_ID ="+Status+", SET Customer_ID ="+Product_ID+", SET Customer_ID ='"+Quanity+"'"); 
+    }   
+   
+    //delete a order from the database   
+    public void deleteOrder(String Order_ID) throws SQLException{       
+       //code for delete-operation   
+       st.executeUpdate("DELETE FROM APP.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
+    }
 }

@@ -13,6 +13,8 @@ CREATE TABLE PRODUCTDB (
     ProductName VARCHAR(100) NOT NULL,
     Price double NOT NULL,
     Category VARCHAR(100) NOT NULL,
-    SupplierID (100) NOT NULL,
-    PRIMARY KEY(Product_ID)
+    SupplierID int NOT NULL,
+
+    PRIMARY KEY(Product_ID),
+    FOREIGN KEY(SupplierID) REFERENCES SUPPLIERDB(SupplierID)
 )
