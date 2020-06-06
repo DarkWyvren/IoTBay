@@ -1,9 +1,9 @@
 <%-- 
-    Document   : Staff
-    Created on : Jun 5, 2020, 7:39:33 PM
+    Document   : AddStaff
+    Created on : Jun 6, 2020, 3:50:33 PM
     Author     : Danny16
 --%>
-<%@ page import="uts.isd.model.*"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,9 +25,7 @@
                      <jsp:include page="navbar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                    <div class="jumbotron" href="."><a href="ViewStaff.jsp">View Staff List</div>
-                         <div class="jumbotron"><a href="AddStaff.jsp">Add to Staff List</div>
-                         <div class="jumbotron"><a href="DeleteStaff.jsp">Delete from Staff List</div>
+                    
                 </div>
             </div>
         </div>
