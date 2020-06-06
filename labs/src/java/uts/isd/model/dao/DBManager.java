@@ -435,4 +435,22 @@ public class DBManager {
     public void deleteStaff(String Email) throws SQLException{
         st.executeUpdate("DELETE FROM APP.STAFF WHERE EMAILADDRESS ='"+Email+"'");
     }
+    
+        public ArrayList<Staff> fetchStaffList() throws SQLException
+        {
+            String fetch = "SELECT * FROM APP.STAFFDB";
+            ResultSet rs = st.executeQuery(fetch);
+            ArrayList<Staff> temp1 = new ArrayList();
+            while(rs.next()){
+            String Name = rs.getString(2);
+            String Address = rs.getString(3);
+            String Position = rs.getString(4);
+            String Email = rs.getString(5);
+            String Password = rs.getString(6);
+            int Id = rs.getInt(7);
+            int Phone = rs.getInt(8);
+            temp1.add(new Staff(Id, Name, Address, Password, Position, Phone, Email));
+        } 
+            return temp1;
+    }
 }
