@@ -423,15 +423,15 @@ public class DBManager {
         }         
        return null;   
     }
-       //Add a supplier into the db
+       //Add a staff into the db
     public void addStaff (String Name, String Address, String Position, String Email) throws SQLException {
         st.executeUpdate("INSERT INTO STAFFDB" + "VALUES ('"+ Name +"', '"+ Address +", "+ Position +", "+ Email +",");
     }
-    //Update a Suppliers information
+    //Update a staff information
     public void updateStaff (String Name, String Address, String Position, String Email) throws SQLException {
         st.executeUpdate("INSERT INTO STAFFDB SET SupName ="+Name+", SET SupAddress  "+Address+", SET SupType "+Position+",SET SupEmail "+Email+",");
     }
-    //delete a supplier from db
+    //delete a staff from db
     public void deleteStaff(String Email) throws SQLException{
         st.executeUpdate("DELETE FROM APP.STAFF WHERE EMAILADDRESS ='"+Email+"'");
     }
