@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import uts.isd.model.CustomerAccessLogBean;
 /**
  *
  * @author willi
@@ -60,6 +61,14 @@ public class LoginController  extends HttpServlet {
             AccountTracker.logout(current);
             req.getSession().removeAttribute("login");
             System.out.println("valid account, session removed");
+            try{
+                CustomerAccessLogBean accesslog = (CustomerAccessLogBean)req.getSession().getAttribute("sessionLog");
+                manager.endCustomerLoginRecord(accesslog);
+                req.getSession().setAttribute("sessionLog", null);
+            }catch(Exception e){
+            
+            }
+            
         }
         RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
         req.setAttribute("response",  "OK");
@@ -84,39 +93,47 @@ public class LoginController  extends HttpServlet {
             }
         }
         System.out.println("Login");
-        
+        try {
         CustomerBean current = (CustomerBean)req.getSession().getAttribute("login");
         if(AccountTracker.isLoggedIn(email)&&AccountTracker.isValidLogin(manager,current.getEmail(), current.getPassword())){
+            
+            CustomerAccessLogBean accesslog = (CustomerAccessLogBean)req.getSession().getAttribute("sessionLog");
+            manager.endCustomerLoginRecord(accesslog);
+            req.getSession().setAttribute("sessionLog", null);
             AccountTracker.logout(current);
             req.getSession().setAttribute("login", null);
+            
             RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
             req.setAttribute("response",  "OK");
             dispatch.forward(req, resp);
             return;
         }
         CustomerBean cbdb = null;
-        try {
+        
             cbdb = manager.findCustomer(email, pass);
+        
+            if(!AccountTracker.isValidLogin(manager,email, pass) && cbdb==null){
+                RequestDispatcher dispatch = req.getRequestDispatcher("login.jsp");
+                req.setAttribute("response",  "Invalid email or password");
+                dispatch.forward(req, resp);
+            }else{
+                if(cbdb!=null){
+                    System.out.println(cbdb.toString());
+                    AccountTracker.login(cbdb);
+                }else{
+                    AccountTracker.login(current);
+                }
+                CustomerBean cb2 = AccountTracker.getCustomerByEmail(manager,email);
+                req.getSession().setAttribute("login",cb2 );
+                req.getSession().setAttribute("sessionLog",manager.addCustomerLoginRecord(cb2) );
+                RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
+                req.setAttribute("response",  "OK");
+                dispatch.forward(req, resp);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if(!AccountTracker.isValidLogin(manager,email, pass) && cbdb==null){
-            RequestDispatcher dispatch = req.getRequestDispatcher("login.jsp");
-            req.setAttribute("response",  "Invalid email or password");
-            dispatch.forward(req, resp);
-        }else{
-            if(cbdb!=null){
-                System.out.println(cbdb.toString());
-                AccountTracker.login(cbdb);
-            }else{
-                AccountTracker.login(current);
-            }
-            req.getSession().setAttribute("login", AccountTracker.getCustomerByEmail(manager,email));
-            RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
-            req.setAttribute("response",  "OK");
-            dispatch.forward(req, resp);
-        }
         
         
     }

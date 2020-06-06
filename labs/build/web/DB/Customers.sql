@@ -1,20 +1,15 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Author:  willi
- * Created: 03/06/2020
- */
+DROP TABLE CUSTOMER_SESSION;
+DROP TABLE CUSTOMERDB;
+
 CREATE TABLE CUSTOMERDB (
-    Customer_ID int NOT NULL,
+
+    Customer_ID int GENERATED ALWAYS AS IDENTITY NOT NULL,
     Email varchar(128) UNIQUE,
     Password varchar(128) NOT NULL,
     FullName varchar(128),
     DOB DATE,
     Address varchar(255),
-    Phone int,
+    Phone varchar(15),
     Title varchar(8),
     
     PRIMARY KEY(Customer_ID)
@@ -36,7 +31,5 @@ CREATE TABLE CUSTOMER_SESSION (
 );
 
 
-INSERT INTO CUSTOMERDB 
-VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
-
-
+INSERT INTO CUSTOMERDB(Email, Password,FullName,DOB,Address,Phone,Title) 
+VALUES('pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore','+61-4535702572','Mr');
