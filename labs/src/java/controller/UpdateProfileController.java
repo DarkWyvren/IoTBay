@@ -29,9 +29,9 @@ import uts.isd.model.dao.DBManager;
  * @author willi
  */
 @WebServlet(
-  name = "RegisterServlet", 
-  urlPatterns = "/registerauth")
-public class RegisterController extends HttpServlet {
+  name = "UpdateProfileServlet", 
+  urlPatterns = "/updateProf")
+public class UpdateProfileController extends HttpServlet {
     private DBConnector db;
     private DBManager manager;
     private Connection conn;
@@ -65,7 +65,7 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Enumeration<String> paramNames = req.getParameterNames();
-        CustomerBean cb = new CustomerBean();
+        CustomerBean cb = (CustomerBean)req.getSession().getAttribute("login");
         boolean hastoc=false;
         int date[] = new int[3];
         String[] address = new String[2];
@@ -103,9 +103,7 @@ public class RegisterController extends HttpServlet {
                 case "title":
                     cb.setTitle(req.getParameter(paramName));
                     break;         
-                case "agreeCheck":
-                    hastoc=true;
-                    break;
+                
             }
             }catch(NumberFormatException ne){
                 RequestDispatcher dispatch = req.getRequestDispatcher("register.jsp");
@@ -117,21 +115,17 @@ public class RegisterController extends HttpServlet {
         cb.setAddress(address[0]+"|"+address[1]);
         System.out.println(Arrays.toString(date));
         try{
-        cb.setDOB(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
+            cb.setDOB(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
         }catch(java.lang.IllegalArgumentException ec){
             RequestDispatcher dispatch = req.getRequestDispatcher("register.jsp");
             req.setAttribute("response",  "Date has incorrect format");
             dispatch.forward(req, resp);
         }
-        if(!hastoc){
-            RequestDispatcher dispatch = req.getRequestDispatcher("register.jsp");
-            req.setAttribute("response",  "Please agree to the TOC");
-            dispatch.forward(req, resp);
-            return;
-        }
+     
         System.out.println("CMON");
-        RequestDispatcher dispatch = req.getRequestDispatcher("register.jsp");
-        req.setAttribute("response",  AccountTracker.registerAccount(manager, cb));
+        RequestDispatcher dispatch = req.getRequestDispatcher("profile.jsp");
+        req.setAttribute("response",  AccountTracker.updateAccount(manager, cb));
+        req.getSession().setAttribute("login", cb);
         dispatch.forward(req, resp);
         
     }

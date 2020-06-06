@@ -29,8 +29,43 @@ public class AccountTracker {
         }
         return out;
     }
-    
-    public static String registerAccount(CustomerBean cb){
+    public static String updateAccount(DBManager db, CustomerBean cb){
+        System.out.println("email"+cb.getEmail());
+        try {
+        
+        for(CustomerBean pass:csbeanlist){
+            if(cb.getEmail().equals(pass.getEmail()) && cb.getId()!=pass.getId()){
+                return "An account with that email already exists";
+            }
+        }
+        if(cb.getPassword().length()<5){
+            return "Password needs to be 5 characters or longer";
+        }
+        cb.setJoined(new Date());
+        db.updateCustomer(cb);
+        CustomerBean oldbean=null;
+        for(CustomerBean pass:csbeanlist){
+            if(pass.getId()==cb.id){
+                oldbean = pass;
+                break;
+            }
+        }
+        csbeanlist.remove(oldbean);
+        csbeanlist.add(cb);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountTracker.class.getName()).log(Level.SEVERE, null, ex);
+            return "SQL died oopsie whoopsie";
+        }
+        
+        return "OK";
+    }
+    public static String registerAccount(DBManager db, CustomerBean cb){
+        
+        try {
+            if(db.findCustomer(cb.getEmail())!=null){
+                return "An account with that email already exists";
+            }
+        
         for(CustomerBean pass:csbeanlist){
             if(pass==cb){
                 return "Account already exists";
@@ -44,7 +79,13 @@ public class AccountTracker {
             return "Password needs to be 5 characters or longer";
         }
         cb.setJoined(new Date());
+        db.addCustomer(cb);
         csbeanlist.add(cb);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountTracker.class.getName()).log(Level.SEVERE, null, ex);
+            return "SQL died oopsie whoopsie";
+        }
+        
         return "OK";
     }
     
