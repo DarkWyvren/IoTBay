@@ -11,9 +11,11 @@ package uts.isd.model.dao;
  */
 import uts.isd.model.CustomerBean;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Random;
 import javax.swing.text.DateFormatter;
 import uts.isd.model.CustomerAccessLogBean;
@@ -71,7 +73,7 @@ public class DBManager {
     public void addCustomer(CustomerBean cb) throws SQLException {                   
 //code for add-operation       
 //VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
-      SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyy");
+      SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
       String values=
               "'"
               +cb.getEmail()+"','"
@@ -90,7 +92,7 @@ public class DBManager {
     public CustomerAccessLogBean addCustomerLoginRecord(CustomerBean cb) throws SQLException {                   
 //code for add-operation       
 //VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
-      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyy");
+      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
       SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
       java.util.Date d =  new java.util.Date();
       String values=
@@ -110,9 +112,11 @@ public class DBManager {
     public void endCustomerLoginRecord(CustomerAccessLogBean cb) throws SQLException {                   
 //code for add-operation       
 //VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
-      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyy");
+      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
       SimpleDateFormat timeformat = new SimpleDateFormat("H:m:s");
       java.util.Date d =  new java.util.Date();
+      
+      
       String values=
               "LOGGEDOUT_DATE = '"+dateformat.format(d)+"',"+
               "LOGGEDOUT_TIME = '"+timeformat.format(d)+"'"
@@ -127,15 +131,19 @@ public class DBManager {
       cb.setLoggedout(d);
     }
     
-    public ArrayList<CustomerAccessLogBean> listCustomerLoginRecord(int cid) throws SQLException {                   
+    public ArrayList<CustomerAccessLogBean> listCustomerLoginRecord(int cid) throws SQLException, ParseException {                   
         ArrayList<CustomerAccessLogBean> result = new ArrayList<>();
       String query = "SELECT * FROM APP.CUSTOMER_SESSION WHERE  Customer_ID="+cid;
         ResultSet rs = st.executeQuery(query);
+        
+        SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd H:m:s");
         while(rs.next()){
              CustomerAccessLogBean cb = new CustomerAccessLogBean();
                 cb.setCustomerid(cid);
-                cb.setLoggedin(Date.valueOf(rs.getString(2)));
-                cb.setLoggedout(rs.getString(4)==null?cb.getLoggedin():Date.valueOf(rs.getString(4)));
+                cb.setLoggedin(timeformat.parse(rs.getString(2)+" "+rs.getString(3)));
+                cb.setLoggedout(rs.getString(4)==null?cb.getLoggedin():(timeformat.parse(rs.getString(4)+" "+rs.getString(5))));
+                //apply time here.
+                //add search and delete and ur done yey
                 result.add(cb);
         }
         return result;
@@ -143,7 +151,7 @@ public class DBManager {
 
     //update a user details in the database   
     public void updateCustomer(CustomerBean cb) throws SQLException {       
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyy");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         String values=
               "Email = '"+cb.getEmail()+"',"+
               "Password = '"+cb.getPassword()+"',"+

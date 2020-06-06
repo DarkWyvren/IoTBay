@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
@@ -64,8 +66,68 @@ public class AccessLogQueryController  extends HttpServlet {
         try{
             ArrayList<CustomerAccessLogBean> queryresult = manager.listCustomerLoginRecord(cb.getId());
             String query = req.getParameter("search_date");
-            if(query!=null){
-
+            if(query!=null &&query.trim().length()>0){
+                query = query.trim();
+                String mode = "EQUALS";
+                String params[] = query.split(" +",2);
+                if(params.length>1){
+                    switch(params[0].toLowerCase().trim()){
+                        case "equal":
+                        case "equals":
+                        case "=":
+                        case "==":    
+                            break;
+                        case "<":
+                        case "before":
+                        case "before_date":
+                            mode = "BEFORE";  
+                            break;
+                        case ">":
+                        case "after":
+                        case "past":
+                            mode = "AFTER";  
+                            break;    
+                        default:
+                            mode = "UNKNOWN";
+                        break;
+                    }
+                }
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date d = sdf.parse(params[params.length>1?1:0]);
+                Calendar cd = Calendar.getInstance();
+                cd.setTime(d);
+                int day_of_year = cd.get(Calendar.DAY_OF_YEAR);
+                int year = cd.get(Calendar.YEAR);
+                int dayindex= day_of_year+year*365;
+                System.out.println("dayindex="+dayindex+ ","+day_of_year+","+year);
+                for(int i = 0;i<queryresult.size();i++){
+                    boolean shouldremove = false;
+                    cd.setTime(queryresult.get(i).getLoggedin());
+                    int loginday = cd.get(Calendar.DAY_OF_YEAR)+cd.get(Calendar.YEAR)*365;
+                    System.out.println("login day index="+loginday+ ","+cd.get(Calendar.DAY_OF_YEAR)+","+cd.get(Calendar.YEAR));
+                   switch(mode){
+                       case "EQUALS":
+                           if(loginday != dayindex ){
+                               shouldremove = true;
+                           }
+                           break;
+                       case "BEFORE":
+                           if(loginday > dayindex ){
+                               shouldremove = true;
+                           }
+                           break;
+                        case "AFTER":
+                           if(loginday< dayindex ){
+                               shouldremove = true;
+                           }
+                           break;   
+                   
+                   }
+                   if(shouldremove){
+                       queryresult.remove(i);
+                       i--;
+                   }
+                }
             }
             System.out.println("returned? "+queryresult.toString());
             RequestDispatcher dispatch = req.getRequestDispatcher("accesslogs.jsp");
