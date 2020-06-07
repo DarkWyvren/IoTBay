@@ -14,10 +14,10 @@ DROP TABLE PAYMENTDB;
 CREATE TABLE PAYMENTDB (
 
     Payment_ID int GENERATED ALWAYS AS IDENTITY NOT NULL,
-    Payment_METHOD varchar(128) NOT NULL,
+    Payment_METHOD varchar(128) NOT NULL Unique,
     Order_id int NOT NULL,
     Payment_DATE DATE,
-    Amount int NOT NULL,
+    Amount double NOT NULL Unique,
     Credicard varchar(15),
     
     FOREIGN KEY(Order_ID) REFERENCES ORDERDB(Order_ID),
@@ -25,4 +25,5 @@ CREATE TABLE PAYMENTDB (
     
 
 );
-
+    INSERT INTO PAYMENTDB (Payment_METHOD, Order_id, Payment_DATE, Amount, Credicard)
+    VALUES ('Mastercard', 2, '06/06/2020', 19.9, 'B');

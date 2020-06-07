@@ -12,7 +12,7 @@ public class OrderBean implements Serializable{
     
     private int orderId, customerId, productId, productQuanity;
     private double productPrice, totalPrice;
-    private String address, status, productName;
+    private String shippingAddress, status, productName;
     private Date DOO;
 
     public CustomerBean getCustomer() {
@@ -55,12 +55,12 @@ public class OrderBean implements Serializable{
         this.customerId = customerId;
     }
 
-    public String getAddress() {
-        return address;
+    public String getShippingAddress() {
+        return shippingAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public String getStatus() {
@@ -113,7 +113,7 @@ public class OrderBean implements Serializable{
 
     @Override
     public String toString() {
-        return "OrderBean{" + "orderId=" + orderId + ", customerId=" + customerId + ", address=" + address + ", status=" + status + ", productId=" + productId + ", quanity=" + productQuanity + ", DOO=" + DOO + '}';
+        return "OrderBean{" + "orderId=" + orderId + ", customerId=" + customerId + ", address=" + shippingAddress + ", status=" + status + ", productId=" + productId + ", quanity=" + productQuanity + ", DOO=" + DOO + '}';
     }
 
     
