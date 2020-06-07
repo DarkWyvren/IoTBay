@@ -46,7 +46,7 @@ import javax.servlet.annotation.WebServlet;
            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
        }
    }
-    /*@Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     Supplier sd = null;
         int S_ID = Integer.parseInt(request.getParameter("SID"));
@@ -76,6 +76,6 @@ import javax.servlet.annotation.WebServlet;
         RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
         rd.forward(request, response);
     }
-*/
+
    
    }

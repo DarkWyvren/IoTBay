@@ -55,7 +55,7 @@ import uts.isd.model.dao.DBManager;
        }
    }
     @Override
-       /* protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             Supplier sb = null;
         int S_ID = Integer.parseInt(request.getParameter("SID"));
                try {
@@ -72,7 +72,7 @@ import uts.isd.model.dao.DBManager;
         request.setAttribute("SupplierInfo2", sb);
         request.getRequestDispatcher("SupplierUpdate.jsp").include(request, response);
         
-    }*/
+    }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Enumeration<String> paramNames = request.getParameterNames();

@@ -280,28 +280,46 @@ public class DBManager {
         } 
      }
     
-        //find supplier from db
-     /*public Supplier findSupplier(String ContactName, String CompanyEmail) throws SQLException {   
-        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND EMAILADDRESS = '"+CompanyEmail+"'");
+           //find supplier from db using supplier id
+     public Supplier findSupplier(String CompanyName, String CompanyType) throws SQLException {   
+        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupName='"+CompanyName+"' AND Password = '"+CompanyType+"'";
         ResultSet rs = st.executeQuery(query);
         
         while(rs.next()){
             String C_Name = rs.getString(2);
-            String C_Email = rs.getString(3);
-            System.out.println(C_Name+","+C_Email);
+            String C_Type = rs.getString(4);
             
-            if(C_Name.equals(ContactName)&& C_Email.equals(CompanyEmail)){
 
+            if(C_Name.equals(CompanyName) && C_Type.equals(CompanyType) ){ 
+                int S_ID = rs.getInt(1);               
                 String C_Address = rs.getString(3);
-                String C_Type = rs.getString(4);
+                String C_Email = rs.getString(5);
                 int C_Status = rs.getInt(6);
-                return new Supplier (C_Name, C_Address, C_Type, C_Email, C_Status); 
 
+                System.out.println("Company Name: " +C_Name);
+                return new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
             }
         }         
        return null;   
-    }*/
-       
+    }
+     
+        public Supplier getSupplier(int Supplier_id) throws SQLException {   
+        Supplier supplier = null;
+            String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupplierID="+Supplier_id+"";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                int S_ID = rs.getInt(1);
+                System.out.println(S_ID);
+                String C_Name = rs.getString(2);
+                String C_Address = rs.getString(3);
+                String C_Type = rs.getString(4);
+                String C_Email = rs.getString(5);
+                int C_Status = rs.getInt(6);
+                System.out.println("Company Name: " +C_Name);
+                supplier = new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
+            } return supplier;     
+    }
+        
     //Add a supplier into the db
     public void addSupplier(Supplier sb) throws SQLException {
         String values=
