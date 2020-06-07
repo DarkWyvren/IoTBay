@@ -3,10 +3,18 @@
     Created on : Jun 6, 2020, 3:52:16 PM
     Author     : Danny16
 --%>
+<%@page import="java.util.ArrayList"%>
 <%@ page import="uts.isd.model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+            int count =0;
+            if (request.getAttribute("StaffList")!=null)
+            {
+                Arraylist staffList = (ArrayList)request.getAttribute("StaffList");
+            }
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -27,8 +35,13 @@
                 <div class="col-sm-12 col-md-9 p-4">
                 </h1> Edit Staff info </h1>
                      <form method="post" action="">
-                        <table> 
-                            <tr><td>Staff Name: </td><td><input type="text" value= "${Staff.FullName}" placeholder="Enter Company Name" name="SName"></td></tr>
+                        <table class = "table"> 
+                               
+                        <input type="text" id="myInput" onkeyup="myFunc()" placeholder="Search for names.." title="Type in a name">
+                        <input type="text" placeholder="Search by Position">
+                      
+                        <tr></tr>
+                            <tr><td>Name: </td><td><input type="text" value= "${Staff.FullName}" placeholder="Enter Company Name" name="SName"></td></tr>
                             <tr><td>Address: </td><td><input type="text" value= "${Staff.Address}" placeholder="Enter Address" name="SAddress"></td></tr>
                             <tr><td>Position: </td><td><input type="text" value= "${Staff.Position}" placeholder="Enter Company Type" name="SPosition"></td></tr>
                             <tr><td>Email: </td><td><input type="email" value= "${Staff.Email}" placeholder="Enter Email" name="SEmail"></td></tr>

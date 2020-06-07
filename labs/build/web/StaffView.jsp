@@ -37,8 +37,6 @@
                 <div class="col-sm-12 col-md-9 p-4">
                 </h1> View Staff info </h1>
                      <div class="jumbotron">
-                         <input type="text" id="myInput" onkeyup="myFunc()" placeholder="Search for names.." title="Type in a name">
-                        <input type="text" placeholder="Search by Position">
                      <table class = "table">
             <thead>
                 <tr>
