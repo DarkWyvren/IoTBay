@@ -13,7 +13,6 @@ import uts.isd.model.CustomerBean;
 import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
 import uts.isd.model.OrderBean;
-import uts.isd.model.OrderHistoryBean;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -266,7 +265,7 @@ public class DBManager {
     
     
     
-    //SUPPLIER INFO
+    //SUPPLIER INFORMATION
     //can view supplier info
      public void showSupplier(String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) throws SQLException{
         String query = "SELECT FROM * APP.SUPPLIERDB";
@@ -281,7 +280,7 @@ public class DBManager {
         } 
      }
     
-        //find supplier from db using supplier id
+           //find supplier from db using supplier id
      public Supplier findSupplier(String CompanyName, String CompanyType) throws SQLException {   
         String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupName='"+CompanyName+"' AND Password = '"+CompanyType+"'";
         ResultSet rs = st.executeQuery(query);
@@ -290,11 +289,13 @@ public class DBManager {
             String C_Name = rs.getString(2);
             String C_Type = rs.getString(4);
             
+
             if(C_Name.equals(CompanyName) && C_Type.equals(CompanyType) ){ 
                 int S_ID = rs.getInt(1);               
                 String C_Address = rs.getString(3);
                 String C_Email = rs.getString(5);
                 int C_Status = rs.getInt(6);
+
                 System.out.println("Company Name: " +C_Name);
                 return new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
             }
@@ -318,21 +319,49 @@ public class DBManager {
                 supplier = new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
             } return supplier;     
     }
-       
+        
     //Add a supplier into the db
-    public void addSupplier (String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int CompanyStatus) throws SQLException {
+    public void addSupplier(Supplier sb) throws SQLException {
+        String values=
+              //"SupplierID = '"+sb.getSupplierID()+"',"+
+              "'"+sb.getCompanyName()+"',"+
+              "'"+sb.getCompanyAddress()+"',"+
+              "'"+sb.getCompanyType()+"',"+
+              "'"+sb.getCompanyEmail()+"',"+
+              ""+sb.getCompanyStatus()+""
+              ;
+        System.out.println(values);
+        st.executeUpdate("INSERT INTO APP.SUPPLIERDB(SupName,SupAddress,SupType,SupEmail,SupStatus)  VALUES("+values+")");   
+
+    }  
+    /*public void addSupplier (String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int CompanyStatus) throws SQLException {
         st.executeUpdate("INSERT INTO APP.SUPPLIERDB" + "VALUES ("+CompanyName+", "+CompanyAddress+", "+CompanyType+", "+CompanyEmail+", "+CompanyStatus+")");
-    }
+    }*/
     //Update a Suppliers information
-    public void updateSupplier (int SupplierID, String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int Status) throws SQLException {
+    public void updateSupplier(Supplier sb) throws SQLException {
+        String values=
+              //"SupplierID = '"+sb.getSupplierID()+"',"+
+              "SupName = '"+sb.getCompanyName()+"',"+
+              "SupAddress = '"+sb.getCompanyAddress()+"',"+
+              "SupType = '"+sb.getCompanyType()+"',"+
+              "SupEmail = '"+sb.getCompanyEmail()+"'"
+              ;
+        System.out.println(+sb.getSupplierID());
+        st.executeUpdate("UPDATE APP.SUPPLIERDB SET "+values+" WHERE SupplierID ="+sb.getSupplierID());   
+
+    }  
+    
+    /*public void updateSupplier (int SupplierID, String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int Status) throws SQLException {
         st.executeUpdate("UPDATE APP.SUPPLIERDB SET SupName ="+CompanyName+", SET SupAddress  "+CompanyAddress+", SET SupType "+CompanyType+",SET SupEmail "+CompanyEmail+", SET SupStatus "+Status+" WHERE SupplierID ='"+SupplierID+"'");
-    }
+    }*/
+    
+    
     //delete a supplier from db
-    public void deleteSupplier(String CompanyEmail) throws SQLException{
-        st.executeUpdate("DELETE FROM APP.SUPPLIER WHERE EMAILADDRESS ='"+CompanyEmail+"'");
+    public void deleteSupplier(Supplier sd) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.SUPPLIERDB WHERE SupplierID =" +sd.getSupplierID());
   
     }
-   
+
     public ArrayList<Supplier> fetchSupplierList() throws SQLException{
            
         String fetch = "SELECT * FROM APP.SUPPLIERDB";
@@ -349,7 +378,6 @@ public class DBManager {
             
             Supplier SupplierFromDB = new Supplier(S_ID, C_NAME, C_ADDRESS, C_TYPE, C_EMAIL, C_STATUS);
             listSupplier.add(SupplierFromDB);
-            
             
         }     
         return listSupplier;
@@ -381,28 +409,17 @@ public class DBManager {
         String fetch = "SELECT * FROM APP.SUPPLIERDB where SupplierID" +sid;
         ResultSet rs = st.executeQuery(fetch);
             while(rs.next()){
-            Supplier s = new Supplier();
-            s.setSupplierID(sid);
-            s.setCompanyName(rs.getString(2));
-            s.setCompanyAddress(rs.getString(3));
-            s.setCompanyType(rs.getString(4));
-            s.setCompanyEmail(rs.getString(5));
-            s.setCompanyStatus(rs.getInt(6));
-            temp.add(s);
-        }     
-        return temp;
-    }
-
-    private static class Arraylist<T> {
-
-        public Arraylist() {
-        }
-
-        private void add(Supplier supplier) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }*/
-    
+            String C_Name = rs.getString(2);
+            String C_Address = rs.getString(3);
+            String C_Type = rs.getString(4);
+            String C_Email = rs.getString(5);
+            int C_Status = rs.getInt(6);
+            temp.add(new Supplier(C_Name, C_Address, C_Type, C_Email, C_Status));
+        } 
+            
+            return temp;
+    }   
+     
     //check if supplier exists using company name and type
     public boolean checkSupplier(String ContactName, String CompanyType) throws SQLException{
        String fetch = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND COMTYPE = '"+CompanyType+"'");
@@ -417,7 +434,6 @@ public class DBManager {
         }
         return false; 
     }
-
     
 
     
@@ -457,7 +473,7 @@ public class DBManager {
         }            
         return null;   
     }
-        
+    
     //Add a order-data into the database   
     public void addOrder(OrderBean ob) throws SQLException {                   
     //code for add-operation    
@@ -504,72 +520,6 @@ public class DBManager {
     }
 
     
-        public void showOrderHistory(int OrderId, int CustomerId, Date DOO, String Status, String PaymentMethod, double OriginalPrice, double PaidMoney, double SavedMoney) throws SQLException{
-        String query = "SELECT FROM * APP.ORDER_HISTORY";
-        ResultSet rs = st.executeQuery(query);
-
-        while(rs.next()){
-            OrderId = rs.getInt(1);
-            CustomerId = rs.getInt(2);
-            DOO = rs.getDate(3);
-            Status = rs.getString(4);
-            PaymentMethod = rs.getString(5);
-            OriginalPrice = rs.getDouble(6);
-            PaidMoney = rs.getDouble(7);
-            SavedMoney = rs.getDouble(7);
-        } 
-    }
-     
-        public ArrayList<OrderHistoryBean> fetchOrderHistoryList() throws SQLException{
-           
-        String fetch = "SELECT * FROM APP.ORDER_HISTORY";
-        ResultSet rs = st.executeQuery(fetch);
-        ArrayList<OrderHistoryBean> listOrderHistory = new ArrayList(); 
-
-        while(rs.next()){
-            int OrderId = rs.getInt(1);
-            int CustomerId = rs.getInt(2);
-            Date DOO = rs.getDate(3);
-            String Status = rs.getString(4);
-            String PaymentMethod = rs.getString(5);
-            double OriginalPrice = rs.getDouble(6);
-            double PaidMoney = rs.getDouble(7);
-            double SavedMoney = rs.getDouble(8);
-            
-            OrderHistoryBean OrderHistoryFromDB = new OrderHistoryBean(OrderId, CustomerId, DOO, Status, PaymentMethod, OriginalPrice, PaidMoney, SavedMoney);
-            listOrderHistory.add(OrderHistoryFromDB);
-            
-            
-        }     
-        return listOrderHistory;
-    }
-    
-     public ArrayList<OrderHistoryBean> WholeLine(int Customer_id) throws SQLException{
-           
-        String fetch = "SELECT * FROM APP.ORDER_HISTORY WHERE Customer_ID='"+Customer_id+"'";;
-        ResultSet rs = st.executeQuery(fetch);
-        ArrayList<OrderHistoryBean> WholeLine = new ArrayList(); 
-       
-        while(rs.next()){
-            int OrderId = rs.getInt(1);
-            int CustomerId = rs.getInt(2);
-            Date DOO = rs.getDate(3);
-            String Status = rs.getString(4);
-            String PaymentMethod = rs.getString(5);
-            double OriginalPrice = rs.getDouble(6);
-            double PaidMoney = rs.getDouble(7);
-            double SavedMoney = rs.getDouble(8);
-            
-            OrderHistoryBean OrderHistoryFromDB = new OrderHistoryBean(OrderId, CustomerId, DOO, Status, PaymentMethod, OriginalPrice, PaidMoney, SavedMoney);
-            WholeLine.add(OrderHistoryFromDB);
-            
-            
-        }     
-        return WholeLine;
-    }
-        
-
-     
     public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
         String query = "SELECT * FROM APP.PAYMENTDB WHERE  PAYMENTID='"+Payment_ID+"'"+ (" AND PAYMENTDATE = '"+Payment_DATE+"'");
         ResultSet rs = st.executeQuery(query);
