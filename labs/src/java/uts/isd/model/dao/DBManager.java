@@ -546,7 +546,7 @@ public class DBManager {
     //Update a Suppliers information
     public void updatePayment(String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {       
        //code for update-operation   
-       st.executeUpdate("INSERT INTO APP.PAYMENTDB SET Payment_ID ="+Payment_ID+", SET Payment_DATE ="+Payment_DATE+", SET Payment_METHOD ="+Payment_METHOD+", SET Creditcard ="+Creditcard+", SET Amount ="+Amount+",");  
+       st.executeUpdate("UPDATE INTO APP.PAYMENTDB SET Payment_ID ="+Payment_ID+", SET Payment_DATE ="+Payment_DATE+", SET Payment_METHOD ="+Payment_METHOD+", SET Creditcard ="+Creditcard+", SET Amount ="+Amount+",");  
     }   
     //delete a supplier from db
     public void deletePayment(String Payment_ID) throws SQLException{
