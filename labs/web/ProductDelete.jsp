@@ -1,6 +1,7 @@
 <%-- 
-    Document   : Supplier
-    Author     : mood35-Laptop
+    Document   : ProductDelete
+    Created on : 07/06/2020, 10:55:20 AM
+    Author     : antho
 --%>
 
 <%@ page import="uts.isd.model.*"%>
@@ -11,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Supplier List Page</title>
+        <title>Remove a Product</title>
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
          <script src="lib/jquery/jquery-3.5.0.min.js"></script>
@@ -22,22 +23,20 @@
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="SupplierNavBar.jsp" />
+                     <jsp:include page="ProductNavBar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                    <table class="table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Company Name</th>
-                                <th>Address</th>
-                                <th>Company Type</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th></th>
-                                <th></th>
-                            </tr> 
-                        </thead>
-                    </table>
+                    <div class="jumbotron">
+                        <h1>Remove a Product from the Store</h1> 
+                        <table> 
+                            <tr><td>Product ID: </td><td><input type="text" placeholder="Enter Product ID" name="PID"></td></tr>
+                            <tr><td></td><td><input type="reset"> <input type="submit" value="Delete"> </td></tr>
+                            <tr><td><input type="checkbox" name="TermsCondition" > Are you sure? </td><td></td></tr>
+                            <tr><td></td><td></td></tr>
+                        </table>
+                        <hidden value="SAdd"></hidden> 
+                    </div>
+                  
                 </div>
             </div>
         </div>

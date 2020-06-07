@@ -6,6 +6,7 @@
     import java.util.logging.Level;
     import java.util.logging.Logger;
     import javax.servlet.ServletException;
+    import javax.servlet.annotation.WebServlet;
     import javax.servlet.http.HttpServlet;
     import javax.servlet.http.HttpServletRequest;
     import javax.servlet.http.HttpServletResponse;
@@ -17,8 +18,10 @@
     *
     * @author Max
     */
-
-    public class OrderController extends HttpServlet {
+    @WebServlet(
+    name = "getOrderHistory", 
+    urlPatterns = "/orderHistory")
+    public class OrderHistoryViewController extends HttpServlet {
 
        private DBConnector db;
        private DBManager manager;
@@ -29,8 +32,10 @@
        public void init() {
            try {
                db = new DBConnector();
+               conn = db.openConnection();
+               manager = new DBManager(conn);
            } catch (ClassNotFoundException | SQLException ex) {
-               Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(OrderHistoryViewController.class.getName()).log(Level.SEVERE, null, ex);
            }      
        }
 
@@ -45,7 +50,7 @@
            try {
                manager = new DBManager(conn);
            } catch (SQLException ex) {
-               Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(OrderHistoryViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
 
            //export the DB manager to the view-session (JSPs)
@@ -59,7 +64,7 @@
            try {
                db.closeConnection();
            } catch (SQLException ex) {
-               Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(OrderHistoryViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
        }
    }

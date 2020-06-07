@@ -43,7 +43,7 @@ public class AddProductController extends HttpServlet{
             //String paramPrice = paramPrice.nextDouble();
             switch(paramName){
                 case "ID":
-                    pb.setID(req.getParameter(paramName));
+                    Integer.parseInt(req.getParameter(paramName));
                     break;
                 case "name":
                     pb.setName(req.getParameter(paramName));

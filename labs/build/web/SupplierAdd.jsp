@@ -27,17 +27,24 @@
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
                         <h1>Register</h1> 
-                        <table> 
-                            <tr><td>Company Name: </td><td><input type="text" placeholder="Enter Company Name" name="CName"></td></tr>
-                            <tr><td>Address: </td><td><input type="text" placeholder="Enter Address" name="CAddress"></td></tr>
-                            <tr><td>Number:  </td><td><input type="int" placeholder="Enter Phone Number" name="CNumber"></td></tr>
-                            <tr><td>Company Type: </td><td><input type="text" placeholder="Enter Company Type" name="CType"></td></tr>
-                            <tr><td>Email: </td><td><input type="email" placeholder="Enter Email" name="CEmail"></td></tr>
-                            <tr><td></td><td><input type="reset"> <input type="submit" value="Register"> </td></tr>
-                            <tr><td><input type="checkbox" name="TermsCondition" > I have Read the Terms and Conditions</td><td></td></tr>
-                            <tr><td></td><td></td></tr>
-                        </table>
-                        <hidden value="SAdd"></hidden> 
+                        <form  method="POST">
+                            <table> 
+                                <tr><td>Company Name: </td><td><input type="text" placeholder="Enter Company Name" name="CName"></td></tr>
+                                <tr><td>Address: </td><td><input type="text" placeholder="Enter Address" name="CAddress"></td></tr>
+                                <tr><td>Company Type: </td><td><input type="text" placeholder="Enter Company Type" name="CType"></td></tr>
+                                <tr><td>Email: </td><td><input type="email" placeholder="Enter Email" name="CEmail"></td></tr>
+                                <tr><td>
+                                    </td>
+                                    <td>
+                                    <input type="reset"> 
+                                    <input type="submit" value="Register" href="${pageContext.request.contextPath}/AddNewSupplier"> 
+                                    </td>
+                                </tr>
+                                <tr><td><input type="checkbox" name="TermsCondition" > I have Read the Terms and Conditions</td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                            </table>
+                            <hidden value="SAdd"></hidden> 
+                        </form>
                     </div>
                   
                 </div>
