@@ -26,9 +26,9 @@
                      <jsp:include page="navbar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                    <div class="jumbotron">Add a product</div>
-                    <div class="jumbotron">Remove a product</div>
-                    <div class="jumbotron">Edit a product</div>
+                    <div  class="jumbotron"><a href="ProductAdd.jsp"</a>Add a product</div>
+                    <div  class="jumbotron"><a href="ProductDelete.jsp"</a>Remove a product</div>
+                    <div  class="jumbotron"><a href="ProductUpdate.jsp"</a>Edit a product</div>
                 </div>
             </div>
         </div>
