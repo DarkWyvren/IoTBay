@@ -26,7 +26,11 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
-                        <h1>Register</h1> 
+                        <h2 class="float-right pb-8">Add new Supplier</h2> 
+                        <a class="float-right pb-8">or go back</a>
+                        
+                    </div>
+                    <div class="jumbotron">
                         <form  method="POST">
                             <table> 
                                 <tr><td>Company Name: </td><td><input type="text" placeholder="Enter Company Name" name="CName"></td></tr>
@@ -36,13 +40,13 @@
                                 <tr><td>
                                     </td>
                                     <td>
-                                    <input type="reset"> 
-                                    <input type="submit" value="Register" href="${pageContext.request.contextPath}/AddNewSupplier"> 
+                                    
                                     </td>
                                 </tr>
-                                <tr><td><input type="checkbox" name="TermsCondition" > I have Read the Terms and Conditions</td><td></td></tr>
                                 <tr><td></td><td></td></tr>
                             </table>
+                            <input type="reset"> 
+                            <input type="submit" value="Register" href="${pageContext.request.contextPath}/AddNewSupplier"> 
                             <hidden value="SAdd"></hidden> 
                         </form>
                     </div>
