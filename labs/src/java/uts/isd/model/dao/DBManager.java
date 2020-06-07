@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Random;
 import javax.swing.text.DateFormatter;
 import uts.isd.model.CustomerAccessLogBean;
+import uts.isd.model.payment;
 
 /* 
 * DBManager is the primary DAO class to interact with the database. 
@@ -390,5 +391,39 @@ public class DBManager {
     public void deleteOrder(String Order_ID) throws SQLException{       
        //code for delete-operation   
        st.executeUpdate("DELETE FROM APP.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
+    }
+    
+    public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
+        String query = "SELECT * FROM APP.PAYMENTDB WHERE  PAYMENTID='"+Payment_ID+"'"+ (" AND PAYMENTDATE = '"+Payment_DATE+"'");
+        ResultSet rs = st.executeQuery(query);
+        
+        while(rs.next()){
+            String P_ID = rs.getString(1);
+            String P_DATE = rs.getString(4);
+            System.out.println(P_ID+","+P_DATE);
+            
+            if(P_ID.equals(Payment_ID)&& P_DATE.equals(Payment_DATE)){
+                String P_METHOD = rs.getString(2);
+                String P_CREDITCARD = rs.getString(5);
+                int P_AMOUNT = rs.getInt(6);
+                return new payment (P_ID, P_DATE, P_METHOD, P_CREDITCARD, P_AMOUNT); 
+            }
+        }         
+       return null;   
+    }
+       
+    //Add a supplier into the db
+    public void addPayment (String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {
+        st.executeUpdate("INSERT INTO APP.PAYMENTDB" + "VALUES ("+Payment_ID+", "+Payment_DATE+", "+Payment_METHOD+", "+Creditcard+", "+Amount+")");
+    }
+    //Update a Suppliers information
+    public void updatePayment(String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {       
+       //code for update-operation   
+       st.executeUpdate("INSERT INTO APP.PAYMENTDB SET Payment_ID ="+Payment_ID+", SET Payment_DATE ="+Payment_DATE+", SET Payment_METHOD ="+Payment_METHOD+", SET Creditcard ="+Creditcard+", SET Amount ="+Amount+",");  
+    }   
+    //delete a supplier from db
+    public void deletePayment(String Payment_ID) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.PAYMENTDB WHERE PAYMENTID ='"+Payment_ID+"'");
+  
     }
 }
