@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Random;
 import javax.swing.text.DateFormatter;
 import uts.isd.model.CustomerAccessLogBean;
+import uts.isd.model.payment;
 
 /* 
 * DBManager is the primary DAO class to interact with the database. 
@@ -346,146 +347,83 @@ public class DBManager {
     
     //Order Management [MVC]
     //Find all orders based on Date_Of_Order
-    /*public OrderBean findOrder(String Date_Of_Order) throws SQLException {  
+    public OrderBean findOrder(String Date_Of_Order) throws SQLException {  
         return findOrder(Date_Of_Order, "");
-    }*/
+    }
     //Find the specific order using Date_Of_Order and Order_ID
-    public OrderBean findOrder(String Date_Of_Order, int Order_ID) throws SQLException {   
+    public OrderBean findOrder(String Date_Of_Order, String Order_ID) throws SQLException {   
         String query = "SELECT * FROM APP.ORDERDB WHERE Date_Of_Order='"+Date_Of_Order+"' AND Order_ID = '"+Order_ID;
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String order_date = rs.getString(3);
-            int ord_id = rs.getInt(1);
+            String ord_id = rs.getString(1);
             System.out.println(order_date+","+ord_id);
-            if(order_date.equals(Date_Of_Order)&& ord_id == (Order_ID)){
+            if(order_date.equals(Date_Of_Order)&& ord_id.equals(Order_ID)){
                 OrderBean ob = new OrderBean();
                 ob.setOrderId(ord_id);
-                ob.setCustomerId(rs.getInt(2));
+                ob.setAddress(rs.getString(4));
+                ob.setStatus(rs.getString(5));
+                ob.setQuanity(rs.getString(7));
                 
                 String[] dt = rs.getString(3).split("/");
                 System.out.println(Arrays.toString(dt));
-                ob.setDOO(Date.valueOf(rs.getString(3)));
                 
-                ob.setAddress(rs.getString(4));
-                ob.setStatus(rs.getString(5));
-                ob.setProductId(rs.getInt(6));
-                ob.setProductName(rs.getString(7));
-                ob.setProductPrice(rs.getDouble(8));
-                ob.setProductQuanity(rs.getInt(9));
-                ob.setTotalPrice(rs.getDouble(10));
-
+                ob.setDOO(Date.valueOf(rs.getString(3)));
                 return ob;
             }
         }            
         return null;   
     }
-    
     //Add a order-data into the database   
-    public void addOrder(OrderBean ob) throws SQLException {                   
-    //code for add-operation    
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        String values=
-              "'"
-              +ob.getCustomerId()+"','"
-              +format.format(ob.getDOO())+"','"
-              +ob.getAddress()+"','"
-              +ob.getStatus()+"','"
-              +ob.getProductId()+"','"
-              +ob.getProductName()+"','"
-              +ob.getProductPrice()+"','"
-              +ob.getProductQuanity()+"','"
-              +ob.getTotalPrice()+"'"
-              ;
-        System.out.println(values);
-        st.executeUpdate("INSERT INTO APP.ORDERDB(Customer_ID, Date_Of_Order, Address, Status, Product_ID, Product_Quanity, Total_Price)  VALUES("+values+")");   
-        ob.setOrderId(findOrder(format.format(ob.getDOO()),ob.getOrderId()).getOrderId());  
+    public void addOrder(String Customer_ID, String Date_Of_Order, String Address, String Status, String Product_ID, String Quanity) throws SQLException {                   
+    //code for add-operation       
+      st.executeUpdate("INSERT INTO APP.ORDERDB" + "VALUES ("+Customer_ID+", "+Date_Of_Order+", "+Address+", "+Status+", "+Product_ID+", "+Quanity+")");   
+
     }
-    
+
     //update a order details in the database   
-    public void updateOrder(OrderBean ob) throws SQLException {       
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        String values=
-              "Customer_ID = '"+ob.getCustomerId()+"',"+
-              "Date_Of_Order = '"+format.format(ob.getDOO())+"',"+
-              "Address = '"+ob.getAddress()+"',"+
-              "Status = '"+format.format(ob.getStatus())+"',"+
-              "Product_ID = '"+ob.getProductId()+"',"+
-              "Product_Name = '"+ob.getProductName()+"',"+
-              "Product_Price = '"+ob.getProductPrice()+"',"+
-              "Product_Quanity = '"+ob.getProductQuanity()+"'"+
-              "Total_Price = '"+ob.getTotalPrice()+"'"
-              ;
-        System.out.println(values);
-        st.executeUpdate("UPDATE APP.ORDERDB SET "+values+" WHERE Order_ID ="+ob.getOrderId());
-    } 
-    
+    public void updateOrder(String Customer_ID, String Date_Of_Order, String Address, String Status, String Product_ID, String Quanity) throws SQLException {       
+       //code for update-operation   
+       st.executeUpdate("INSERT INTO APP.ORDERDB SET Customer_ID ="+Customer_ID+", SET Customer_ID ="+Date_Of_Order+", SET Customer_ID ="+Address+", SET Customer_ID ="+Status+", SET Customer_ID ="+Product_ID+", SET Customer_ID ='"+Quanity+"'"); 
+    }   
+   
     //delete a order from the database   
-    public void deleteOrder(int Order_ID) throws SQLException{       
+    public void deleteOrder(String Order_ID) throws SQLException{       
        //code for delete-operation   
        st.executeUpdate("DELETE FROM APP.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
     }
-}
-
-
-
-
-
-public CustomerAccessLogBean addCustomerLoginRecord(CustomerBean cb) throws SQLException {                   
-//code for add-operation       
-//VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
-      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
-      SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
-      java.util.Date d =  new java.util.Date();
-      String values=
-              ""
-              +cb.getId()+",'"
-              +dateformat.format(d)+"','"
-              +timeformat.format(d)+"'"
-              ;
-      System.out.println(values);
-      st.executeUpdate("INSERT INTO APP.CUSTOMER_SESSION(Customer_ID, LOGGEDIN_DATE,LOGGEDIN_TIME)  VALUES("+values+")");   
-      CustomerAccessLogBean cab = new CustomerAccessLogBean();
-      cab.setCustomer(cb);
-      cab.setLoggedin(d);
-      return cab;
-    }
     
-    public void endCustomerLoginRecord(CustomerAccessLogBean cb) throws SQLException {                   
-//code for add-operation       
-//VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
-      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
-      SimpleDateFormat timeformat = new SimpleDateFormat("H:m:s");
-      java.util.Date d =  new java.util.Date();
-      
-      
-      String values=
-              "LOGGEDOUT_DATE = '"+dateformat.format(d)+"',"+
-              "LOGGEDOUT_TIME = '"+timeformat.format(d)+"'"
-              ;
-      System.out.println(values);
-      st.executeUpdate(
-                "UPDATE APP.CUSTOMER_SESSION SET "+values+" "
-                        + "WHERE"
-                        + " Customer_ID = "+cb.getCustomerid()+
-                          " AND LOGGEDIN_TIME = '"+timeformat.format(cb.getLoggedin())+"'"+
-                          " AND LOGGEDIN_DATE = '"+dateformat.format(cb.getLoggedin())+"'" );   
-      cb.setLoggedout(d);
-    }
-    
-    public ArrayList<CustomerAccessLogBean> listCustomerLoginRecord(int cid) throws SQLException, ParseException {                   
-        ArrayList<CustomerAccessLogBean> result = new ArrayList<>();
-      String query = "SELECT * FROM APP.CUSTOMER_SESSION WHERE  Customer_ID="+cid;
+    public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
+        String query = "SELECT * FROM APP.PAYMENTDB WHERE  PAYMENTID='"+Payment_ID+"'"+ (" AND PAYMENTDATE = '"+Payment_DATE+"'");
         ResultSet rs = st.executeQuery(query);
         
-        SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd H:m:s");
         while(rs.next()){
-             CustomerAccessLogBean cb = new CustomerAccessLogBean();
-                cb.setCustomerid(cid);
-                cb.setLoggedin(timeformat.parse(rs.getString(2)+" "+rs.getString(3)));
-                cb.setLoggedout(rs.getString(4)==null?cb.getLoggedin():(timeformat.parse(rs.getString(4)+" "+rs.getString(5))));
-                //apply time here.
-                //add search and delete and ur done yey
-                result.add(cb);
-        }
-        return result;
+            String P_ID = rs.getString(1);
+            String P_DATE = rs.getString(4);
+            System.out.println(P_ID+","+P_DATE);
+            
+            if(P_ID.equals(Payment_ID)&& P_DATE.equals(Payment_DATE)){
+                String P_METHOD = rs.getString(2);
+                String P_CREDITCARD = rs.getString(5);
+                int P_AMOUNT = rs.getInt(6);
+                return new payment (P_ID, P_DATE, P_METHOD, P_CREDITCARD, P_AMOUNT); 
+            }
+        }         
+       return null;   
     }
+       
+    //Add a supplier into the db
+    public void addPayment (String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {
+        st.executeUpdate("INSERT INTO APP.PAYMENTDB" + "VALUES ("+Payment_ID+", "+Payment_DATE+", "+Payment_METHOD+", "+Creditcard+", "+Amount+")");
+    }
+    //Update a Suppliers information
+    public void updatePayment(String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {       
+       //code for update-operation   
+       st.executeUpdate("INSERT INTO APP.PAYMENTDB SET Payment_ID ="+Payment_ID+", SET Payment_DATE ="+Payment_DATE+", SET Payment_METHOD ="+Payment_METHOD+", SET Creditcard ="+Creditcard+", SET Amount ="+Amount+",");  
+    }   
+    //delete a supplier from db
+    public void deletePayment(String Payment_ID) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.PAYMENTDB WHERE PAYMENTID ='"+Payment_ID+"'");
+  
+    }
+}

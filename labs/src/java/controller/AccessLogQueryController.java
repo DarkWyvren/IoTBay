@@ -42,24 +42,24 @@ public class AccessLogQueryController  extends HttpServlet {
     private Connection conn;
     
     @Override 
-    public void init() {
-        try {
-            db = new DBConnector();
-            conn = db.openConnection();
-            manager = new DBManager(conn);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }      
-    }
+        public void init() {
+            try {
+                db = new DBConnector();
+                conn = db.openConnection();
+                manager = new DBManager(conn);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }      
+        }
 
-    @Override //Destroy the servlet and release the resources of the application (terminate also the db connection)
-    public void destroy() {
-       try {
-           db.closeConnection();
-       } catch (SQLException ex) {
-           Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        @Override //Destroy the servlet and release the resources of the application (terminate also the db connection)
+        public void destroy() {
+           try {
+               db.closeConnection();
+           } catch (SQLException ex) {
+               Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+           }
        }
-   }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CustomerBean cb = (CustomerBean)req.getSession().getAttribute("login");
