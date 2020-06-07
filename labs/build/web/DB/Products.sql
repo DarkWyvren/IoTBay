@@ -7,6 +7,7 @@
  * Author:  antho
  * Created: 04/06/2020
  */
+DROP TABLE PRODUCTDB;
 
 CREATE TABLE PRODUCTDB (
     Product_ID int NOT NULL, 
@@ -17,13 +18,16 @@ CREATE TABLE PRODUCTDB (
 
     PRIMARY KEY(Product_ID),
     FOREIGN KEY(SupplierID) REFERENCES SUPPLIERDB(SupplierID)
+
 );
+
 INSERT INTO PRODUCTDB(Product_ID, ProductName, Price, Category, SupplierID)
 Values
 (123456, 'Rasberry Pi', 10, 'Complete', 123512);
-
-
-
+(1, 'IoTBay Device 1', 19.9, 'Electronic Device', 1);
+(2, 'IoTBay Device 2', 29.9, 'Electronic Device', 2);
+(3, 'IoTBay Device 3', 39.9, 'Electronic Device', 3);
 
 
 select * from PRODUCTDB;
+
