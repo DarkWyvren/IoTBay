@@ -4,10 +4,18 @@
     Author     : mood35-Laptop
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@ page import="uts.isd.model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+        ArrayList SupplierList = new ArrayList();
+                        Object  SupplierInfo= request.getAttribute("SupplierInfo");
+                        if(SupplierInfo!=null){
+                            SupplierList = (ArrayList)SupplierInfo;
+                        }
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">
@@ -30,33 +38,44 @@
                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
                         <input type="text" placeholder="Search by Type">
                         <div>
-                            <thead class="thead-dark">
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <th>Company Name</th>
-                                    <th>Address</th>
-                                    <th>Number</th>
-                                    <th>Type</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Company Name</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Company Type</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
+                              <% for(int i = 0;i<SupplierList.size();i++){ %>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                  <%Supplier sb = (Supplier)SupplierList.get(i);%>
+                                  <%int rowNum = i+1; %>
+                                    <td> <%=rowNum%> </td>
+                                    <td scope="row"><%= sb.getCompanyName().toString() %></td>
+                                    <td><%= sb.getCompanyAddress().toString() %></td>
+                                    <td><%= sb.getCompanyType().toString() %></td>
+                                    <td><%= sb.getCompanyEmail().toString() %></td>                        
+                                    <td style="color: <%= sb.getCompanyStatus() == 0 ? "red":"green" %>" >
+                                        <%=sb.getCompanyStatus() == 0 ? "Deactive":"Active"  %>
+                                    </td> <%--Make 1 and 0 into active or inactive --%>
                                     <td>
-                                        <a role="button" href="SupplierEdit">Edit</a>
+                                        <a role="button" href="${pageContext.request.contextPath}/SupplierEdit" >Edit</a>
                                         <a role="button" href="SupplierEdit">Delete</a>
-                                    </td>   
+                                    </td>
+                                    
+
                                 </tr>
                                 
+                                
+                              <%}%>
                             </tbody>
+                        </table>
+                                       
                             
                         </div>
                     </div>                    

@@ -266,24 +266,42 @@ public class DBManager {
         } 
      }
     
-        //find supplier from db
-     public Supplier findSupplier(String ContactName, String CompanyEmail) throws SQLException {   
-        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND EMAILADDRESS = '"+CompanyEmail+"'");
+        //find supplier from db using supplier id
+     public Supplier findSupplier(String CompanyName, String CompanyType) throws SQLException {   
+        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupName='"+CompanyName+"' AND Password = '"+CompanyType+"'";
         ResultSet rs = st.executeQuery(query);
         
         while(rs.next()){
             String C_Name = rs.getString(2);
-            String C_Email = rs.getString(3);
-            System.out.println(C_Name+","+C_Email);
+            String C_Type = rs.getString(4);
             
-            if(C_Name.equals(ContactName)&& C_Email.equals(CompanyEmail)){
+            if(C_Name.equals(CompanyName) && C_Type.equals(CompanyType) ){ 
+                int S_ID = rs.getInt(1);               
                 String C_Address = rs.getString(3);
-                String C_Type = rs.getString(4);
+                String C_Email = rs.getString(5);
                 int C_Status = rs.getInt(6);
-                return new Supplier (C_Name, C_Address, C_Type, C_Email, C_Status); 
+                System.out.println("Company Name: " +C_Name);
+                return new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
             }
         }         
        return null;   
+    }
+     
+        public Supplier getSupplier(int Supplier_id) throws SQLException {   
+        Supplier supplier = null;
+            String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupplierID='"+Supplier_id+"'";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                int S_ID = rs.getInt(1);
+                System.out.println(S_ID);
+                String C_Name = rs.getString(2);
+                String C_Address = rs.getString(3);
+                String C_Type = rs.getString(4);
+                String C_Email = rs.getString(5);
+                int C_Status = rs.getInt(6);
+                System.out.println("Company Name: " +C_Name);
+                supplier = new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
+            } return supplier;     
     }
        
     //Add a supplier into the db
@@ -300,20 +318,64 @@ public class DBManager {
   
     }
    
-    public Arraylist<Supplier> fetchSupplierList() throws SQLException{
-            String fetch = "SELECT * FROM APP.SUPPLIERDB";
-            ResultSet rs = st.executeQuery(fetch);
-            Arraylist<Supplier> temp = new Arraylist();
-            while(rs.next()){
-            String C_Name = rs.getString(2);
-            String C_Address = rs.getString(3);
-            String C_Type = rs.getString(4);
-            String C_Email = rs.getString(5);
-            int C_Status = rs.getInt(6);
-            temp.add(new Supplier(C_Name, C_Address, C_Type, C_Email, C_Status));
-        } 
+    public ArrayList<Supplier> fetchSupplierList() throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.SUPPLIERDB";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Supplier> listSupplier = new ArrayList(); 
+       
+        while(rs.next()){
+            int S_ID = rs.getInt(1);
+            String C_NAME = rs.getString(2);
+            String C_ADDRESS = rs.getString(3);
+            String C_TYPE = rs.getString(4);
+            String C_EMAIL = rs.getString(5);
+            int C_STATUS = rs.getInt(6);
             
-            return temp;
+            Supplier SupplierFromDB = new Supplier(S_ID, C_NAME, C_ADDRESS, C_TYPE, C_EMAIL, C_STATUS);
+            listSupplier.add(SupplierFromDB);
+            
+            
+        }     
+        return listSupplier;
+    }
+    
+     public ArrayList<Supplier> Oneline(int Supplier_id) throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.SUPPLIERDB WHERE  SupplierID='"+Supplier_id+"'";;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Supplier> oneline = new ArrayList(); 
+       
+        while(rs.next()){
+            int S_ID = rs.getInt(1);
+            String C_NAME = rs.getString(2);
+            String C_ADDRESS = rs.getString(3);
+            String C_TYPE = rs.getString(4);
+            String C_EMAIL = rs.getString(5);
+            int C_STATUS = rs.getInt(6);
+            
+            Supplier SupplierFromDB = new Supplier(S_ID, C_NAME, C_ADDRESS, C_TYPE, C_EMAIL, C_STATUS);
+            oneline.add(SupplierFromDB);
+            
+            
+        }     
+        return oneline;
+    }
+    /*public Arraylist<Supplier> fetchSupplierList(int sid) throws SQLException{
+        Arraylist<Supplier> temp = new Arraylist();    
+        String fetch = "SELECT * FROM APP.SUPPLIERDB where SupplierID" +sid;
+        ResultSet rs = st.executeQuery(fetch);
+            while(rs.next()){
+            Supplier s = new Supplier();
+            s.setSupplierID(sid);
+            s.setCompanyName(rs.getString(2));
+            s.setCompanyAddress(rs.getString(3));
+            s.setCompanyType(rs.getString(4));
+            s.setCompanyEmail(rs.getString(5));
+            s.setCompanyStatus(rs.getInt(6));
+            temp.add(s);
+        }     
+        return temp;
     }
 
     private static class Arraylist<T> {
@@ -324,7 +386,7 @@ public class DBManager {
         private void add(Supplier supplier) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    }
+    }*/
     
     //check if supplier exists using company name and type
     public boolean checkSupplier(String ContactName, String CompanyType) throws SQLException{
@@ -391,4 +453,9 @@ public class DBManager {
        //code for delete-operation   
        st.executeUpdate("DELETE FROM APP.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
     }
+
+    
+    
+    
+    
 }

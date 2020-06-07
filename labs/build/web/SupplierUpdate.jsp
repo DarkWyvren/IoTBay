@@ -7,6 +7,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<%
+    CustomerBean cust = new CustomerBean();
+                        cust.setName("Guest");
+                        cust.setPassword("");
+
+                        Object accountsesh = session.getAttribute("login");
+                        if(accountsesh==null){
+                            session.setAttribute("login", cust);
+                        }else{
+                            cust = (CustomerBean)accountsesh;
+                        }
+%>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">
