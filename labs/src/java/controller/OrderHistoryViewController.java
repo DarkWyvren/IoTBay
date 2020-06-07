@@ -3,8 +3,10 @@
     import java.io.IOException;
     import java.sql.Connection;
     import java.sql.SQLException;
+    import java.util.ArrayList;
     import java.util.logging.Level;
     import java.util.logging.Logger;
+    import javax.servlet.RequestDispatcher;
     import javax.servlet.ServletException;
     import javax.servlet.annotation.WebServlet;
     import javax.servlet.http.HttpServlet;
@@ -13,6 +15,8 @@
     import javax.servlet.http.HttpSession;
     import uts.isd.model.dao.*;
     import uts.isd.model.OrderBean;
+    import uts.isd.model.OrderHistoryBean;
+    import uts.isd.model.Supplier;
 
     /**
     *
@@ -20,7 +24,7 @@
     */
     @WebServlet(
     name = "getOrderHistory", 
-    urlPatterns = "/orderHistory")
+    urlPatterns = "/ShowOrderHistory")
     public class OrderHistoryViewController extends HttpServlet {
 
        private DBConnector db;
@@ -42,20 +46,18 @@
       
 
        @Override //Add the DBConnector, DBManager, Connection instances to the session
-       protected void doGet(HttpServletRequest request, HttpServletResponse response)
-               throws ServletException, IOException {
-           response.setContentType("text/html;charset=UTF-8");       
-           HttpSession session = request.getSession();
-           conn = db.openConnection();       
+       protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<OrderHistoryBean> queryresult = null;
            try {
-               manager = new DBManager(conn);
+               queryresult = manager.fetchOrderHistoryList();
            } catch (SQLException ex) {
                Logger.getLogger(OrderHistoryViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
-
-           //export the DB manager to the view-session (JSPs)
-           session.setAttribute("manager", manager);           
-       }   
+        System.out.print(queryresult.toString() + "inside dogetmethod");
+        RequestDispatcher rd = request.getRequestDispatcher("orderHistory.jsp"); 
+        request.setAttribute("OrderHistoryInfo",  queryresult);
+        rd.forward(request, response);  
+    }   
 
         
 

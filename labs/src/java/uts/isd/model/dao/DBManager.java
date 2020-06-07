@@ -13,6 +13,7 @@ import uts.isd.model.CustomerBean;
 import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
 import uts.isd.model.OrderBean;
+import uts.isd.model.OrderHistoryBean;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -456,7 +457,7 @@ public class DBManager {
         }            
         return null;   
     }
-    
+        
     //Add a order-data into the database   
     public void addOrder(OrderBean ob) throws SQLException {                   
     //code for add-operation    
@@ -503,6 +504,72 @@ public class DBManager {
     }
 
     
+        public void showOrderHistory(int OrderId, int CustomerId, Date DOO, String Status, String PaymentMethod, double OriginalPrice, double PaidMoney, double SavedMoney) throws SQLException{
+        String query = "SELECT FROM * APP.ORDER_HISTORY";
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()){
+            OrderId = rs.getInt(1);
+            CustomerId = rs.getInt(2);
+            DOO = rs.getDate(3);
+            Status = rs.getString(4);
+            PaymentMethod = rs.getString(5);
+            OriginalPrice = rs.getDouble(6);
+            PaidMoney = rs.getDouble(7);
+            SavedMoney = rs.getDouble(7);
+        } 
+    }
+     
+        public ArrayList<OrderHistoryBean> fetchOrderHistoryList() throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.ORDER_HISTORY";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderHistoryBean> listOrderHistory = new ArrayList(); 
+
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            String Status = rs.getString(4);
+            String PaymentMethod = rs.getString(5);
+            double OriginalPrice = rs.getDouble(6);
+            double PaidMoney = rs.getDouble(7);
+            double SavedMoney = rs.getDouble(8);
+            
+            OrderHistoryBean OrderHistoryFromDB = new OrderHistoryBean(OrderId, CustomerId, DOO, Status, PaymentMethod, OriginalPrice, PaidMoney, SavedMoney);
+            listOrderHistory.add(OrderHistoryFromDB);
+            
+            
+        }     
+        return listOrderHistory;
+    }
+    
+     public ArrayList<OrderHistoryBean> WholeLine(int Customer_id) throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.ORDER_HISTORY WHERE Customer_ID='"+Customer_id+"'";;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderHistoryBean> WholeLine = new ArrayList(); 
+       
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            String Status = rs.getString(4);
+            String PaymentMethod = rs.getString(5);
+            double OriginalPrice = rs.getDouble(6);
+            double PaidMoney = rs.getDouble(7);
+            double SavedMoney = rs.getDouble(8);
+            
+            OrderHistoryBean OrderHistoryFromDB = new OrderHistoryBean(OrderId, CustomerId, DOO, Status, PaymentMethod, OriginalPrice, PaidMoney, SavedMoney);
+            WholeLine.add(OrderHistoryFromDB);
+            
+            
+        }     
+        return WholeLine;
+    }
+        
+
+     
     public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
         String query = "SELECT * FROM APP.PAYMENTDB WHERE  PAYMENTID='"+Payment_ID+"'"+ (" AND PAYMENTDATE = '"+Payment_DATE+"'");
         ResultSet rs = st.executeQuery(query);

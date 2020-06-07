@@ -15,6 +15,42 @@ public class OrderHistoryBean {
     private String status, paymentMethod;
     private Date DOO;
 
+    public OrderHistoryBean(OrderBean order, CustomerBean customer, int orderId, int customerId, Date DOO, String status, String paymentMethod, double originalPrice, double paidMoney, double savedMoney) {
+        this.order = order;
+        this.customer = customer;
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.originalPrice = originalPrice;
+        this.paidMoney = paidMoney;
+        this.savedMoney = savedMoney;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.DOO = DOO;
+    }
+    
+        public OrderHistoryBean(int orderId, int customerId, Date DOO, String status, String paymentMethod, double originalPrice, double paidMoney, double savedMoney) {
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.originalPrice = originalPrice;
+        this.paidMoney = paidMoney;
+        this.savedMoney = savedMoney;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.DOO = DOO;
+    }
+
+    public OrderHistoryBean(){
+        order = null;
+        customer = null;
+        orderId = 0;
+        customerId = 0;
+        originalPrice = -1;
+        paidMoney = -1;
+        savedMoney = -1;
+        status = null;
+        paymentMethod = null;
+        DOO = null;
+    }
     public OrderBean getOrder() {
         return order;
     }

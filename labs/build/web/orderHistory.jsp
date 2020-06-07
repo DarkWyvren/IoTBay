@@ -53,6 +53,14 @@
                         }
                         //add a controler for this, using request.setAttribute("name", value); 
                         ///and request.getRequestDispatcher("something.jsp").forward(request, response);
+                        
+    
+                        ArrayList OrderHistoryList = new ArrayList();
+                        Object  OrderHistoryInfo= request.getAttribute("OrderHistoryInfo");
+                        if(OrderHistoryInfo!=null){
+                            OrderHistoryList = (ArrayList)OrderHistoryInfo;
+                        }
+    
         %> 
     
     <head>
@@ -75,7 +83,7 @@
             <jsp:include page="header.jsp" />
             <div class="row" >
                 <div class="col-sm-12 col-md-3">
-                     <jsp:include page="navbar.jsp" />
+                     <jsp:include page="orderHistoryNavBar.jsp" />
                 </div>
                 
                 <div class="col-sm-12 col-md-9 p-4">
@@ -83,7 +91,18 @@
                     <form action="orderHistory" method="GET"  class="form-inline ">
                         <div class="row">
                             <div class="col-10 pr-1">
-                                <input type="text" class="form-control lineBox w-100" id="inputDate" placeholder="before 04/06/2020" name="search_date">
+                                <input type="text" class="form-control lineBox w-100" id="inputDate" placeholder="before 08/06/2020" name="search_date">
+                            </div>
+                            <div class="col-2 pl-0">
+                                <button type="submit" class="btn">
+                                    <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                  </svg>
+                                </button>
+                            </div>
+                            <div class="col-10 pr-1">
+                                <input type="text" class="form-control lineBox w-100" id="inputDate" placeholder="Order Number (For example: 2)" name="search_date">
                             </div>
                             <div class="col-2 pl-0">
                                 <button type="submit" class="btn">
@@ -99,8 +118,8 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Your Customer IDs</th>
-                        <th scope="col">Your Order IDs</th>
+                        <th scope="col">Customer IDs</th>
+                        <th scope="col">Order IDs</th>
                         <th scope="col">Date of Order</th>
                         <th scope="col">Order Status</th>
                         <th scope="col">Payment Method</th>
@@ -110,8 +129,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% for(int i = 0;i<datalist.size();i++){ 
-                          OrderHistoryBean ohb = (OrderHistoryBean)datalist.get(i);
+                      <% for(int i = 0;i<OrderHistoryList.size();i++){ 
+                          OrderHistoryBean ohb = (OrderHistoryBean)OrderHistoryList.get(i);
                           
                         %> 
                       <tr>
