@@ -17,4 +17,13 @@ CREATE TABLE PRODUCTDB (
 
     PRIMARY KEY(Product_ID),
     FOREIGN KEY(SupplierID) REFERENCES SUPPLIERDB(SupplierID)
-)
+);
+INSERT INTO PRODUCTDB(Product_ID, ProductName, Price, Category, SupplierID)
+Values
+(123456, 'Rasberry Pi', 10, 'Complete', 123512);
+
+
+
+
+
+select * from PRODUCTDB;

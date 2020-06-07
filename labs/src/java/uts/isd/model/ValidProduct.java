@@ -52,7 +52,7 @@ public class ValidProduct {
         }
         
         probeanlist.add(pb);
-        return"Product Added";
+        return "Product Added";
     }
     
 }

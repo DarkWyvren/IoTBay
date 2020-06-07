@@ -191,7 +191,20 @@ public class DBManager {
     // public CustomerBean findCustomer(String emaild) throws SQLException {  
     //    return findCustomer(emaild, "");
     // }
-    
+    //PRODUCT INFO
+    //can view product info
+     public void showProduct(int id, String name, double price, String category, int supplierid) throws SQLException{
+        String query = "SELECT FROM * APP.PRODUCTDB";
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+            id = rs.getInt(3);
+            name = rs.getString(4);
+            price = rs.getDouble(5);
+            category = rs.getString(6);
+            supplierid = rs.getInt(7);
+            
+        }
+     }
 
     public ProductBean findProduct(String Product_ID) throws SQLException {   
         String query = "SELECT * FROM APP.PRODUCTDB WHERE  Product_ID='"+Product_ID;
@@ -201,11 +214,11 @@ public class DBManager {
             System.out.println(prod_id);
             if(prod_id.equals(Product_ID)){
                 ProductBean pb = new ProductBean();
-                pb.setID(prod_id);
+                pb.setID(rs.getInt(3));
                 pb.setName(rs.getString(4));
                 pb.setPrice(rs.getDouble(5));
                 pb.setCategory(rs.getString(6));
-                pb.setSupplier(rs.getString(7));
+                pb.setSupplier(rs.getInt(7));
                 
                 String[] dt = rs.getString(5).split("/");
                 System.out.println(Arrays.toString(dt));

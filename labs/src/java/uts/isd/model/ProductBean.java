@@ -12,15 +12,29 @@ import java.io.Serializable;
  * @author antho
  */
 public class ProductBean implements Serializable{
-    private String id, name, price, category, supplier;
+    
+    private int productid;
+    private String name;
+    private double price;
+    private String category;
+    private int supplier;
+           
  
+  public ProductBean () {
+      productid = 0;
+      name = "";
+      price = 0;
+      category = "";
+      supplier = 0;
+             
+  }
   
-    public String getID() {
-            return id;
+    public int getID() {
+            return productid;
     }
     
-    public void setID(String id) {
-        this.id = id;
+    public void setID(int id) {
+        this.productid = productid;
     }
     
     public String getName() {
@@ -33,7 +47,7 @@ public class ProductBean implements Serializable{
     }
     
     
-    public String getPrice () {
+    public double getPrice() {
         return price;
     }
     
@@ -53,12 +67,12 @@ public class ProductBean implements Serializable{
     }
     
     
-    public String getSupplier() {
+    public int getSupplier() {
         return supplier;
     }
     
     
-    public void setSupplier(String supplier){
+    public void setSupplier(int supplier){
         this.supplier = supplier;
     }
     
@@ -67,12 +81,9 @@ public class ProductBean implements Serializable{
     
     
     
-    
-    
-    
    @Override
    public String toString() {
-    return "Product:" +id+", "+name+", "+price+", "+category+ ", "+supplier;
+    return "Product:" +productid+", "+name+", "+price+", "+category+ ", "+supplier;
    }
    
     
