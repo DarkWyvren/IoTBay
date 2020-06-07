@@ -3,10 +3,20 @@
     Created on : Jun 6, 2020, 3:49:59 PM
     Author     : Danny16
 --%>
+<%@page import="java.util.ArrayList"%>
 <%@ page import="uts.isd.model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+        ArrayList staffList = new ArrayList();
+        Object data = request.getAttribute("StaffInfo");
+        if(data!=null)
+        {
+            staffList = (ArrayList)data;
+        }
+    %>
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -29,24 +39,28 @@
                      <div class="jumbotron">
                          <input type="text" id="myInput" onkeyup="myFunc()" placeholder="Search for names.." title="Type in a name">
                         <input type="text" placeholder="Search by Position">
-                     <table>
+                     <table class = "table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Password</th>
-                    <th>Date of birth</th>
                     <th>Position</th>
+                    <th>Status</th>
+                    <th>Address</th>
                 </tr>
             </thead>
             <tbody>
+                <%for(int i = 0; i < staffList.size(); i++){ %>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <% Staff st = (Staff)staffList.get(i); %>
+                    <td><%= st.getFullName().toString()%></td>
+                    <td><%= st.getEmail().toString()%></td>
+                    <td><%= st.getPosition().toString()%></td>
+                    <td><%= st.getStatus()%></td>
+                    <td><%= st.getAddress()%></td>
                 </tr>
+                
+                <% } %>
             </tbody>
         </table>
                      </div>

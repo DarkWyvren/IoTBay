@@ -1,16 +1,18 @@
-
-
+DROP TABLE STAFF;
 
 CREATE TABLE STAFF
 (
-ID int not NULL,
+ID int GENERATED ALWAYS AS IDENTITY NOT NULL,
 Email varchar (128) UNIQUE,
-Password varchar (128) NOT NULL,
 FullName varchar (128),
-DOB DATE,
 Address varchar (255),
-Phone int,
-Position varchar (128),
+Pos varchar (128),
+Status int not NULL,
 
 PRIMARY KEY(ID)
 );
+
+INSERT INTO STAFF(Email, FullName,Address,Pos, Status) 
+VALUES('pepe@gmail.com','Pai pei','123 Hujianyan St, HongDoui, Singapore','manager',1);
+
+SELECT * FROM STAFF;

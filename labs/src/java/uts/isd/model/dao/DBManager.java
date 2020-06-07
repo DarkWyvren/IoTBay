@@ -414,11 +414,10 @@ public class DBManager {
             if(FullName.equals(Name)&& Position.equals(SPosition))
             {
                 int Id = rs.getInt(3);
-                String Password = rs.getString(4);
-                String Address = rs.getString(5);
-                String Email = rs.getString(6);
-                int Phone = rs.getInt(7);
-                return new Staff (Id, Name, Password, Address, Position, Phone, Email); 
+                String Address = rs.getString(4);
+                String Email = rs.getString(5);
+                int Status = rs.getInt(6);
+                return new Staff (Id, Name, Address, Position, Email, Status); 
             }
         }         
        return null;   
@@ -438,18 +437,17 @@ public class DBManager {
     
         public ArrayList<Staff> fetchStaffList() throws SQLException
         {
-            String fetch = "SELECT * FROM APP.STAFFDB";
+            String fetch = "SELECT * FROM APP.STAFF";
             ResultSet rs = st.executeQuery(fetch);
             ArrayList<Staff> temp1 = new ArrayList();
             while(rs.next()){
-            String Name = rs.getString(2);
-            String Address = rs.getString(3);
-            String Position = rs.getString(4);
-            String Email = rs.getString(5);
-            String Password = rs.getString(6);
-            int Id = rs.getInt(7);
-            int Phone = rs.getInt(8);
-            temp1.add(new Staff(Id, Name, Address, Password, Position, Phone, Email));
+            String Name = rs.getString(3);
+            String Address = rs.getString(4);
+            String Position = rs.getString(5);
+            String Email = rs.getString(2);
+            int Id = rs.getInt(1);
+            int Status = rs.getInt(6);
+            temp1.add(new Staff(Id, Email, Name, Address, Position, Status));
         } 
             return temp1;
     }

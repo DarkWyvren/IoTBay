@@ -15,31 +15,27 @@ public class Staff implements Serializable
 {
     private int Id;
     private String Email;
-    private String Password;
     private String FullName;
-   // private String Dob;
     private String Address;
-    private int Phone;
-    private String Position;
+    private String Pos;
+    private int Status;
     
-    public Staff(int Id, String Email, String Password, String FullName, String Address, int Phone, String Position)
+    public Staff(int Id, String Email, String FullName, String Address, String Position, int Status)
             {
                 this.Id = Id;
                 this.Email = Email;
                 this.Address = Address;
-              //  this.Dob = Dob;
-                this.Password = Password;
-                this.Phone = Phone;
                 this.FullName = FullName;
-                this.Position = Position;
+                this.Pos = Position;
+                this.Status = Status;
             }
 
     public String getPosition() {
-        return Position;
+        return Pos;
     }
 
     public void setPosition(String Position) {
-        this.Position = Position;
+        this.Pos = Position;
     }
 
     public int getId() {
@@ -58,14 +54,6 @@ public class Staff implements Serializable
         this.Email = Email;
     }
 
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String Password) {
-        this.Password = Password;
-    }
-
     public String getFullName() {
         return FullName;
     }
@@ -82,13 +70,11 @@ public class Staff implements Serializable
         this.Address = Address;
     }
 
-    public int getPhone() {
-        return Phone;
+    public int getStatus() {
+        return Status;
     }
 
-    public void setPhone(int Phone) {
-        this.Phone = Phone;
+    public void setStatus(int Status) {
+        this.Status = Status;
     }
-    
-    
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
    import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
    import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
    import javax.servlet.http.HttpServlet;
    import javax.servlet.http.HttpServletRequest;
    import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,9 @@ import javax.servlet.RequestDispatcher;
    import uts.isd.model.dao.*;
    import uts.isd.model.Staff;
 
-
+@WebServlet(
+  name = "StaffView", 
+  urlPatterns = "/StaffInfo")
  public class StaffController extends HttpServlet 
  {
        private DBConnector db; // db 
@@ -28,19 +31,15 @@ import javax.servlet.RequestDispatcher;
        private Connection conn;
 
        @Override
-    public void init() 
-    {
-        try
-        {
+        public void init() {
+        try {
             db = new DBConnector();
-
-        } catch (ClassNotFoundException | SQLException ex) 
-        {
-
+            conn = db.openConnection();
+            manager = new DBManager(conn);
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }      
     }
-    
     @Override
     public void destroy()
     {
@@ -65,6 +64,7 @@ import javax.servlet.RequestDispatcher;
         {
             Logger.getLogger(StaffController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.print("inside doGet" + queryResult);
         RequestDispatcher rd = request.getRequestDispatcher("StaffView.jsp");
         request.setAttribute("StaffInfo", queryResult);
         rd.forward(request, response);
