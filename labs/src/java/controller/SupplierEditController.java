@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -55,8 +56,46 @@ import uts.isd.model.dao.DBManager;
    }
     @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            Supplier sb = null;
+        int S_ID = Integer.parseInt(request.getParameter("SID"));
+               try {
+                   sb = manager.getSupplier(S_ID);
+               } catch (SQLException ex) {
+                   Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+        String name = sb.getCompanyName();
+        String address = sb.getCompanyAddress();
+        String type =sb.getCompanyType();
+        String email =sb.getCompanyEmail();
+        //int status = Integer.parseInt(request.getParameter("CStatus"));
+        System.out.println("id:" +S_ID + "name: " +name); 
+        request.setAttribute("SupplierInfo", sb);
+        request.getRequestDispatcher("SupplierUpdate.jsp").include(request, response);
+        
+    }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*Enumeration<String> paramNames = request.getParameterNames();
+        Supplier sb = new Supplier();
+        while(paramNames.hasMoreElements()){
+            String paraNames = paramNames.nextElement();
+        }
+        
+        int S_ID = Integer.parseInt(request.getParameter("S_ID"));
+               try {
+                   manager.updateSupplier(sb);
+               } catch (SQLException ex) {
+                   Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+        
+        request.getRequestDispatcher("Supplier.jsp").include(request, response);*/
+    }
+    
 
-        HttpSession session = request.getSession();
+
+         
+
+        /*HttpSession session = request.getSession();
         String C_Name = request.getParameter("CName");
         String C_Type = request.getParameter("CType");
            
@@ -75,20 +114,6 @@ import uts.isd.model.dao.DBManager;
         } catch (SQLException ex) {
                Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.getRequestDispatcher("SupplierUpdate.jsp").include(request, response);
-    }   
-/*Supplier sb = (Supplier)request.getSession();
-        int S_ID = Integer.parseInt(request.getParameter("SID"));
-               try {
-                   sb = manager.findSupplier(S_ID);
-               } catch (SQLException ex) {
-                   Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
-               }
-        String name = sb.getCompanyName();
-        String address = sb.getCompanyAddress();
-        String type =sb.getCompanyType();
-        String email =sb.getCompanyEmail();
-        //int status = Integer.parseInt(request.getParameter("CStatus"));
-        System.out.println("id:" +S_ID + "name: " +name);*/   
+        request.getRequestDispatcher("SupplierUpdate.jsp").include(request, response);*/
 }
 

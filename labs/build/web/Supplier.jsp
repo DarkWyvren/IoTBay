@@ -64,7 +64,7 @@
                                         <%=sb.getCompanyStatus() == 0 ? "Deactive":"Active"  %>
                                     </td> <%--Make 1 and 0 into active or inactive --%>
                                     <td>
-                                        <a role="button" href="${pageContext.request.contextPath}/SupplierEdit" >Edit</a>
+                                        <a role="button" href="${pageContext.request.contextPath}/SupplierEdit?SID=<%= sb.getSupplierID()%>" >Edit</a>
                                         <a role="button" href="SupplierEdit">Delete</a>
                                     </td>
                                     

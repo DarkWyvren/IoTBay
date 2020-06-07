@@ -20,11 +20,20 @@ public class Supplier implements Serializable {
         this.SupplierID = S_ID;
         this.CompanyName = CNAME;
         this.CompanyAddress = CADDRESS;
-        this.CompanyEmail = CTYPE;
-        this.CompanyType = CEMAIL;
+        this.CompanyType= CTYPE;
+        this.CompanyEmail= CEMAIL;
         this.CompanyStatus = CSTATUS;
     }
-
+    
+    public Supplier (){
+      SupplierID = 0;
+      CompanyName = "";
+      CompanyAddress = "";
+      CompanyType = "";
+      CompanyEmail = "";
+      CompanyStatus = -1;
+        
+    }
     
     public int getSupplierID() {
         return SupplierID;
