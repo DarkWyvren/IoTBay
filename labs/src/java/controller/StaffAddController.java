@@ -7,9 +7,11 @@ package controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uts.isd.model.Staff;
+import uts.isd.model.Supplier;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.DBManager;
 /**
@@ -79,6 +82,20 @@ public class StaffAddController extends HttpServlet
             try
             {
                 manager.addStaff(st);
+                System.out.println("test: " + st);
+            }catch(SQLException ex)
+            {
+                Logger.getLogger(StaffAddController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            ArrayList<Staff> queryResult = null;
+           try {
+               queryResult = manager.fetchStaffList();
+           } catch (SQLException ex) {
+               Logger.getLogger(StaffController.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        request.setAttribute("SupplierInfo",  queryResult);
+        RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
+        rd.forward(request, response);
         }
 }

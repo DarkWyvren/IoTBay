@@ -31,7 +31,10 @@ public class Staff implements Serializable
             }
 
     public Staff() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Email = "";
+        FullName = "";
+        Pos = "";
+        Address = "";
     }
 
     public String getPosition() {
