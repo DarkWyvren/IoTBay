@@ -35,8 +35,20 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
-                       <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-                        <input type="text" placeholder="Search by Type">
+                       <div class="container">
+                        <div class="row">
+                          <div class="col-sm">
+                            <a href="SupplierAdd.jsp" class="btn btn-primary h-75 mt-0"  role="button" ><h5>Add New Supplier</h5></a>
+                          </div>
+                          <div class="col-sm">
+                            <input class="form-control mr-sm-2 h-75" type="text" placeholder="Search by Type">
+                          </div>
+                          <div class="col-sm">
+                            <input class="form-control mr-sm-2 h-75" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+                          </div>
+                          
+                        </div>
+                     
                         <div>
                         <table class="table">
                             <thead>
@@ -63,9 +75,9 @@
                                     <td style="color: <%= sb.getCompanyStatus() == 0 ? "red":"green" %>" >
                                         <%=sb.getCompanyStatus() == 0 ? "Deactive":"Active"  %>
                                     </td> <%--Make 1 and 0 into active or inactive --%>
-                                    <td>
+                                    <td style="height: 100px;">
                                         <a role="button" href="${pageContext.request.contextPath}/SupplierEdit?SID=<%= sb.getSupplierID()%>" >Edit</a>
-                                        <a role="button" href="SupplierEdit">Delete</a>
+                                        <a role="button" href="${pageContext.request.contextPath}/deleteSupplier?SID=<%= sb.getSupplierID()%>">Delete</a>
                                     </td>
                                     
 
@@ -75,9 +87,7 @@
                               <%}%>
                             </tbody>
                         </table>
-                                       
                             
-                        </div>
                     </div>                    
                 </div>
             </div>

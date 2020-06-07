@@ -55,7 +55,7 @@ import uts.isd.model.dao.DBManager;
        }
    }
     @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             Supplier sb = null;
         int S_ID = Integer.parseInt(request.getParameter("SID"));
                try {
@@ -69,27 +69,58 @@ import uts.isd.model.dao.DBManager;
         String email =sb.getCompanyEmail();
         //int status = Integer.parseInt(request.getParameter("CStatus"));
         System.out.println("id:" +S_ID + "name: " +name); 
-        request.setAttribute("SupplierInfo", sb);
+        request.setAttribute("SupplierInfo2", sb);
         request.getRequestDispatcher("SupplierUpdate.jsp").include(request, response);
         
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*Enumeration<String> paramNames = request.getParameterNames();
+        Enumeration<String> paramNames = request.getParameterNames();
         Supplier sb = new Supplier();
         while(paramNames.hasMoreElements()){
             String paraNames = paramNames.nextElement();
+            System.out.println(paraNames);
+            switch(paraNames){
+                case "SupplierID":
+                    sb.setSupplierID(Integer.parseInt(request.getParameter(paraNames)));
+                    break;
+                case "CName":
+                    sb.setCompanyName(request.getParameter(paraNames));
+                    break;
+                case "CAddress":
+                    sb.setCompanyAddress(request.getParameter(paraNames));
+                    break;
+                case "CType":
+                    sb.setCompanyType(request.getParameter(paraNames));
+                    break;
+                case "CEmail":
+                    sb.setCompanyEmail(request.getParameter(paraNames));
+                    break;    
+                /*case "CompanyStatus":
+                    sb.setCompanyStatus(request.getParameter(paraNames));
+                    break;*/
+            }
         }
-        
-        int S_ID = Integer.parseInt(request.getParameter("S_ID"));
-               try {
-                   manager.updateSupplier(sb);
-               } catch (SQLException ex) {
-                   Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
-               }
-        
-        request.getRequestDispatcher("Supplier.jsp").include(request, response);*/
+        try {
+                manager.updateSupplier(sb);
+                System.out.println("test: " +sb);
+            } catch (SQLException ex) {
+                Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        ArrayList<Supplier> queryresult = null;
+           try {
+               queryresult = manager.fetchSupplierList();
+           } catch (SQLException ex) {
+               Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        request.setAttribute("SupplierInfo",  queryresult);
+        RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
+        rd.forward(request, response);
+        //request.setAttribute("response",   );
+        //request.getRequestDispatcher("Supplier.jsp").include(request, response);
     }
+    
     
 
 
