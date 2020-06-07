@@ -276,11 +276,13 @@ public class DBManager {
             String C_Name = rs.getString(2);
             String C_Type = rs.getString(4);
             
+
             if(C_Name.equals(CompanyName) && C_Type.equals(CompanyType) ){ 
                 int S_ID = rs.getInt(1);               
                 String C_Address = rs.getString(3);
                 String C_Email = rs.getString(5);
                 int C_Status = rs.getInt(6);
+
                 System.out.println("Company Name: " +C_Name);
                 return new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
             }
@@ -306,19 +308,44 @@ public class DBManager {
     }
        
     //Add a supplier into the db
-    public void addSupplier (String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int CompanyStatus) throws SQLException {
+    public void addSupplier(Supplier sb) throws SQLException {
+        String values=
+              //"SupplierID = '"+sb.getSupplierID()+"',"+
+              "'"+sb.getCompanyName()+"',"+
+              "'"+sb.getCompanyAddress()+"',"+
+              "'"+sb.getCompanyType()+"',"+
+              "'"+sb.getCompanyEmail()+"',"+
+              ""+sb.getCompanyStatus()+""
+              ;
+        System.out.println(values);
+        st.executeUpdate("INSERT INTO APP.SUPPLIERDB(SupName,SupAddress,SupType,SupEmail,SupStatus)  VALUES("+values+")");   
+
+    }  
+    /*public void addSupplier (String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int CompanyStatus) throws SQLException {
         st.executeUpdate("INSERT INTO APP.SUPPLIERDB" + "VALUES ("+CompanyName+", "+CompanyAddress+", "+CompanyType+", "+CompanyEmail+", "+CompanyStatus+")");
-    }
+    }*/
     //Update a Suppliers information
-    public void updateSupplier (int SupplierID, String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int Status) throws SQLException {
+    public void updateSupplier(Supplier sb) throws SQLException {
+        String values=
+              //"SupplierID = '"+sb.getSupplierID()+"',"+
+              "SupName = '"+sb.getCompanyName()+"',"+
+              "SupAddress = '"+sb.getCompanyAddress()+"',"+
+              "SupType = '"+sb.getCompanyType()+"',"+
+              "SupEmail = '"+sb.getCompanyEmail()+"'"
+              ;
+        System.out.println(+sb.getSupplierID());
+        st.executeUpdate("UPDATE APP.SUPPLIERDB SET "+values+" WHERE SupplierID ="+sb.getSupplierID());   
+
+    }  
+    
+    /*public void updateSupplier (int SupplierID, String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int Status) throws SQLException {
         st.executeUpdate("UPDATE APP.SUPPLIERDB SET SupName ="+CompanyName+", SET SupAddress  "+CompanyAddress+", SET SupType "+CompanyType+",SET SupEmail "+CompanyEmail+", SET SupStatus "+Status+" WHERE SupplierID ='"+SupplierID+"'");
-    }
+    }*/
     //delete a supplier from db
-    public void deleteSupplier(String CompanyEmail) throws SQLException{
-        st.executeUpdate("DELETE FROM APP.SUPPLIER WHERE EMAILADDRESS ='"+CompanyEmail+"'");
+    public void deleteSupplier(Supplier sd) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.SUPPLIERDB WHERE SupplierID =" +sd.getSupplierID());
   
     }
-   
     public ArrayList<Supplier> fetchSupplierList() throws SQLException{
            
         String fetch = "SELECT * FROM APP.SUPPLIERDB";
@@ -335,7 +362,6 @@ public class DBManager {
             
             Supplier SupplierFromDB = new Supplier(S_ID, C_NAME, C_ADDRESS, C_TYPE, C_EMAIL, C_STATUS);
             listSupplier.add(SupplierFromDB);
-            
             
         }     
         return listSupplier;
