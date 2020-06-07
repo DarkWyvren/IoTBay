@@ -10,8 +10,8 @@
 
 CREATE TABLE PRODUCTDB (
     Product_ID int NOT NULL, 
-    ProductName VARCHAR(100) NOT NULL,
-    Price double NOT NULL,
+    ProductName VARCHAR(100) NOT NULL Unique,
+    Price double NOT NULL Unique,
     Category VARCHAR(100) NOT NULL,
     SupplierID int NOT NULL,
 
