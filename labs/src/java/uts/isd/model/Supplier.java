@@ -8,19 +8,41 @@ import java.io.Serializable;
  * @author mood35-Laptop
  */
 public class Supplier implements Serializable {
+    private int SupplierID;
     private String CompanyName;
     private String CompanyAddress;
     private String CompanyType;
     private String CompanyEmail;
     private int CompanyStatus;
+    
 
-    public Supplier (String CNAME, String CADDRESS, String CTYPE, String CEMAIL, int CSTATUS) {
+    public Supplier (int S_ID, String CNAME, String CADDRESS, String CTYPE, String CEMAIL, int CSTATUS) {
+        this.SupplierID = S_ID;
         this.CompanyName = CNAME;
         this.CompanyAddress = CADDRESS;
-        this.CompanyEmail = CTYPE;
-        this.CompanyType = CEMAIL;
+        this.CompanyType= CTYPE;
+        this.CompanyEmail= CEMAIL;
         this.CompanyStatus = CSTATUS;
     }
+    
+    public Supplier (){
+      SupplierID = 0;
+      CompanyName = "";
+      CompanyAddress = "";
+      CompanyType = "";
+      CompanyEmail = "";
+      CompanyStatus = -1;
+        
+    }
+    
+    public int getSupplierID() {
+        return SupplierID;
+    }
+
+    public void setSupplierID(int SupplierID) {
+        this.SupplierID = SupplierID;
+    }
+
 
     public String getCompanyName() {
         return CompanyName;
