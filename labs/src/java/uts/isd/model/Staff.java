@@ -30,6 +30,10 @@ public class Staff implements Serializable
                 this.Status = Status;
             }
 
+    public Staff() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getPosition() {
         return Pos;
     }

@@ -576,8 +576,13 @@ public class DBManager {
     }
 
        //Add a staff into the db
-    public void addStaff (String Name, String Address, String Position, String Email) throws SQLException {
-        st.executeUpdate("INSERT INTO STAFFDB" + "VALUES ('"+ Name +"', '"+ Address +", "+ Position +", "+ Email +",");
+    public void addStaff (Staff stf) throws SQLException {
+       String values = 
+               "'"+stf.getEmail() + "',"+
+               "'"+stf.getFullName() + "',"+
+               "'"+stf.getAddress() + "',"+
+               "'"+stf.getPosition() + "" ;
+       st.executeUpdate("INSERT INTO APP.STAFF(EMAIL, FULLNAME, ADDRESS, POSITION) VALUES("+values+")");
     }
     //Update a staff information
     public void updateStaff (String Name, String Address, String Position, String Email) throws SQLException {
