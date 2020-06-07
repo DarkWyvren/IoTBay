@@ -10,7 +10,7 @@ package uts.isd.model.dao;
  * @author willi
  */
 import uts.isd.model.CustomerBean;
-import uts.isd.model.ProductBean;
+import uts.isd.model.Product;
 import uts.isd.model.Supplier;
 import java.sql.*;
 import java.util.Arrays;
@@ -86,15 +86,20 @@ public class DBManager {
     // }
     
 
-    public ProductBean findProduct(String Product_ID) throws SQLException {   
+    public Product findProduct(String Product_ID) throws SQLException {   
         String query = "SELECT * FROM APP.PRODUCTDB WHERE  Product_ID='"+Product_ID;
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String prod_id = rs.getString(2);
             System.out.println(prod_id);
             if(prod_id.equals(Product_ID)){
+<<<<<<< Updated upstream
                 ProductBean pb = new ProductBean();
                 pb.setID(prod_id);
+=======
+                Product pb = new Product();
+                pb.setID(rs.getInt(3));
+>>>>>>> Stashed changes
                 pb.setName(rs.getString(4));
                 pb.setPrice(rs.getDouble(5));
                 pb.setCategory(rs.getString(6));
@@ -130,7 +135,31 @@ public class DBManager {
 
     }
     
-    
+    public Arraylist<Product> fetchProductList() throws SQLException{
+            String fetch = "SELECT * FROM APP.PRODUCTDB";
+            ResultSet rs = st.executeQuery(fetch);
+            Arraylist<Product> temp = new Arraylist();
+            while(rs.next()){
+            int Product_ID = rs.getInt(3);
+            String ProductName = rs.getString(4);
+            double price = rs.getDouble(5);
+            String Category = rs.getString(6);
+            int SupplierID = rs.getInt(7);
+            temp.add(new Product(Product_ID, ProductName, price, Category, SupplierID));
+        } 
+            
+            return temp;
+    }
+
+    private static class ProductArraylist<T> {
+
+        public ProductArraylist() {
+        }
+
+        private void add(Product product) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
 
 
  

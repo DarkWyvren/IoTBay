@@ -11,9 +11,33 @@ import java.io.Serializable;
  *
  * @author antho
  */
+<<<<<<< Updated upstream:labs/src/java/uts/isd/model/ProductBean.java
 public class ProductBean implements Serializable{
     private String id, name, price, category, supplier;
  
+=======
+public class Product implements Serializable{
+    
+    private int productid;
+    private String name;
+    private double price;
+    private String category;
+    private int supplier;
+           
+ 
+  public Product () {
+      productid = 0;
+      name = "";
+      price = 0;
+      category = "";
+      supplier = 0;
+             
+  }
+
+    public Product(int Product_ID, String ProductName, double price, String Category, int SupplierID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+>>>>>>> Stashed changes:labs/src/java/uts/isd/model/Product.java
   
     public String getID() {
             return id;

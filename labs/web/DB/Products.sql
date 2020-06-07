@@ -13,6 +13,24 @@ CREATE TABLE PRODUCTDB (
     ProductName VARCHAR(100) NOT NULL,
     Price double NOT NULL,
     Category VARCHAR(100) NOT NULL,
+<<<<<<< Updated upstream
     SupplierID (100) NOT NULL,
     PRIMARY KEY(Product_ID)
 )
+=======
+    SupplierID int NOT NULL,
+
+    PRIMARY KEY(Product_ID),
+    
+
+);
+
+INSERT INTO PRODUCTDB(Product_ID, ProductName, Price, Category, SupplierID)
+Values
+(123456, 'Rasberry Pi', 10, 'Complete', 123512);
+
+
+
+select * from PRODUCTDB;
+
+>>>>>>> Stashed changes

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import uts.isd.model.ValidProduct;
-import uts.isd.model.ProductBean;
+import uts.isd.model.Product;
 
 
 /**
@@ -36,7 +36,7 @@ public class AddProductController extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Enumeration<String> paramNames = req.getParameterNames();
         //Enumeration<Double> paramPrice = req.getParameterPrice();
-        ProductBean pb = new ProductBean();
+        Product pb = new Product();
         boolean hastoc=false;
         while(paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
