@@ -8,13 +8,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <%
-            int count =0;
-            if (request.getAttribute("StaffList")!=null)
-            {
-                Arraylist staffList = (ArrayList)request.getAttribute("StaffList");
-            }
-    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">

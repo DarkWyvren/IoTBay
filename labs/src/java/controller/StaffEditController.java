@@ -50,21 +50,4 @@ public class StaffEditController extends HttpServlet
         }
     } 
         
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException
-    {
-       ArrayList<Staff> al = null;
-       Statement st;
-       try
-       {
-            al = manager.fetchStaffList();
-            
-            ResultSet rs = st.executeQuery(sql)
-            while(rs.next())
-            {
-                
-            }
-       } 
-       catch
-    }
 }
