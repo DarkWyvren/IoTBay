@@ -26,21 +26,32 @@
          <script src="lib/jquery/jquery-3.5.0.min.js"></script>
         <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     </head>
-    
         <div class="container">
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="SupplierNavBar.jsp" /> -needs to be looked at (potentially build new navbar ?)
+                     <jsp:include page="SupplierNavBar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
-                       <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-                        <input type="text" placeholder="Search by Type">
+                       <div class="container">
+                        <div class="row">
+                          <div class="col-sm">
+                            <a href="ProductAdd.jsp" class="btn btn-primary h-75 mt-0"  role="button" ><h5>Add New Product</h5></a>
+                          </div>
+                          <div class="col-sm">
+                            <input class="form-control mr-sm-2 h-75" type="text" placeholder="Search by Category">
+                          </div>
+                          <div class="col-sm">
+                            <input class="form-control mr-sm-2 h-75" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+                          </div>
+                          
+                        </div>
                         <div>
                         <table class="table">
                             <thead>
                                 <tr>
+                                    
                                     <th scope="col">Product ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Price</th>
@@ -53,18 +64,18 @@
                             <tbody>
                               <% for(int i = 0;i<ProductList.size();i++){ %>
                                 <tr>
-                                  <%ProductBean pb = (ProductBean)ProductList.get(i);%>
-                                  <%int rowNum = i+1; %>
-                                    <td> <%=rowNum%> </td>
-                                    <td scope="row"><%= pb.getID().toString() %></td>
+                                  <%Product pb = (Product)ProductList.get(i);%>
+                                    
+                                    <td scope="row"><%= pb.getID() %></td> 
                                     <td><%= pb.getName().toString() %></td>
-                                    <td><%= pb.getPrice().toString() %></td>
+                                    <td><%= pb.getPrice() %></td>   
                                     <td><%= pb.getCategory().toString() %></td>  
-                                    <td><%= pb.getStockN().toString() %></td>                      
+                                    <td><%= pb.getSupplier() %></td> 
+                                    <td><%= pb.getQuantity() %></td>              
                                     
                                     <td>
-                                        <a role="button" href="${pageContext.request.contextPath}/SupplierEdit?SID=<%= pb.getID()%>" >Edit</a>
-                                        <a role="button" href="ProductUpdate">Delete</a>
+                                        <a role="button" href="${pageContext.request.contextPath}/ProductEdit?PID=<%= pb.getID()%>" >Edit</a>
+                                        <a role="button" href="${pageContext.request.contextPath}/deleteProduct?PID=<%= pb.getID()%>">Delete</a>
                                     </td>
                                     
 

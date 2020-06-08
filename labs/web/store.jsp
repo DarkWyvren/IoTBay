@@ -22,19 +22,32 @@
     
     <% 
         
-        
-        
-        
-        ArrayList productlist = new ArrayList();
-        
-        for(int i =  0;i<30;i++){
-            ProductBean pb = new ProductBean();
-            pb.setName("test "+(int)(Math.random()*200)+"GB");
-            pb.setCategory(Math.random()>0.5?"computers":"accessories");
-            pb.setPrice(2.50+ (int)(Math.random()*200)*0.5);
-            pb.setID(i);
-            productlist.add(pb);
+         Object accountsesh = session.getAttribute("login");
+         CustomerBean cust = null;
+        Staff stuff= null;
+        if(accountsesh!=null){
+            
+            if(accountsesh instanceof CustomerBean){
+                cust = (CustomerBean)accountsesh;
+            }else{
+                stuff = (Staff)accountsesh;
+            }
+            
         }
+        
+        
+        ArrayList productlist =(ArrayList)request.getAttribute("products");
+        
+        if(productlist==null){
+            productlist=new ArrayList();
+        }
+        
+
+        String search= (String)request.getAttribute("search");
+        if(search==null){
+            search = "everything";
+        }
+        
         
      %>
     <body>
@@ -54,7 +67,14 @@
                        <button class="btn" onclick="filterSelection('books')"> Books</button>
                        
                    </div>
-                    
+                     <div class="row justify-content-start">
+                         <h3>
+                             Currently viewing <%=search%>
+                         </h3>
+                             <%if(!search.equals("everything")){%>
+                             <a href="store" class="pl-3 links">Back</a>
+                             <%}%>
+                     </div>
                      <div class="row justify-content-start">
                          
                          <%for(int j = 0;j<(productlist.size());j++){
@@ -65,7 +85,7 @@
                             <jsp:param name="productcat" value="<%=pb.getCategory() %>"/>
                             <jsp:param name="productprice" value="<%=pb.getPrice() %>"/>
                             <jsp:param name="productid" value="<%=pb.getID() %>"/>
-                            <jsp:param name="canEdit" value="<%=true%>"/>
+                            <jsp:param name="canEdit" value="<%=stuff!=null%>"/>
                         </jsp:include>
                         <%}%>
                      </div>

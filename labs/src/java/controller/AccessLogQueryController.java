@@ -26,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import uts.isd.model.AccountTracker;
 import uts.isd.model.CustomerAccessLogBean;
 import uts.isd.model.CustomerBean;
+import uts.isd.model.Staff;
+import uts.isd.model.StaffAccessLogBean;
+import uts.isd.model.UniversalAccessLog;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.DBManager;
 
@@ -60,11 +63,27 @@ public class AccessLogQueryController  extends HttpServlet {
                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
            }
        }
+        
+      
+        
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CustomerBean cb = (CustomerBean)req.getSession().getAttribute("login");
+        Object sesh = req.getSession().getAttribute("login");
+        
         try{
-            ArrayList<CustomerAccessLogBean> queryresult = manager.listCustomerLoginRecord(cb.getId());
+            ArrayList<UniversalAccessLog> queryresult = new ArrayList();
+            if(sesh instanceof CustomerBean){
+                ArrayList<CustomerAccessLogBean> cblist =  manager.listCustomerLoginRecord(((CustomerBean)sesh).getId());
+                for(CustomerAccessLogBean cb: cblist){
+                    queryresult.add(new UniversalAccessLog(cb.getLoggedin(), cb.getLoggedout()));
+                }
+            }else{
+                ArrayList<StaffAccessLogBean> cblist =  manager.listStaffLoginRecord(((Staff)sesh).getId());
+                cblist.forEach((cb) -> {
+                    queryresult.add(new UniversalAccessLog(cb.getLoggedin(), cb.getLoggedout()));
+                });
+            }
+            
             String query = req.getParameter("search_date");
             if(query!=null &&query.trim().length()>0){
                 query = query.trim();

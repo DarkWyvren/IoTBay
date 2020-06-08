@@ -4,6 +4,8 @@
     Author     : willi
 --%>
 
+<%@page import="uts.isd.model.Staff"%>
+<%@page import="uts.isd.model.UniversalAccessLog"%>
 <%@page import="uts.isd.model.CustomerAccessLogBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="uts.isd.model.dao.DBConnector"%>
@@ -16,14 +18,17 @@
 <html>
     <%
                         CustomerBean cust = new CustomerBean();
-                        cust.setName("Guest");
-                        cust.setPassword("");
-
+                        Staff stuff = null;
                         Object accountsesh = session.getAttribute("login");
-                        if(accountsesh==null){
-                            session.setAttribute("login", cust);
-                        }else{
-                            cust = (CustomerBean)accountsesh;
+                        String name="";
+                        if(accountsesh!=null){
+                           if(accountsesh instanceof CustomerBean){
+                                cust = (CustomerBean)accountsesh;
+                                name = cust.getName();
+                            }else{
+                                stuff = (Staff)accountsesh;
+                                name = stuff.getFullName();
+                            }
                         }
                         
                         String errortext="";
@@ -36,12 +41,6 @@
                                 haserror = true;
                                 errortext = postRes;
                             }
-                        }
-                        Calendar thing = Calendar.getInstance();
-                        
-                        if(accountsesh!=null&&cust.getDOB()!=null){
-                            System.out.println(cust.getDOB().toString()+ thing);
-                            thing.setTime(cust.getDOB());
                         }
                         
 
@@ -57,7 +56,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title><%=cust.getName()%>'s Access logs</title>
+        <title><%=name%>'s Access logs</title>
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
          <script src="lib/jquery/jquery-3.5.0.min.js"></script>
@@ -77,7 +76,7 @@
                 </div>
                 
                 <div class="col-sm-12 col-md-9 p-4">
-                    <h1><%=cust.getName()%>'s Access logs</h1>
+                    <h1><%=name%>'s Access logs</h1>
                     <form action="accessLogs" method="GET"  class="form-inline ">
                         <div class="row">
                             <div class="col-10 pr-1">
@@ -103,7 +102,7 @@
                     </thead>
                     <tbody>
                       <% for(int i = 0;i<datalist.size();i++){ 
-                          CustomerAccessLogBean cb = (CustomerAccessLogBean)datalist.get(i);
+                          UniversalAccessLog cb = (UniversalAccessLog)datalist.get(i);
                           
                         %> 
                       <tr>

@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Random;
 import javax.swing.text.DateFormatter;
 import uts.isd.model.CustomerAccessLogBean;
+import uts.isd.model.StaffAccessLogBean;
 import uts.isd.model.payment;
 
 /* 
@@ -225,26 +226,132 @@ public class DBManager {
         }
       return null;
     }
+    // Product Information
     
-    //delete a product from the database   
-    public void deleteProduct(String ID) throws SQLException{       
-       //code for delete-operation   
 
+    // view Product Information
+    
+    public void showProduct(int ProID, String ProName, double ProPrice, String ProCategory, int ProSupplierid, int ProQuantity) throws SQLException{
+    String query = "SELECT FROM * sql12346043.PRODUCTDB";
+    ResultSet rs = st.executeQuery(query);
+    while(rs.next()){
+        
+            ProID = rs.getInt(1);
+            ProName = rs.getString(2);
+            ProPrice = rs.getDouble(3);
+            ProCategory = rs.getString(4);
+            ProSupplierid = rs.getInt(5);
+            ProQuantity = rs.getInt(6);
+        }
+     }
+    
+    // Find Products from DB using Product ID (Primary Key) 
+        public ProductBean findProduct(String ProName, String ProCategory) throws SQLException {   
+            String query = "SELECT * FROM sql12346043.PRODUCTDB WHERE  ProductName='"+ProName+"' AND Password = '"+ProCategory+"'";
+            ResultSet rs = st.executeQuery(query);
+        
+             while(rs.next()){
+                    String P_Name = rs.getString(2);
+                    String P_Category = rs.getString(4);
+            
+
+            if(P_Name.equals(ProName) && P_Category.equals(ProCategory) ){ 
+                int P_ID = rs.getInt(1);               
+                Double P_Price = rs.getDouble(3);
+                Integer P_SupplierID = rs.getInt(5);
+                Integer P_Quantity = rs.getInt(6);
+
+               // int C_Status = rs.getInt(6); //
+
+                System.out.println("Product Name: " +P_Name);
+                return new ProductBean (P_ID, P_Name, P_Price, P_Category, P_SupplierID, P_Quantity); 
+            }
+        }         
+       return null;   
     }
     
     
-    //add a product from the database   
-    public void addProduct(String ID, String name, String price, String supplierid) throws SQLException{       
-       //code for add-operation   
-        st.executeUpdate("sql query");
+           public ProductBean getProduct(int ProID) throws SQLException {   
+        ProductBean product = null;
+            String query = "SELECT * FROM sql12346043.PRODUCTDB WHERE  ProductID="+ProID+"";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                int P_ID = rs.getInt(1);
+                System.out.println(P_ID);
+                String P_Name = rs.getString(2);
+                Double P_Price = rs.getDouble(3);
+                String P_Category = rs.getString(4);
+                Integer P_SupplierID = rs.getInt(5);
+                Integer P_Quantity = rs.getInt(6);
+                
+                System.out.println("Product Name: " +P_Name);
+                product = new ProductBean (P_ID, P_Name, P_Price, P_Category, P_SupplierID, P_Quantity); 
+            } return product;     
+    }
+           
+    // Add a Product into the DB
+    
+    public void addProduct(ProductBean pb) throws SQLException {
+        String values=
+              //"ProductID = '"+sb.getProductID()+"',"+
+              "'"+pb.getName()+"',"+
+              ""+pb.getPrice()+","+
+              "'"+pb.getCategory()+"',"+
+              ""+pb.getSupplier()+","+
+              ""+pb.getQuantity()+""
+              ;
+        System.out.println(values);
+        st.executeUpdate("INSERT INTO sql12346043.PRODUCTDB(ProductName, ProductPrice, Category, SupplierID, Quantity)  VALUES("+values+")");   
 
     }
     
+    // Delete a Product from the DB 
     
-    //update a product from the database   
-    public void updateProduct(String ID, String name, String price, String supplierid) throws SQLException{       
-       //code for update-operation   
+    public void deleteProduct(ProductBean pd) throws SQLException{
+        st.executeUpdate("DELETE FROM sql12346043.PRODUCTDB WHERE ProductID =" +pd.getID());
+  
+    }
+    
+    // Update a Product in the DB
+    
+    public void updateProduct(ProductBean pb) throws SQLException {
+        String values=
+              //"SupplierID = '"+sb.getSupplierID()+"',"+
+                
+              //"ProductID = '"+pb.getID()+","+
+              "ProductName = '"+pb.getName()+"',"+
+              "ProductPrice = "+pb.getPrice()+","+
+              "Category = '"+pb.getCategory()+"',"+
+              "SupplierID = "+pb.getSupplier()+","+
+              "Quantity = "+pb.getQuantity()+""
+              ;
+        System.out.println(+pb.getID());
+        st.executeUpdate("UPDATE sql12346043.PRODUCTDB SET "+values+" WHERE ProductID ="+pb.getID());   
 
+    }  
+    
+    // Show Products from the DB (Fetch Array List) 
+
+
+    public ArrayList<ProductBean> fetchProductList() throws SQLException{
+           
+        String fetch = "SELECT * FROM sql12346043.PRODUCTDB";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<ProductBean> listProduct = new ArrayList(); 
+       
+        while(rs.next()){
+                int P_ID = rs.getInt(1);
+                String P_Name = rs.getString(2);
+                Double P_Price = rs.getDouble(3);
+                String P_Category = rs.getString(4);
+                Integer P_SupplierID = rs.getInt(5);
+                Integer P_Quantity = rs.getInt(6);
+            
+            ProductBean ProductFromDB = new ProductBean(P_ID, P_Name, P_Price, P_Category, P_SupplierID, P_Quantity);
+            listProduct.add(ProductFromDB);
+            
+        }     
+        return listProduct;
     }
     
     
@@ -662,7 +769,69 @@ public class DBManager {
             return temp1;
         }
 
-
+        
+     public StaffAccessLogBean addStaffLoginRecord(Staff cb) throws SQLException {                   
+//code for add-operation       
+//VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
+      SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+      SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+      java.util.Date d =  new java.util.Date();
+      String values=
+              ""
+              +cb.getId()+",'"
+              +dateformat.format(d)+"','"
+              +timeformat.format(d)+"'"
+              ;
+      System.out.println(values);
+      st.executeUpdate("INSERT INTO sql12346043.STAFF_SESSION(Staff_ID, LOGGEDIN_DATE,LOGGEDIN_TIME)  VALUES("+values+")");   
+      StaffAccessLogBean cab = new StaffAccessLogBean();
+      cab.setStaff(cb);
+      cab.setLoggedin(d);
+      return cab;
+    }
+    
+    public void endStaffLoginRecord(StaffAccessLogBean cb) throws SQLException {                   
+//code for add-operation       
+//VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
+      SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+      SimpleDateFormat timeformat = new SimpleDateFormat("H:m:s");
+      java.util.Date d =  new java.util.Date();
+      
+      
+      String values=
+              "LOGGEDOUT_DATE = '"+dateformat.format(d)+"',"+
+              "LOGGEDOUT_TIME = '"+timeformat.format(d)+"'"
+              ;
+      System.out.println(values);
+      st.executeUpdate(
+                "UPDATE sql12346043.STAFF_SESSION SET "+values+" "
+                        + "WHERE"
+                        + " Staff_ID = "+cb.getStaffid()+
+                          " AND LOGGEDIN_TIME = '"+timeformat.format(cb.getLoggedin())+"'"+
+                          " AND LOGGEDIN_DATE = '"+dateformat.format(cb.getLoggedin())+"'" );   
+      cb.setLoggedout(d);
+    }
+    
+    public ArrayList<StaffAccessLogBean> listStaffLoginRecord(int cid) throws SQLException, ParseException {                   
+        ArrayList<StaffAccessLogBean> result = new ArrayList<>();
+      String query = "SELECT * FROM sql12346043.STAFF_SESSION WHERE  Staff_ID="+cid;
+        ResultSet rs = st.executeQuery(query);
+        
+        SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd H:m:s");
+        while(rs.next()){
+             StaffAccessLogBean cb = new StaffAccessLogBean();
+                cb.setStaffid(cid);
+                cb.setLoggedin(timeformat.parse(rs.getString(2)+" "+rs.getString(3)));
+                cb.setLoggedout(rs.getString(4)==null?cb.getLoggedin():(timeformat.parse(rs.getString(4)+" "+rs.getString(5))));
+                //apply time here.
+                //add search and delete and ur done yey
+                result.add(cb);
+        }
+        return result;
+    }   
+        
+        
+        
        
     //Add a supplier into the db
     public void addPayment (String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {

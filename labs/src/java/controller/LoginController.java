@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import uts.isd.model.CustomerAccessLogBean;
 import uts.isd.model.Staff;
+import uts.isd.model.StaffAccessLogBean;
 /**
  *
  * @author willi
@@ -126,6 +127,9 @@ public class LoginController  extends HttpServlet {
             }else{
                 Staff current = (Staff)logindt;
                 req.getSession().setAttribute("login", null);
+                StaffAccessLogBean accesslog = (StaffAccessLogBean)req.getSession().getAttribute("sessionLog");
+                manager.endStaffLoginRecord(accesslog);
+                    req.getSession().setAttribute("sessionLog", null);
                 RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
                 req.setAttribute("response",  "OK");
                 dispatch.forward(req, resp);
@@ -141,6 +145,7 @@ public class LoginController  extends HttpServlet {
                 req.getSession().setAttribute("login",st );
                 RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
                 req.setAttribute("response",  "OK");
+                req.getSession().setAttribute("sessionLog",manager.addStaffLoginRecord(st) );
                 dispatch.forward(req, resp);
                 return;
             }

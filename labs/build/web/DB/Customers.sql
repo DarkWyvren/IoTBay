@@ -3,7 +3,7 @@ DROP TABLE CUSTOMERDB;
 
 CREATE TABLE CUSTOMERDB (
 
-    Customer_ID int GENERATED ALWAYS AS IDENTITY NOT NULL,
+Customer_ID int NOT NULL AUTO_INCREMENT,
     Email varchar(128) UNIQUE,
     Password varchar(128) NOT NULL,
     FullName varchar(128),

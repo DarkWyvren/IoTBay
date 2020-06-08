@@ -26,21 +26,27 @@
                      <jsp:include page="ProductNavBar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
+                    
                     <div class="jumbotron">
+                        <form  method="POST" Action="AddNewProduct">
                         <h1>Add a Product to the Store</h1> 
                         <table> 
-                            <tr><td>Product ID: </td><td><input type="text" placeholder="Enter Product ID" name="PID"></td></tr>
-                            <tr><td>Product Number: </td><td><input type="text" placeholder="Enter Product Name (Max 50 Characters)" name="PName"></td></tr>
+                            <tr><td>Product Name: </td><td><input type="text" placeholder="Enter Product Name" name="PName"></td></tr>
                             <tr><td>Price:  </td><td><input type="double" placeholder="Enter Price per Unit" name="PPrice"></td></tr>
                             <tr><td>Category: </td><td><input type="text" placeholder="Enter Product Category" name="PCategory"></td></tr>
-                            <tr><td>Supplier: </td><td><input type="email" placeholder="Enter Supplier" name="CName"></td></tr>
-                            <tr><td></td><td><input type="reset"> <input type="submit" value="Add"> </td></tr>
-                            <tr><td><input type="checkbox" name="TermsCondition" > I have Read the Terms and Conditions</td><td></td></tr>
+                            <tr><td>Supplier: </td><td><input type="text" placeholder="Enter Supplier" name="PSupplier"></td></tr>
+                            <tr><td>Quantity: </td><td><input type="text" placeholder="Enter Quantity" name="PQUANT"></td></tr>
+                            <tr><td>  
+                            </td><td> 
+                            </td></tr>
+                            <tr><td>
+                                    
                             <tr><td></td><td></td></tr>
-                        </table>
-                        <hidden value="SAdd"></hidden> 
+                          </table>
+                        <input type="reset"> 
+                        <input type="submit" value="Add">
+                        </form>
                     </div>
-                  
                 </div>
             </div>
         </div>

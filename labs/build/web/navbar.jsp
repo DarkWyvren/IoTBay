@@ -40,7 +40,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <form action="Insert Search Controller Here" method="POST"  class="form-inline  bg-dark text-white">
+        <form action="store" method="GET"  class="form-inline  bg-dark text-white">
             <div class="row p-2">
                 <div class="form-group col-9 pr-0">
                     <input type="text" class="form-control lineBox w-100" id="inputProductName" placeholder="Search" name="search_product">
@@ -100,7 +100,7 @@
     </li>
     
     <li class="nav-item">
-        <a href="store.jsp">
+        <a href="store">
             <div class="nav-fill navButt bg-dark text-white">
                 <div style="margin: 25px; width:100%;">
                     <svg class="bi bi-house-door-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

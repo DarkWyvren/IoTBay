@@ -15,7 +15,7 @@
     p.setID(Integer.parseInt(request.getParameter("productid")));
     boolean canEdit = (Boolean.parseBoolean(request.getParameter("canEdit")));
 %>
-<div class="col-6 col-lg-2 col-md-4 float-left filterDiv p-2 container-fluid <%=p.getCategory()%>">
+<div class="col-6 col-lg-2 col-md-4 float-left filterDiv p-2 container-fluid <%=p.getCategory().toLowerCase()%>">
     
     <div class="row  m-0">
         <img class="w-100 "src="productimage<%=(p.getID()%5) %>.png">
@@ -41,7 +41,7 @@
         </a>
         <%}%>
         <a href="#" class="btn btn-success  col-md-8 h-20  col-sm-12  mb-0">
-            <p class=" mb-0">Add to cart</p>
+            <p class=" mb-0">Buy</p>
         </a>
     </div>
     

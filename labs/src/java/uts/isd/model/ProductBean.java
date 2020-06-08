@@ -18,7 +18,17 @@ public class ProductBean implements Serializable{
     private double price;
     private String category;
     private int supplier;
+    private int quantity;
            
+    public ProductBean (int P_ID, String PNAME, Double PPrice, String PCATEGORY, int SUP_ID, int PQUANT) {
+        this.productid = P_ID;
+        this.name=PNAME;
+        this.price=PPrice;
+        this.category=PCATEGORY;
+        this.supplier=SUP_ID;
+        this.quantity=PQUANT;
+        
+    }
  
   public ProductBean () {
       productid = 0;
@@ -26,6 +36,7 @@ public class ProductBean implements Serializable{
       price = 0;
       category = "";
       supplier = 0;
+      quantity = 0;
              
   }
   
@@ -76,6 +87,15 @@ public class ProductBean implements Serializable{
         this.supplier = supplier;
     }
     
+    public int getQuantity() {
+        return quantity;
+    }
+    
+    
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+    
     
     
     
@@ -83,7 +103,7 @@ public class ProductBean implements Serializable{
     
    @Override
    public String toString() {
-    return "Product:" +productid+", "+name+", "+price+", "+category+ ", "+supplier;
+    return "Product:" +productid+", "+name+", "+price+", "+category+ ", "+supplier+", "+quantity;
    }
    
     
