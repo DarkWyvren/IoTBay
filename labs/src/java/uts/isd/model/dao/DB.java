@@ -12,10 +12,10 @@ import java.sql.Connection;
  * @author willi
  */
 public class DB {
-    protected String URL = "jdbc:derby://localhost:1527/usersdb";
-    protected String db = "usersdb";
-    protected String dbuser=  "isduser";
-    protected String dbpass = "admin";
-    protected String driver = "org.apache.derby.jdbc.ClientDriver";
+    protected String URL = "jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12346043?zeroDateTimeBehavior=convertToNull";	
+    protected String db = "sql12346043";
+    protected String dbuser=  "sql12346043";
+    protected String dbpass = "nZFipmZBxp";
+    protected String driver = "com.mysql.jdbc.Driver";
     protected Connection conn;
 }

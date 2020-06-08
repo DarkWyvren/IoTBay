@@ -41,7 +41,7 @@ public class DBManager {
         return findCustomer(emaild, "");
     }
     public CustomerBean findCustomer(String email, String password) throws SQLException {   
-        String query = "SELECT * FROM APP.CUSTOMERDB WHERE  Email='"+email+"'"+ (password.length()>0? " AND Password = '"+password+"'":"");
+        String query = "SELECT * FROM sql12346043.CUSTOMERDB WHERE  Email='"+email+"'"+ (password.length()>0? " AND Password = '"+password+"'":"");
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String cust_email = rs.getString(2);
@@ -89,14 +89,14 @@ public class DBManager {
               +cb.getTitle()+"'"
               ;
       System.out.println(values);
-      st.executeUpdate("INSERT INTO APP.CUSTOMERDB(Email, Password,FullName,DOB,Address,Phone,Title)  VALUES("+values+")");   
+      st.executeUpdate("INSERT INTO sql12346043.CUSTOMERDB(Email, Password,FullName,DOB,Address,Phone,Title)  VALUES("+values+")");   
       cb.setId(findCustomer(cb.getEmail(),cb.getPassword()).getId());
 
     }
     public CustomerAccessLogBean addCustomerLoginRecord(CustomerBean cb) throws SQLException {                   
 //code for add-operation       
 //VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
-      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
+      SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
       SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
       java.util.Date d =  new java.util.Date();
       String values=
@@ -106,7 +106,7 @@ public class DBManager {
               +timeformat.format(d)+"'"
               ;
       System.out.println(values);
-      st.executeUpdate("INSERT INTO APP.CUSTOMER_SESSION(Customer_ID, LOGGEDIN_DATE,LOGGEDIN_TIME)  VALUES("+values+")");   
+      st.executeUpdate("INSERT INTO sql12346043.CUSTOMER_SESSION(Customer_ID, LOGGEDIN_DATE,LOGGEDIN_TIME)  VALUES("+values+")");   
       CustomerAccessLogBean cab = new CustomerAccessLogBean();
       cab.setCustomer(cb);
       cab.setLoggedin(d);
@@ -116,7 +116,7 @@ public class DBManager {
     public void endCustomerLoginRecord(CustomerAccessLogBean cb) throws SQLException {                   
 //code for add-operation       
 //VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
-      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
+      SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
       SimpleDateFormat timeformat = new SimpleDateFormat("H:m:s");
       java.util.Date d =  new java.util.Date();
       
@@ -127,7 +127,7 @@ public class DBManager {
               ;
       System.out.println(values);
       st.executeUpdate(
-                "UPDATE APP.CUSTOMER_SESSION SET "+values+" "
+                "UPDATE sql12346043.CUSTOMER_SESSION SET "+values+" "
                         + "WHERE"
                         + " Customer_ID = "+cb.getCustomerid()+
                           " AND LOGGEDIN_TIME = '"+timeformat.format(cb.getLoggedin())+"'"+
@@ -137,7 +137,7 @@ public class DBManager {
     
     public ArrayList<CustomerAccessLogBean> listCustomerLoginRecord(int cid) throws SQLException, ParseException {                   
         ArrayList<CustomerAccessLogBean> result = new ArrayList<>();
-      String query = "SELECT * FROM APP.CUSTOMER_SESSION WHERE  Customer_ID="+cid;
+      String query = "SELECT * FROM sql12346043.CUSTOMER_SESSION WHERE  Customer_ID="+cid;
         ResultSet rs = st.executeQuery(query);
         
         SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd H:m:s");
@@ -166,13 +166,13 @@ public class DBManager {
               "Title = '"+cb.getTitle()+"'"
               ;
         System.out.println(values);
-        st.executeUpdate("UPDATE APP.CUSTOMERDB SET "+values+" WHERE Customer_ID ="+cb.getId());   
+        st.executeUpdate("UPDATE sql12346043.CUSTOMERDB SET "+values+" WHERE Customer_ID ="+cb.getId());   
 
     }       
 
     //delete a user from the database   
     public void deleteCustomer(String email) throws SQLException{       
-       st.executeUpdate("DELETE FROM APP.CUSTOMERDB WHERE Email='"+email+"'");
+       st.executeUpdate("DELETE FROM sql12346043.CUSTOMERDB WHERE Email='"+email+"'");
     }
 
 
@@ -185,7 +185,7 @@ public class DBManager {
     
 
     public ProductBean findProduct(String Product_ID) throws SQLException {   
-        String query = "SELECT * FROM APP.PRODUCTDB WHERE  Product_ID='"+Product_ID;
+        String query = "SELECT * FROM sql12346043.PRODUCTDB WHERE  Product_ID='"+Product_ID;
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String prod_id = rs.getString(2);
@@ -246,7 +246,7 @@ public class DBManager {
     //SUPPLIER INFO
     //can view supplier info
      public void showSupplier(String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) throws SQLException{
-        String query = "SELECT FROM * APP.SUPPLIERDB";
+        String query = "SELECT FROM * sql12346043.SUPPLIERDB";
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             ContactName = rs.getString(2);
@@ -260,7 +260,7 @@ public class DBManager {
     
         //find supplier from db
     /* public Supplier findSupplier(String ContactName, String CompanyEmail) throws SQLException {   
-        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND EMAILADDRESS = '"+CompanyEmail+"'");
+        String query = "SELECT * FROM sql12346043.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND EMAILADDRESS = '"+CompanyEmail+"'");
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String Com_Name = rs.getString(2);
@@ -294,7 +294,7 @@ public class DBManager {
     }
     //delete a supplier from db
     public void deleteSupplier(String CompanyEmail) throws SQLException{
-        st.executeUpdate("DELETE FROM APP.SUPPLIER WHERE EMAILADDRESS ='"+CompanyEmail+"'");
+        st.executeUpdate("DELETE FROM sql12346043.SUPPLIER WHERE EMAILADDRESS ='"+CompanyEmail+"'");
   
     }
     
@@ -307,7 +307,7 @@ public class DBManager {
     }
     //Find the specific order using Date_Of_Order and Order_ID
     public OrderBean findOrder(String Date_Of_Order, String Order_ID) throws SQLException {   
-        String query = "SELECT * FROM APP.ORDERDB WHERE Date_Of_Order='"+Date_Of_Order+"' AND Order_ID = '"+Order_ID;
+        String query = "SELECT * FROM sql12346043.ORDERDB WHERE Date_Of_Order='"+Date_Of_Order+"' AND Order_ID = '"+Order_ID;
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String order_date = rs.getString(3);
@@ -332,19 +332,19 @@ public class DBManager {
     //Add a order-data into the database   
     public void addOrder(String Customer_ID, String Date_Of_Order, String Address, String Status, String Product_ID, String Quanity) throws SQLException {                   
     //code for add-operation       
-      st.executeUpdate("INSERT INTO APP.ORDERDB" + "VALUES ("+Customer_ID+", "+Date_Of_Order+", "+Address+", "+Status+", "+Product_ID+", "+Quanity+")");   
+      st.executeUpdate("INSERT INTO sql12346043.ORDERDB" + "VALUES ("+Customer_ID+", "+Date_Of_Order+", "+Address+", "+Status+", "+Product_ID+", "+Quanity+")");   
 
     }
 
     //update a order details in the database   
     public void updateOrder(String Customer_ID, String Date_Of_Order, String Address, String Status, String Product_ID, String Quanity) throws SQLException {       
        //code for update-operation   
-       st.executeUpdate("INSERT INTO APP.ORDERDB SET Customer_ID ="+Customer_ID+", SET Customer_ID ="+Date_Of_Order+", SET Customer_ID ="+Address+", SET Customer_ID ="+Status+", SET Customer_ID ="+Product_ID+", SET Customer_ID ='"+Quanity+"'"); 
+       st.executeUpdate("INSERT INTO sql12346043.ORDERDB SET Customer_ID ="+Customer_ID+", SET Customer_ID ="+Date_Of_Order+", SET Customer_ID ="+Address+", SET Customer_ID ="+Status+", SET Customer_ID ="+Product_ID+", SET Customer_ID ='"+Quanity+"'"); 
     }   
    
     //delete a order from the database   
     public void deleteOrder(String Order_ID) throws SQLException{       
        //code for delete-operation   
-       st.executeUpdate("DELETE FROM APP.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
+       st.executeUpdate("DELETE FROM sql12346043.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
     }
 }

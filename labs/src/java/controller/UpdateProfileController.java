@@ -117,7 +117,7 @@ public class UpdateProfileController extends HttpServlet {
         try{
             cb.setDOB(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
         }catch(java.lang.IllegalArgumentException ec){
-            RequestDispatcher dispatch = req.getRequestDispatcher("register.jsp");
+            RequestDispatcher dispatch = req.getRequestDispatcher("profile.jsp");
             req.setAttribute("response",  "Date has incorrect format");
             dispatch.forward(req, resp);
         }

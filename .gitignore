@@ -21,3 +21,8 @@ labs/dist/labs.war
 labs/nbproject/private/private.properties
 labs/nbproject/project.properties
 /labs/dist/
+labs/build/web/WEB-INF/classes/controller/AddProductController.class
+labs/build/web/WEB-INF/classes/controller/LoginController.class
+labs/build/web/WEB-INF/classes/controller/RegisterController.class
+labs/build/web/WEB-INF/classes/controller/SupplierController.class
+*.class
