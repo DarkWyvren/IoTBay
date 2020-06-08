@@ -67,8 +67,9 @@ import uts.isd.model.dao.DBManager;
         String address = sb.getCompanyAddress();
         String type =sb.getCompanyType();
         String email =sb.getCompanyEmail();
+        int status = sb.getCompanyStatus();
         //int status = Integer.parseInt(request.getParameter("CStatus"));
-        System.out.println("id:" +S_ID + "name: " +name); 
+        System.out.println("id: " +S_ID + "name: " +name + "status:" +status); 
         request.setAttribute("SupplierInfo2", sb);
         request.getRequestDispatcher("SupplierUpdate.jsp").include(request, response);
         
@@ -82,28 +83,35 @@ import uts.isd.model.dao.DBManager;
             System.out.println(paraNames);
             switch(paraNames){
                 case "SupplierID":
+                    System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
                     sb.setSupplierID(Integer.parseInt(request.getParameter(paraNames)));
                     break;
                 case "CName":
+                    System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
                     sb.setCompanyName(request.getParameter(paraNames));
                     break;
                 case "CAddress":
+                    System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
                     sb.setCompanyAddress(request.getParameter(paraNames));
                     break;
                 case "CType":
+                    System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
                     sb.setCompanyType(request.getParameter(paraNames));
                     break;
                 case "CEmail":
+                    System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
                     sb.setCompanyEmail(request.getParameter(paraNames));
                     break;    
-                /*case "CompanyStatus":
-                    sb.setCompanyStatus(request.getParameter(paraNames));
-                    break;*/
+                case "CStatus":
+                   System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
+                    sb.setCompanyStatus(Integer.parseInt(request.getParameter(paraNames)));
+                    break;
             }
         }
         try {
+                System.out.println("test: " +sb);   
                 manager.updateSupplier(sb);
-                System.out.println("test: " +sb);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -344,7 +344,8 @@ public class DBManager {
               "SupName = '"+sb.getCompanyName()+"',"+
               "SupAddress = '"+sb.getCompanyAddress()+"',"+
               "SupType = '"+sb.getCompanyType()+"',"+
-              "SupEmail = '"+sb.getCompanyEmail()+"'"
+              "SupEmail = '"+sb.getCompanyEmail()+"',"+
+              "SupStatus = "+sb.getCompanyStatus()+""
               ;
         System.out.println(+sb.getSupplierID());
         st.executeUpdate("UPDATE APP.SUPPLIERDB SET "+values+" WHERE SupplierID ="+sb.getSupplierID());   
