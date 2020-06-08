@@ -4,22 +4,26 @@
     Author     : willi
 --%>
 
+<%@page import="uts.isd.model.Staff"%>
 <%@page import="uts.isd.model.CustomerBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <% 
     CustomerBean cust = new CustomerBean();
+    Staff stuff = null;
     cust.setName("Guest");
     cust.setPassword("");
 
     Object accountsesh = session.getAttribute("login");
-    if(accountsesh==null){
-        session.setAttribute("login", cust);
-    }else{
-        cust = (CustomerBean)accountsesh;
-    }
+    if(accountsesh!=null){
+        if(accountsesh instanceof CustomerBean){
+            cust = (CustomerBean)accountsesh;
 
+        }else{
+            stuff = (Staff)accountsesh;
+        }
+    }
 %>
 <ul class="flex-sm-column nav  nav-pills ">
     <li class="nav-item">
@@ -108,6 +112,7 @@
             </div>
         </a>
     </li>
+    <%if(stuff!=null){%>
     <li class="nav-item">    
         <a href="Management.jsp">
             <div class="nav-fill navButt  bg-light" style="color: #404040">
@@ -117,10 +122,9 @@
             </div>
         </a>
     </li>
-    <%if(!cust.getName().equals("Guest")){%>
+    <%}%>
+    <%if(accountsesh!=null){%>
         <li class="nav-item">
-
-
             <a href="accessLogs">
                 <div class="nav-fill navButt bg-light" style="color: #404040">
                     <div style="margin: 25px; width:100%;">

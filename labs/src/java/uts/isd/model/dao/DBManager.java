@@ -64,11 +64,7 @@ public class DBManager {
                 cb.setTitle(rs.getString(8));
                 return cb;
             }
-        }
-       //setup the select sql query string       
-       //execute this query using the statement field       
-       //add the results to a ResultSet       
-       //search the ResultSet for a user using the parameters               
+        }             
        return null;   
     } 
     
@@ -540,9 +536,28 @@ public class DBManager {
     
     //STAFF INFO
         //find staff from db
+    
+    public Staff findStaff(String email, String password) throws SQLException {   
+        String query = "SELECT * FROM sql12346043.STAFF WHERE Email='"+email+"'"+ (password.length()>0? " AND Password = '"+password+"'":"");
+        ResultSet rs = st.executeQuery(query);
+        Staff staff = null;
+        while(rs.next()){
+            int Id = rs.getInt(1);
+            System.out.println(Id);
+            String Name = rs.getString(4);
+            String Address = rs.getString(5);
+            String Pos = rs.getString(6);
+            String Email = rs.getString(2);
+            int Status = rs.getInt(7);
+            staff = new Staff (Id, Email,Name, Address, Pos, Status); 
+            staff.setPassword(rs.getString(3));
+            return staff;   
+        }       
+       return null;   
+    } 
      public ArrayList<Staff> findStaff(String name) throws SQLException 
      {   
-        String query = "SELECT * FROM APP.STAFF WHERE FULLNAME='"+name+"'";
+        String query = "SELECT * FROM sql12346043.STAFF WHERE FULLNAME='"+name+"'";
         ResultSet rs = st.executeQuery(query);
         ArrayList<Staff> result = new ArrayList();
         while(rs.next())
@@ -563,23 +578,25 @@ public class DBManager {
      
      public Staff getStaff(int Staff_id) throws SQLException {   
         Staff staff = null;
-            String query = "SELECT * FROM APP.STAFF WHERE  ID="+Staff_id+"";
+        //(ID,Email, Password,FullName,Address,Pos, Status) 
+            String query = "SELECT * FROM sql12346043.STAFF WHERE  ID="+Staff_id+"";
             ResultSet rs = st.executeQuery(query);
             while(rs.next()){
                 int Id = rs.getInt(1);
                 System.out.println(Id);
-                String Name = rs.getString(2);
-                String Address = rs.getString(3);
-                String Pos = rs.getString(4);
-                String Email = rs.getString(5);
-                int Status = rs.getInt(6);
+                String Name = rs.getString(4);
+                String Address = rs.getString(5);
+                String Pos = rs.getString(6);
+                String Email = rs.getString(2);
+                int Status = rs.getInt(7);
                 System.out.println("Staff Name: " +Name);
                 staff = new Staff (Id, Name, Address, Pos, Email, Status); 
+                staff.setPassword(rs.getString(3));
             } return staff;     
     }
      
      public void deleteStaff(Staff stf) throws SQLException{
-        st.executeUpdate("DELETE FROM APP.STAFF WHERE ID =" +stf.getId());
+        st.executeUpdate("DELETE FROM sql12346043.STAFF WHERE ID =" +stf.getId());
   
     }
 
@@ -592,7 +609,7 @@ public class DBManager {
               "Email = '"+stf.getEmail()+"'"
               ;
         System.out.println(+stf.getId());
-        st.executeUpdate("UPDATE APP.STAFF SET "+values+" WHERE ID ="+stf.getId());   
+        st.executeUpdate("UPDATE sql12346043.STAFF SET "+values+" WHERE ID ="+stf.getId());   
 
     }
     
@@ -625,12 +642,12 @@ public class DBManager {
                 "'"+stf.getAddress() + "',"+
               "'"+stf.getPosition() + "',"+
                ""+stf.getStatus() + "";
-       st.executeUpdate("INSERT INTO APP.STAFF(EMAIL, FULLNAME, ADDRESS, POS, STATUS) VALUES("+values+")");
+       st.executeUpdate("INSERT INTO sql12346043.STAFF(EMAIL, FULLNAME, ADDRESS, POS, STATUS) VALUES("+values+")");
     }
      
         public ArrayList<Staff> fetchStaffList() throws SQLException
         {
-            String fetch = "SELECT * FROM APP.STAFF";
+            String fetch = "SELECT * FROM sql12346043.STAFF";
             ResultSet rs = st.executeQuery(fetch);
             ArrayList<Staff> temp1 = new ArrayList();
             while(rs.next()){

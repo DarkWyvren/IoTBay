@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import uts.isd.model.AccountTracker;
 import uts.isd.model.CustomerBean;
+import uts.isd.model.Staff;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.DBManager;
 
@@ -61,17 +62,14 @@ public class UpdateProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Enumeration<String> paramNames = req.getParameterNames();
+    
+    CustomerBean populateCustomer(HttpServletRequest req, Enumeration<String> paramNames) throws NumberFormatException, java.lang.IllegalArgumentException{
         CustomerBean cb = new CustomerBean();
-        boolean hastoc=false;
         int date[] = new int[3];
         String[] address = new String[2];
         while(paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
-            try{
+            
             switch(paramName){
                 case "full_name":
                     cb.setName(req.getParameter(paramName));
@@ -105,32 +103,87 @@ public class UpdateProfileController extends HttpServlet {
                     break;         
                 
             }
-            }catch(NumberFormatException ne){
-                RequestDispatcher dispatch = req.getRequestDispatcher("register.jsp");
+            
+        }
+        cb.setAddress(address[0]+"|"+address[1]);
+        System.out.println(Arrays.toString(date));
+        cb.setDOB(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
+        return cb;
+    }
+    
+    Staff populateStaff(HttpServletRequest req,Enumeration<String> paramNames){
+        Staff s = new Staff();
+        String[] address = new String[2];
+        while(paramNames.hasMoreElements()) {
+            String paramName = paramNames.nextElement();
+           
+            switch(paramName){
+                case "full_name":
+                    s.setFullName(req.getParameter(paramName));
+                    break;
+                case "email":
+                    s.setEmail(req.getParameter(paramName));
+                    break;
+                case "password":
+                    s.setPassword(req.getParameter(paramName));
+                    break;
+                case "address":
+                    address[0] = req.getParameter(paramName);
+                    break; 
+                case "postalcode":
+                    address[1] = req.getParameter(paramName);
+                    break; 
+            }
+            
+        }
+        s.setAddress(address[0]+"|"+address[1]);
+        return s;
+    }
+    
+    
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Enumeration<String> paramNames = req.getParameterNames();
+        Object editprof =  req.getSession().getAttribute("login");
+        
+        if(editprof instanceof CustomerBean){
+            try{
+                CustomerBean cb = populateCustomer(req, paramNames);
+            
+                cb.setId(((CustomerBean)req.getSession().getAttribute("login")).getId());
+
+                
+                String res = AccountTracker.updateAccount(manager, cb);
+                req.setAttribute("response",  res);
+
+                if(res.equals("OK")){
+                    req.getSession().setAttribute("login", cb);
+                }
+                RequestDispatcher dispatch = req.getRequestDispatcher("profile.jsp");
+                dispatch.forward(req, resp);
+            }catch(java.lang.IllegalArgumentException ec){
+                RequestDispatcher dispatch = req.getRequestDispatcher("profile.jsp");
                 req.setAttribute("response",  "Date has incorrect format");
                 dispatch.forward(req, resp);
                 return;
             }
-        }
-        cb.setAddress(address[0]+"|"+address[1]);
-        System.out.println(Arrays.toString(date));
-        try{
-            cb.setDOB(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
-        }catch(java.lang.IllegalArgumentException ec){
+        }else{
+            Staff sb = populateStaff(req, paramNames);
+            String res = "OK";
+            
+            if(sb.getPassword().length()<6){
+                res="Password must be 6 character or longer";
+            }
+            
+            
+            if(res.equals("OK")){
+                req.getSession().setAttribute("login", sb);
+            }
             RequestDispatcher dispatch = req.getRequestDispatcher("profile.jsp");
-            req.setAttribute("response",  "Date has incorrect format");
             dispatch.forward(req, resp);
-        }
-        cb.setId(((CustomerBean)req.getSession().getAttribute("login")).getId());
-        System.out.println("CMON");
-        RequestDispatcher dispatch = req.getRequestDispatcher("profile.jsp");
-        String res = AccountTracker.updateAccount(manager, cb);
-        req.setAttribute("response",  res);
+            
         
-        if(res.equals("OK")){
-            req.getSession().setAttribute("login", cb);
         }
-        dispatch.forward(req, resp);
         
     }
     

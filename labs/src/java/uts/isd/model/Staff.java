@@ -17,6 +17,7 @@ public class Staff implements Serializable
     private String Email;
     private String FullName;
     private String Address;
+    private String password;
     private String Pos;
     private int Status;
     
@@ -29,14 +30,24 @@ public class Staff implements Serializable
                 this.Pos = Position;
                 this.Status = Status;
             }
-
+    
     public Staff() {
         Email = "";
         FullName = "";
         Pos = "";
         Address = "";
+        password="";
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    
     public String getPosition() {
         return Pos;
     }

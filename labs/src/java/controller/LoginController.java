@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uts.isd.model.CustomerAccessLogBean;
+import uts.isd.model.Staff;
 /**
  *
  * @author willi
@@ -56,25 +57,36 @@ public class LoginController  extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CustomerBean current = (CustomerBean)req.getSession().getAttribute("login");
-        if(AccountTracker.isValidLogin(manager,current.getEmail(), current.getPassword())){
-            AccountTracker.logout(current);
-            req.getSession().removeAttribute("login");
-            System.out.println("valid account, session removed");
-            try{
-                CustomerAccessLogBean accesslog = (CustomerAccessLogBean)req.getSession().getAttribute("sessionLog");
-                manager.endCustomerLoginRecord(accesslog);
-                req.getSession().setAttribute("sessionLog", null);
-            }catch(Exception e){
-            
+        Object logindt = req.getSession().getAttribute("login");
+        if(logindt!=null){
+            if(logindt instanceof CustomerBean){
+                 CustomerBean current = (CustomerBean)req.getSession().getAttribute("login");
+                if(AccountTracker.isValidLogin(manager,current.getEmail(), current.getPassword())){
+                    AccountTracker.logout(current);
+                    req.getSession().removeAttribute("login");
+                    System.out.println("valid account, session removed");
+                    try{
+                        CustomerAccessLogBean accesslog = (CustomerAccessLogBean)req.getSession().getAttribute("sessionLog");
+                        manager.endCustomerLoginRecord(accesslog);
+                        req.getSession().setAttribute("sessionLog", null);
+                    }catch(Exception e){
+
+                    }
+
+                }
+                RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
+                req.setAttribute("response",  "OK");
+                dispatch.include(req, resp);
+                dispatch.forward(req, resp);
+                System.out.println("CMON"+req.getSession().getAttribute("login"));
+            }else{
+                Staff current = (Staff)logindt;
+                req.getSession().setAttribute("login", null);
+                RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
+                req.setAttribute("response",  "OK");
+                dispatch.forward(req, resp);
             }
-            
         }
-        RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
-        req.setAttribute("response",  "OK");
-        dispatch.include(req, resp);
-        dispatch.forward(req, resp);
-        System.out.println("CMON"+req.getSession().getAttribute("login"));
     }
     
     @Override
@@ -94,24 +106,44 @@ public class LoginController  extends HttpServlet {
         }
         System.out.println("Login");
         try {
-        CustomerBean current = (CustomerBean)req.getSession().getAttribute("login");
-        if(AccountTracker.isLoggedIn(email)&&AccountTracker.isValidLogin(manager,current.getEmail(), current.getPassword())){
-            
-            CustomerAccessLogBean accesslog = (CustomerAccessLogBean)req.getSession().getAttribute("sessionLog");
-            manager.endCustomerLoginRecord(accesslog);
-            req.getSession().setAttribute("sessionLog", null);
-            AccountTracker.logout(current);
-            req.getSession().setAttribute("login", null);
-            
-            RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
-            req.setAttribute("response",  "OK");
-            dispatch.forward(req, resp);
-            return;
+        Object logindt = req.getSession().getAttribute("login");
+        if(logindt!=null){
+            if(logindt instanceof CustomerBean){
+                CustomerBean current = (CustomerBean)req.getSession().getAttribute("login");
+                if(AccountTracker.isLoggedIn(email)&&AccountTracker.isValidLogin(manager,current.getEmail(), current.getPassword())){
+
+                    CustomerAccessLogBean accesslog = (CustomerAccessLogBean)req.getSession().getAttribute("sessionLog");
+                    manager.endCustomerLoginRecord(accesslog);
+                    req.getSession().setAttribute("sessionLog", null);
+                    AccountTracker.logout(current);
+                    req.getSession().setAttribute("login", null);
+
+                    RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
+                    req.setAttribute("response",  "OK");
+                    dispatch.forward(req, resp);
+                    return;
+                }
+            }else{
+                Staff current = (Staff)logindt;
+                req.getSession().setAttribute("login", null);
+                RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
+                req.setAttribute("response",  "OK");
+                dispatch.forward(req, resp);
+
+            }
         }
         CustomerBean cbdb = null;
-        
+        Staff st = null;
             cbdb = manager.findCustomer(email, pass);
-        
+            st = manager.findStaff(email, pass);
+            System.out.println("STAFFF PLESASE: "+st);
+            if(st!=null){
+                req.getSession().setAttribute("login",st );
+                RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
+                req.setAttribute("response",  "OK");
+                dispatch.forward(req, resp);
+                return;
+            }
             if(!AccountTracker.isValidLogin(manager,email, pass) && cbdb==null){
                 RequestDispatcher dispatch = req.getRequestDispatcher("login.jsp");
                 req.setAttribute("response",  "Invalid email or password");
@@ -121,7 +153,7 @@ public class LoginController  extends HttpServlet {
                     System.out.println(cbdb.toString());
                     AccountTracker.login(cbdb);
                 }else{
-                    AccountTracker.login(current);
+                    AccountTracker.login((CustomerBean)logindt);
                 }
                 CustomerBean cb2 = AccountTracker.getCustomerByEmail(manager,email);
                 req.getSession().setAttribute("login",cb2 );
