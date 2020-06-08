@@ -3,17 +3,19 @@
     Created on : Jun 6, 2020, 3:52:16 PM
     Author     : Danny16
 --%>
+<%@page import="java.util.Iterator"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="uts.isd.model.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <%
-        ArrayList staffList = new ArrayList();
+        
         Object data = request.getAttribute("Staff");
+        Staff current = null;
         if(data!=null)
         {
-            staffList = (ArrayList)data;
+            current = (Staff)data;
         }
     %>
     <head>
@@ -41,13 +43,24 @@
                        <tr><td> <input type="text" id="myInput" onkeyup="" placeholder="Search for names.." title="Type in a name">
                                . </td><td><input type="submit" name="submit" value="Search"> </td></tr>
                         <tr></tr>
-                            <%for(int i = 0; i < staffList.size(); i++){ %>
+                            <%
+                       
+                            if(request.getAttribute("result1")!=null)
+                            { 
+                                ArrayList result = (ArrayList)request.getAttribute("result1");
+                                Iterator itr = result.iterator();
+                                
+                                while(itr.hasNext())
+                                {
+                                    
+                                    ArrayList result1 = (ArrayList)itr.next();
+                            %>
                             
-                            <tr><td>Name: </td><td><input type="text" value= ""  name="FullName"></td></tr>
-                            <tr><td>Address: </td><td><input type="text" value= ""  name="Address"></td></tr>
-                            <tr><td>Position: </td><td><input type="text" value= ""  name="Pos"></td></tr>
-                            <tr><td>Email: </td><td><input type="email" value= ""  name="Email"></td></tr>
-                            
+                            <tr><td>Name: </td><td><input type="text" value=<%= result1.get(2) %>  name="FullName"></td></tr>
+                            <tr><td>Address: </td><td><input type="text" value=<%= result1.get(2) %>   name="Address"></td></tr>
+                            <tr><td>Position: </td><td><input type="text" value=<%= result1.get(2) %>   name="Pos"></td></tr>
+                            <tr><td>Email: </td><td><input type="email" value=<%= result1.get(2) %>   name="Email"></td></tr>
+                            <%}}%>
                             <tr><td></td><td><input type="submit" value="Delete"> <input class="btn  btn-primary btn-lg" type="submit" value="Update"> </td></tr>
                         </table>
                 </div>
