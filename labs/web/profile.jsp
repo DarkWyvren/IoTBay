@@ -126,6 +126,8 @@
                       <%if(haserror){%>
                         <small id="error_response" class="form-text text-danger"><%=errortext%></small>
                       <%}%>
+                      
+                      <button type="submit" class="btn btn-primary">Submit</button>
                     </form> 
                 </div>
                    

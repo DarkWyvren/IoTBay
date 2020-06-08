@@ -23,6 +23,7 @@
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
                      <jsp:include page="SupplierNavBar.jsp" />
+                     
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">

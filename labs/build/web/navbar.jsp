@@ -92,7 +92,13 @@
         </a>
     </li>
     <li class="nav-item">    
-        <a href="Management.jsp"><div class="nav-link nav-fill navButt"><h5>Management</h5></div></a>
+        <a href="Management.jsp">
+            <div class="nav-fill navButt  bg-light" style="color: #404040">
+                <div style="margin: 25px; width:100%;">
+                    <b>Management</b>
+                </div>
+            </div>
+        </a>
     </li>
     <%if(!cust.getName().equals("Guest")){%>
         <li class="nav-item">

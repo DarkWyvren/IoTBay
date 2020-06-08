@@ -20,16 +20,12 @@ import uts.isd.model.dao.DBManager;
  *
  * @author 10847
  */
-public class paymentcontroller extends HttpServlet {
+
 public class paymentconncontroller extends HttpServlet {
     private DBConnector db;
     private DBManager manager;
     private Connection conn;
-public class paymentcontroller extends HttpServlet {
-            }      
-        }
 
-       
     @Override //Add the DBConnector, DBManager, Connection instances to the session
        protected void doGet(HttpServletRequest request, HttpServletResponse response)
                throws ServletException, IOException {
@@ -45,15 +41,24 @@ public class paymentcontroller extends HttpServlet {
            //export the DB manager to the view-session (JSPs)
            session.setAttribute("manager", manager);           
        }   
-        @Override //Destroy the servlet and release the resources of the application (terminate also the db connection)
-        public void destroy() {
-           try {
-     public class paymentconncontroller extends HttpServlet {
-               Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-           }
+          @Override 
+    public void init() {
+        try {
+            db = new DBConnector();
+            conn = db.openConnection();
+            manager = new DBManager(conn);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(paymentconncontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }
+
+    @Override //Destroy the servlet and release the resources of the application (terminate also the db connection)
+    public void destroy() {
+       try {
+           db.closeConnection();
+       } catch (SQLException ex) {
+           Logger.getLogger(paymentconncontroller.class.getName()).log(Level.SEVERE, null, ex);
        }
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-    }   
+   }
+    
 }

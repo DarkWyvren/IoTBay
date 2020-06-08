@@ -19,7 +19,7 @@ public class ValidProduct {
     public static String[] getAllProductIDs(){
         String[] out= new String[probeanlist.size()];
         for(int i =0;i<probeanlist.size();i++){
-            out[i]=probeanlist.get(i).getID();
+            out[i]=probeanlist.get(i).getID()+"";
         }
         return out;
     }
@@ -31,7 +31,7 @@ public class ValidProduct {
                 return "Product already exists";
             }
         
-            if(pb.getID().equals(pass.getID())){
+            if(pb.getID()==(pass.getID())){
                 return "A Product with this ID already exists";
             }
         }
@@ -39,7 +39,7 @@ public class ValidProduct {
             return "Please enter a Name";
         }
         
-        if(pb.getPrice().isEmpty()){
+        if(pb.getPrice()==0){
             return "Please enter a Price for the product";
         }
         
@@ -47,7 +47,7 @@ public class ValidProduct {
             return "Please enter a Category for the product";
         }
         
-        if(pb.getSupplier().isEmpty()){
+        if(pb.getSupplier()<=0){
             return "Does not match a supplier ID";
         }
         

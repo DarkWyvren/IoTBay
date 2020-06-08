@@ -65,7 +65,7 @@ public class UpdateProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Enumeration<String> paramNames = req.getParameterNames();
-        CustomerBean cb = (CustomerBean)req.getSession().getAttribute("login");
+        CustomerBean cb = new CustomerBean();
         boolean hastoc=false;
         int date[] = new int[3];
         String[] address = new String[2];
@@ -121,11 +121,15 @@ public class UpdateProfileController extends HttpServlet {
             req.setAttribute("response",  "Date has incorrect format");
             dispatch.forward(req, resp);
         }
-     
+        cb.setId(((CustomerBean)req.getSession().getAttribute("login")).getId());
         System.out.println("CMON");
         RequestDispatcher dispatch = req.getRequestDispatcher("profile.jsp");
-        req.setAttribute("response",  AccountTracker.updateAccount(manager, cb));
-        req.getSession().setAttribute("login", cb);
+        String res = AccountTracker.updateAccount(manager, cb);
+        req.setAttribute("response",  res);
+        
+        if(res.equals("OK")){
+            req.getSession().setAttribute("login", cb);
+        }
         dispatch.forward(req, resp);
         
     }

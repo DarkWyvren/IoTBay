@@ -17,6 +17,10 @@ public class CustomerBean implements Serializable{
     private Date joined, DOB;
     int id;
 
+    public CustomerBean() {
+        
+    }
+
     public void setId(int id) {
         this.id = id;
     }
