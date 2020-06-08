@@ -480,7 +480,7 @@ public class DBManager {
     }
         
     //Add a order-data into the database   
-   /* public void addOrder(OrderBean ob) throws SQLException {                   
+    public void addOrder(OrderBean ob) throws SQLException {                   
     //code for add-operation    
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         String values=
@@ -496,23 +496,6 @@ public class DBManager {
               ;
         System.out.println(values);
         st.executeUpdate("INSERT INTO APP.ORDERDB(Customer_ID, Date_Of_Order, Shipping_Address, Status, Product_ID, Product_Name, Product_Price, Product_Quanity, Total_Price)  VALUES("+values+")");   
-    }*/
-public void addOrder(OrderBean ob) throws SQLException {                   
-    //code for add-operation    
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        String values=
-              ""+ob.getCustomerId()+","+
-              //"'"+format.format(ob.getDOO())+"','"+
-              "'"+ob.getShippingAddress()+"','"+
-              "'"+ob.getStatus()+"','"+
-              ""+ob.getProductId()+","+
-              "'"+ob.getProductName()+"','"+
-              ""+ob.getProductPrice()+","+
-              ""+ob.getProductQuanity()+","+
-              ""+ob.getTotalPrice()+","
-              ;
-        System.out.println(values);
-        st.executeUpdate("INSERT INTO APP.ORDERDB(Customer_ID, Shipping_Address, Status, Product_ID, Product_Name, Product_Price, Product_Quanity, Total_Price)  VALUES("+values+")");   
     }
     
     //update a order details in the database   

@@ -81,12 +81,12 @@ public class OrderAddController extends HttpServlet {
                 case "postalcode":
                     address[1] = request.getParameter(paraNames);
                     break; 
-                /*case "status":
+                case "status":
                     ob.setStatus(request.getParameter(paraNames));
                     break;
                 case "productId":
                     ob.setProductId(Integer.parseInt(request.getParameter(paraNames)));
-                    break;  */
+                    break; 
                 case "productName":
                     ob.setProductName(request.getParameter(paraNames));
                     break; 
@@ -96,9 +96,9 @@ public class OrderAddController extends HttpServlet {
                 case "productQuanity":
                     ob.setProductQuanity(Integer.parseInt(request.getParameter(paraNames)));
                     break; 
-                /*case "totalPrice":
+                case "totalPrice":
                     ob.setTotalPrice(Double.parseDouble(request.getParameter(paraNames)));
-                    break;*/
+                    break;
                 case "agreeCheck":
                     hastoc=true;
                     break;
