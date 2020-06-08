@@ -35,8 +35,6 @@
                          <tr><td>Position:</td><td><input type="text" placeholder="Enter Name" name="Pos"></td></tr>
                          <tr><td>Address:</td><td><input type="text" placeholder="Enter Name" name="Address"></td></tr>
                          <tr><td></td><td><input type="submit" value="Register"> </td></tr>
-                         
-                          <tr><td><input type="checkbox" name="TermsCondition" > I have Read the Terms and Conditions</td><td></td></tr>
                      </table>
                      </div>
                 </div>

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,5 +50,22 @@ public class StaffEditController extends HttpServlet
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     } 
-        
+    
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        ArrayList<Staff> queryResult = null;
+        String name = ""; 
+        try
+        {
+            queryResult = manager.findStaff(name);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(StaffController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("inside doget" + queryResult);
+        RequestDispatcher rd = request.getRequestDispatcher("StaffEdit.jsp");
+        request.setAttribute("StaffInfo", queryResult);
+        rd.forward(request, response);
+    }
 }

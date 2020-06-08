@@ -532,27 +532,27 @@ public class DBManager {
     
     //STAFF INFO
         //find staff from db
-     public Staff findStaff(String Name, String SPosition) throws SQLException 
+     public ArrayList<Staff> findStaff(String name) throws SQLException 
      {   
-        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+Name+"'"+ (" AND EMAILADDRESS = '"+SPosition+"'");
+        String query = "SELECT * FROM APP.STAFF WHERE FULLNAME='"+name+"'";
         ResultSet rs = st.executeQuery(query);
-        
-        while(rs.next()){
-            String FullName = rs.getString(2);
-            String Position = rs.getString(3);
-            System.out.println(Name+","+Position);
-            
-            if(FullName.equals(Name)&& Position.equals(SPosition))
+        ArrayList<Staff> result = new ArrayList();
+        while(rs.next())
+        {
+            String FullName = rs.getString(3);
+            String Email = rs.getString(2);
+            String Address = rs.getString(4);
+            String Position = rs.getString(5);
+            int Status = rs.getInt(6);
+            int Id = rs.getInt(1);
+            if(FullName.equals(name))
             {
-                int Id = rs.getInt(3);
-                String Address = rs.getString(4);
-                String Email = rs.getString(5);
-                int Status = rs.getInt(6);
-                return new Staff (Id, Name, Address, Position, Email, Status); 
+                result.add(new Staff(Id, Email, FullName, Address, Position, Status));
             }
         }
-        return null;
+        return result;
      }
+
 
     
     public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
@@ -586,15 +586,7 @@ public class DBManager {
                ""+stf.getStatus() + "";
        st.executeUpdate("INSERT INTO APP.STAFF(EMAIL, FULLNAME, ADDRESS, POS, STATUS) VALUES("+values+")");
     }
-    //Update a staff information
-    public void updateStaff (String Name, String Address, String Position, String Email) throws SQLException {
-        st.executeUpdate("INSERT INTO STAFFDB SET SupName ="+Name+", SET SupAddress  "+Address+", SET SupType "+Position+",SET SupEmail "+Email+",");
-    }
-    //delete a staff from db
-    public void deleteStaff(String Email) throws SQLException{
-        st.executeUpdate("DELETE FROM APP.STAFF WHERE EMAILADDRESS ='"+Email+"'");
-    }
-    
+     
         public ArrayList<Staff> fetchStaffList() throws SQLException
         {
             String fetch = "SELECT * FROM APP.STAFF";

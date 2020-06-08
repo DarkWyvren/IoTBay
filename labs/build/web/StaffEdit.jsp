@@ -30,16 +30,15 @@
                      <form method="post" action="">
                         <table class = "table"> 
                                
-                        <input type="text" id="myInput" onkeyup="myFunc()" placeholder="Search for names.." title="Type in a name">
-                        <input type="text" placeholder="Search by Position">
-                      
+                       <tr><td> <input type="text" id="myInput" onkeyup="" placeholder="Search for names.." title="Type in a name">
+                               . </td><td><input type="submit" name="submit" value="Search"> </td></tr>
                         <tr></tr>
-                            <tr><td>Name: </td><td><input type="text" value= "${Staff.FullName}" placeholder="Enter Company Name" name="SName"></td></tr>
-                            <tr><td>Address: </td><td><input type="text" value= "${Staff.Address}" placeholder="Enter Address" name="SAddress"></td></tr>
-                            <tr><td>Position: </td><td><input type="text" value= "${Staff.Position}" placeholder="Enter Company Type" name="SPosition"></td></tr>
-                            <tr><td>Email: </td><td><input type="email" value= "${Staff.Email}" placeholder="Enter Email" name="SEmail"></td></tr>
+                            <tr><td>Name: </td><td><input type="text" value= ""  name="FullName"></td></tr>
+                            <tr><td>Address: </td><td><input type="text" value= ""  name="Address"></td></tr>
+                            <tr><td>Position: </td><td><input type="text" value= ""  name="Pos"></td></tr>
+                            <tr><td>Email: </td><td><input type="email" value= ""  name="Email"></td></tr>
                             
-                            <tr><td></td><td><input type="reset"> <input class="btn  btn-primary btn-lg" type="submit" value="Update"> </td></tr>
+                            <tr><td></td><td><input type="submit" value="Delete"> <input class="btn  btn-primary btn-lg" type="submit" value="Update"> </td></tr>
                         </table>
                 </div>
             </div>
