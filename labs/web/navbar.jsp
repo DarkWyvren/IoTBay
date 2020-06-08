@@ -51,30 +51,47 @@
                 </div>
             </div>
             
-            <div class="form-group p-2 mt-2">
+            <div class="form-group p-2 mt-2 ">
                 <div class="form-check ml-2 ">
-                    <input class="form-check-input" type="checkbox" value="" id="catagory1"  name="category_1">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory1"  name="Computers">
                     <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory1">
-                      Some category
+                      Computers
                     </label>
                 </div>
             </div>
-            <div class="form-group p-2 ">
+            <div class="form-group p-2 " >
                 <div class="form-check ml-2 ">
-                    <input class="form-check-input" type="checkbox" value="" id="catagory2"  name="category_2">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory2"  name="Accessories">
                     <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory2">
-                      Some category2
+                      Accessories
                     </label>
                 </div>
             </div>
             <div class="form-group p-2 mb-2">
                 <div class="form-check ml-2 ">
-                    <input class="form-check-input" type="checkbox" value="" id="catagory3"  name="category_3">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory3"  name="Cables">
                     <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory3">
-                      Some category3
+                      Cables
                     </label>
                 </div>
             </div>
+            <div class="form-group p-2 mb-2">
+                <div class="form-check ml-2 ">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory4"  name="Cases">
+                    <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory4">
+                      Cases
+                    </label>
+                </div>
+            </div>
+            <div class="form-group p-2 mb-2">
+                <div class="form-check ml-2 ">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory5"  name="Books">
+                    <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory5">
+                      Books
+                    </label>
+                </div>
+            </div>
+            
         </form>
     </li>
     
