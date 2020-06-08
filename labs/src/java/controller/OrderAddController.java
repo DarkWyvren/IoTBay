@@ -81,24 +81,12 @@ public class OrderAddController extends HttpServlet {
                 case "postalcode":
                     address[1] = request.getParameter(paraNames);
                     break; 
-                case "status":
-                    ob.setStatus(request.getParameter(paraNames));
-                    break;
-                case "productId":
-                    ob.setProductId(Integer.parseInt(request.getParameter(paraNames)));
-                    break; 
                 case "productName":
                     ob.setProductName(request.getParameter(paraNames));
                     break; 
-                case "productPrice":
-                    ob.setProductPrice(Double.parseDouble(request.getParameter(paraNames)));
+                case "productQuantity":
+                    ob.setProductQuantity(Integer.parseInt(request.getParameter(paraNames)));
                     break; 
-                case "productQuanity":
-                    ob.setProductQuanity(Integer.parseInt(request.getParameter(paraNames)));
-                    break; 
-                case "totalPrice":
-                    ob.setTotalPrice(Double.parseDouble(request.getParameter(paraNames)));
-                    break;
                 case "agreeCheck":
                     hastoc=true;
                     break;
@@ -111,17 +99,11 @@ public class OrderAddController extends HttpServlet {
                 return;
             }*/
         }
-        
-
-        ob.setCustomerId(1);
-        ob.setStatus("In ordering process");
-        ob.setProductPrice(19.9);
-        ob.setTotalPrice(19.9);
         ob.setShippingAddress(address[0]+"|"+address[1]);
         System.out.println(Arrays.toString(date));
-        try{
+        //try{
         ob.setDOO(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
-        }catch(java.lang.IllegalArgumentException ec){
+        /*}catch(java.lang.IllegalArgumentException ec){
             RequestDispatcher dispatch = request.getRequestDispatcher("orderAdd.jsp");
             request.setAttribute("response",  "Date has incorrect format");
             dispatch.forward(request, response);
@@ -131,7 +113,7 @@ public class OrderAddController extends HttpServlet {
             request.setAttribute("response",  "Please agree to the TOC");
             dispatch.forward(request, response);
             return;
-        }
+        }*/
 
         
         

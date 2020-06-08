@@ -117,16 +117,11 @@
                         <th scope="col">Customer IDs</th>
                         <th scope="col">Order Numbers</th>
                         <th scope="col">Date of Order</th>
-                        <th scope="col">Order Status</th>
-                        <th scope="col">Payment Method</th>
-                        <th scope="col">Original Price</th>
-                        <th scope="col">Paid Money</th>
-                        <th scope="col">You Saved</th>
                       </tr>
                     </thead>
                     <tbody>
                       <% for(int i = 0;i<OrderHistoryList.size();i++){ 
-                          OrderHistoryBean ohb = (OrderHistoryBean)OrderHistoryList.get(i);
+                          OrderBean ohb = (OrderBean)OrderHistoryList.get(i);
                           
                         %> 
                       <tr>
@@ -134,11 +129,6 @@
                         <td><%= String.valueOf(ohb.getCustomerId()).toString() %></td>
                         <td><%= String.valueOf(ohb.getOrderId()).toString()%></td>
                         <td><%= ohb.getDOO()==null? "In ordering process":ohb.getDOO().toString()%></td>
-                        <td><%= ohb.getStatus()==null? "In ordering process":ohb.getStatus().toString()%></td>
-                        <td><%= ohb.getPaymentMethod()==null? "Unselected":ohb.getPaymentMethod().toString()%></td>
-                        <td><%= String.valueOf(ohb.getOriginalPrice()).toString()%></td>
-                        <td><%= String.valueOf(ohb.getPaidMoney())==null? "In ordering process":String.valueOf(ohb.getPaidMoney()).toString()%></td>
-                        <td><%= String.valueOf(ohb.getSavedMoney())==null? "Try coupon":String.valueOf(ohb.getSavedMoney()).toString()%></td>
                         <td style="height: 100px;">
                             <a role="button" href="${pageContext.request.contextPath}/OrderView?OID=<%= ohb.getOrderId()%>" >Manage</a>
                         </td>

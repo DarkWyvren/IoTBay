@@ -138,4 +138,13 @@
             </a>
         </li>
     <%}%>
+    <li class="nav-item">    
+        <a href="orderManagement.jsp">
+            <div class="nav-fill navButt  bg-light" style="color: #404040">
+                <div style="margin: 25px; width:100%;">
+                    <b>Order Management</b>
+                </div>
+            </div>
+        </a>
+    </li>
 </ul>

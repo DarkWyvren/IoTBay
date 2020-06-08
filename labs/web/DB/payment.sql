@@ -14,10 +14,10 @@ DROP TABLE PAYMENTDB;
 CREATE TABLE PAYMENTDB (
 
     Payment_ID int GENERATED ALWAYS AS IDENTITY NOT NULL,
-    Payment_METHOD varchar(128) NOT NULL Unique,
+    Payment_METHOD varchar(128) NOT NULL,
     Order_id int NOT NULL,
     Payment_DATE DATE,
-    Amount double NOT NULL Unique,
+    Amount double NOT NULL,
     Credicard varchar(15),
     
     FOREIGN KEY(Order_ID) REFERENCES ORDERDB(Order_ID),

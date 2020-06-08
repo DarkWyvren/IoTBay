@@ -18,7 +18,6 @@ public class Staff implements Serializable
     private String FullName;
     private String Address;
 
-
     private String password;
 
     private String Pos;

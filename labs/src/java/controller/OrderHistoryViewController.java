@@ -45,7 +45,7 @@
 
        @Override //Add the DBConnector, DBManager, Connection instances to the session
        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<OrderHistoryBean> queryresult = null;
+        ArrayList<OrderBean> queryresult = null;
            try {
                queryresult = manager.fetchOrderHistoryList();
            } catch (SQLException ex) {

@@ -60,12 +60,9 @@ import java.util.Date;
                 int CustomerId = od.getCustomerId();
                 Date DOO = od.getDOO();
                 String ShippingAddress = od.getShippingAddress();
-                String Status = od.getStatus();
-                int ProductId = od.getProductId();
                 String ProductName = od.getProductName();
-                double ProductPrice = od.getProductPrice();
-                int ProductQuanity = od.getProductQuanity();
-                double Total_Price = od.getTotalPrice();
+                int ProductQuantity = od.getProductQuantity();
+
         System.out.println("id:" +O_ID);
            try {
                manager.deleteOrder(od);

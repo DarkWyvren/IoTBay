@@ -10,14 +10,9 @@ package uts.isd.model.dao;
  * @author willi
  */
 import uts.isd.model.CustomerBean;
-import uts.isd.model.OrderHistoryBean;
 import uts.isd.model.OrderBean;
 import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
-
-
-import uts.isd.model.OrderBean;
-
 import uts.isd.model.Staff;
 import java.sql.*;
 import java.text.ParseException;
@@ -474,20 +469,15 @@ public class DBManager {
             if(order_date.equals(Date_Of_Order)&& ord_id == (Order_ID)){
                 OrderBean ob = new OrderBean();
                 ob.setOrderId(ord_id);
-                ob.setCustomerId(rs.getInt(2));
                 
-                String[] dt = rs.getString(3).split("/");
+                String[] dt = rs.getString(2).split("/");
                 System.out.println(Arrays.toString(dt));
-                ob.setDOO(Date.valueOf(rs.getString(3)));
+                ob.setDOO(Date.valueOf(rs.getString(2)));
                 
-                ob.setShippingAddress(rs.getString(4));
-                ob.setStatus(rs.getString(5));
-                ob.setProductId(rs.getInt(6));
-                ob.setProductName(rs.getString(7));
-                ob.setProductPrice(rs.getDouble(8));
-                ob.setProductQuanity(rs.getInt(9));
-                ob.setTotalPrice(rs.getDouble(10));
-
+                ob.setShippingAddress(rs.getString(3));
+                ob.setProductName(rs.getString(4));
+                ob.setProductQuantity(rs.getInt(5));
+ 
                 return ob;
             }
         }            
@@ -497,38 +487,30 @@ public class DBManager {
     //Add a order-data into the database   
     public void addOrder(OrderBean ob) throws SQLException {                   
     //code for add-operation    
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+              SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         String values=
               ""+ob.getCustomerId()+","+
-              ""+format.format(ob.getDOO())+","+
-              "'"+ob.getShippingAddress()+"','"+
-              "'"+ob.getStatus()+"','"+
-              ""+ob.getProductId()+","+
-              "'"+ob.getProductName()+"','"+
-              ""+ob.getProductPrice()+","+
-              ""+ob.getProductQuanity()+","+
-              ""+ob.getTotalPrice()+""
+              "'"+dateformat.format(ob.getDOO())+"',"+
+              "'"+ob.getShippingAddress()+"',"+
+              "'"+ob.getProductName()+"',"+
+              ""+ob.getProductQuantity()+""
               ;
         System.out.println(values); 
 
-        st.executeUpdate("INSERT INTO sql12346043.ORDERDB(Customer_ID, Date_Of_Order, Address, Status, Product_ID, Product_Quanity, Total_Price)  VALUES("+values+")");    
+        st.executeUpdate("INSERT INTO sql12346043.ORDERDB(Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)  VALUES("+values+")");    
 
     }
     
     //update a order details in the database   
 
     public void updateOrder(OrderBean ob) throws SQLException {       
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+      SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         String values=
               "Customer_ID = '"+ob.getCustomerId()+"',"+
-              "Date_Of_Order = '"+format.format(ob.getDOO())+"',"+
+              "Date_Of_Order = '"+dateformat.format(ob.getDOO())+"',"+
               "Address = '"+ob.getShippingAddress()+"',"+
-              "Status = '"+format.format(ob.getStatus())+"',"+
-              "Product_ID = '"+ob.getProductId()+"',"+
               "Product_Name = '"+ob.getProductName()+"',"+
-              "Product_Price = '"+ob.getProductPrice()+"',"+
-              "Product_Quanity = '"+ob.getProductQuanity()+"'"+
-              "Total_Price = '"+ob.getTotalPrice()+"'"
+              "Product_Quantity = '"+ob.getProductQuantity()+"'"
               ;
         System.out.println(values);
         st.executeUpdate("UPDATE sql12346043.ORDERDB SET "+values+" WHERE Order_ID ="+ob.getOrderId());
@@ -542,26 +524,22 @@ public class DBManager {
 
     public OrderBean getOrderBean(int order_ID) throws SQLException {   
         OrderBean orderBean = null;
-            String query = "SELECT * FROM APP.ORDERDB WHERE Order_ID="+order_ID+"";
+            String query = "SELECT * FROM sql12346043.ORDERDB WHERE Order_ID="+order_ID+"";
             ResultSet rs = st.executeQuery(query);
             while(rs.next()){
                 int OrderId = rs.getInt(1);
                 int CustomerId = rs.getInt(2);
                 Date DOO = rs.getDate(3);
                 String ShippingAddress = rs.getString(4);
-                String Status = rs.getString(5);
-                int ProductId = rs.getInt(6);
-                String ProductName = rs.getString(7);
-                double ProductPrice = rs.getDouble(8);
-                int ProductQuanity = rs.getInt(9);
-                double Total_Price = rs.getDouble(10);
-                System.out.println("Order Status: " + Status);
-                orderBean = new OrderBean (OrderId, CustomerId, DOO, ShippingAddress, Status, ProductId, ProductName, ProductPrice, ProductQuanity, Total_Price); 
+                String productName = rs.getString(5);
+                int ProductQuantity = rs.getInt(6);
+                System.out.println("Order id: " + OrderId);
+                orderBean = new OrderBean (OrderId, CustomerId, DOO, ShippingAddress, productName, ProductQuantity); 
             } return orderBean;     
     }
     
-        public void showOrder(int OrderId, int CustomerId, Date DOO, String ShippingAddress, String Status, int ProductId, String ProductName, double ProductPrice, int ProductQuanity, double Total_Price) throws SQLException{
-        String query = "SELECT FROM * APP.ORDERDB";
+        public void showOrder(int OrderId, int CustomerId, Date DOO, String ShippingAddress, int ProductId, int ProductQuantity) throws SQLException{
+        String query = "SELECT FROM * sql12346043.ORDERDB";
         ResultSet rs = st.executeQuery(query);
 
         while(rs.next()){
@@ -569,18 +547,14 @@ public class DBManager {
             CustomerId = rs.getInt(2);
             DOO = rs.getDate(3);
             ShippingAddress = rs.getString(4);
-            Status = rs.getString(5);
-            ProductId = rs.getInt(6);
-            ProductName = rs.getString(7);
-            ProductPrice = rs.getDouble(8);
-            ProductQuanity = rs.getInt(9);
-            Total_Price = rs.getDouble(10);
+            ProductId = rs.getInt(5);
+            ProductQuantity = rs.getInt(6);
         } 
     }
      
         public ArrayList<OrderBean> fetchOrderList() throws SQLException{
            
-        String fetch = "SELECT * FROM APP.ORDERDB";
+        String fetch = "SELECT * FROM sql12346043.ORDERDB";
         ResultSet rs = st.executeQuery(fetch);
         ArrayList<OrderBean> listOrder = new ArrayList(); 
 
@@ -589,24 +563,18 @@ public class DBManager {
             int CustomerId = rs.getInt(2);
             Date DOO = rs.getDate(3);
             String ShippingAddress = rs.getString(4);
-            String Status = rs.getString(5);
-            int ProductId = rs.getInt(6);
-            String ProductName = rs.getString(7);
-            double ProductPrice = rs.getDouble(8);
-            int ProductQuanity = rs.getInt(9);
-            double Total_Price = rs.getDouble(10);
-            
-            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, Status, ProductId, ProductName, ProductPrice, ProductQuanity, Total_Price);
+            String ProductName = rs.getString(5);
+            int ProductQuantity = rs.getInt(6);
+  
+            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, ProductName, ProductQuantity);
             listOrder.add(OrderFromDB);
-            
-            
         }     
         return listOrder;
     }
     
      public ArrayList<OrderBean> OrderLine(int Customer_id) throws SQLException{
            
-        String fetch = "SELECT * FROM APP.ORDERDB WHERE Customer_ID='"+Customer_id+"'";;
+        String fetch = "SELECT * FROM sql12346043.ORDERDB WHERE Customer_ID='"+Customer_id+"'";;
         ResultSet rs = st.executeQuery(fetch);
         ArrayList<OrderBean> OrderLine = new ArrayList(); 
        
@@ -615,24 +583,65 @@ public class DBManager {
             int CustomerId = rs.getInt(2);
             Date DOO = rs.getDate(3);
             String ShippingAddress = rs.getString(4);
-            String Status = rs.getString(5);
-            int ProductId = rs.getInt(6);
-            String ProductName = rs.getString(7);
-            double ProductPrice = rs.getDouble(8);
-            int ProductQuanity = rs.getInt(9);
-            double Total_Price = rs.getDouble(10);
+            String ProductName = rs.getString(5);
+            int ProductQuantity = rs.getInt(6);
             
-            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, Status, ProductId, ProductName, ProductPrice, ProductQuanity, Total_Price);
-            OrderLine.add(OrderFromDB);
-            
-            
+            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, ProductName, ProductQuantity);
+            OrderLine.add(OrderFromDB);         
         }     
         return OrderLine;
     }
     
+     public void showOrderHistory(int OrderId, int CustomerId, Date DOO) throws SQLException{
+        String query = "SELECT FROM * sql12346043.ORDERDB";
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()){
+            OrderId = rs.getInt(1);
+            CustomerId = rs.getInt(2);
+            DOO = rs.getDate(3);
+        } 
+    }
      
+        public ArrayList<OrderBean> fetchOrderHistoryList() throws SQLException{
+           
+        String fetch = "SELECT * FROM sql12346043.ORDERDB";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderBean> listOrderHistory = new ArrayList(); 
+
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            
+            OrderBean OrderHistoryFromDB = new OrderBean(OrderId, CustomerId, DOO);
+            listOrderHistory.add(OrderHistoryFromDB);
+            
+            
+        }     
+        return listOrderHistory;
+    }
+    
+     public ArrayList<OrderBean> OrderHistoryLine(int Customer_id) throws SQLException{
+           
+        String fetch = "SELECT * FROM sql12346043.ORDERDB WHERE Customer_ID='"+Customer_id+"'";;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderBean> OrderHistoryLine = new ArrayList(); 
+       
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            
+            OrderBean OrderHistoryFromDB = new OrderBean(OrderId, CustomerId, DOO);
+            OrderHistoryLine.add(OrderHistoryFromDB);
+            
+            
+        }     
+        return OrderHistoryLine;
+    }
      
-     
+     /*
          //Add a order-data into the database   
     public void addOrderHistory(OrderHistoryBean ohb) throws SQLException {                   
     //code for add-operation    
@@ -737,9 +746,7 @@ public class DBManager {
             
         }     
         return OrderHistoryLine;
-    }
-    
-    
+    }*/
     
     
     

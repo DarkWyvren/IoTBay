@@ -21,7 +21,7 @@ import uts.isd.model.dao.DBManager;
 public class paymentUpdateServlet extends HttpServlet {
 
   
-    
+  /*  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,6 +51,6 @@ public class paymentUpdateServlet extends HttpServlet {
       response.sendRedirect("paymentupdate.jsp");
               
               
-          }
+          }*/
       } 
        

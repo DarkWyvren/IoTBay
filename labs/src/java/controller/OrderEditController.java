@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -24,10 +19,6 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.*;
 import uts.isd.model.dao.*;
 
-/**
- *
- * @author mood35-Laptop
- */
 @WebServlet(
   name = "UpdateOrder", 
   urlPatterns = "/OrderEdit")
@@ -68,16 +59,12 @@ import uts.isd.model.dao.*;
                 int CustomerId = ob.getCustomerId();
                 Date DOO = ob.getDOO();
                 String ShippingAddress = ob.getShippingAddress();
-                String Status = ob.getStatus();
-                int ProductId = ob.getProductId();
                 String ProductName = ob.getProductName();
-                double ProductPrice = ob.getProductPrice();
-                int ProductQuanity = ob.getProductQuanity();
-                double Total_Price = ob.getTotalPrice();
+                int ProductQuantity = ob.getProductQuantity();
         //int status = Integer.parseInt(request.getParameter("CStatus"));
         System.out.println("id:" +O_ID); 
         request.setAttribute("OrderInfo2", ob);
-        request.getRequestDispatcher("OrderUpdate.jsp").include(request, response);
+        request.getRequestDispatcher("orderUpdate.jsp").include(request, response);
         
     }
     
@@ -107,24 +94,12 @@ import uts.isd.model.dao.*;
                 case "postalcode":
                     address[1] = request.getParameter(paraNames);
                     break; 
-                case "status":
-                    ob.setStatus(request.getParameter(paraNames));
-                    break;
-                case "productId":
-                    ob.setProductId(Integer.parseInt(request.getParameter(paraNames)));
-                    break;  
                 case "productName":
                     ob.setProductName(request.getParameter(paraNames));
+                    break;  
+                case "productQuantity":
+                    ob.setProductQuantity(Integer.parseInt(request.getParameter(paraNames)));
                     break; 
-                case "productPrice":
-                    ob.setProductPrice(Double.parseDouble(request.getParameter(paraNames)));
-                    break; 
-                case "productQuanity":
-                    ob.setProductQuanity(Integer.parseInt(request.getParameter(paraNames)));
-                    break; 
-                case "totalPrice":
-                    ob.setTotalPrice(Double.parseDouble(request.getParameter(paraNames)));
-                    break;
                 case "agreeCheck":
                     hastoc=true;
                     break;

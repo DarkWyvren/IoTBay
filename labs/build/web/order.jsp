@@ -2,8 +2,6 @@
     Document   : order
     Author     : Forever
 --%>
-
-<%@page import="uts.isd.model.OrderHistoryBean"%>
 <%@page import="uts.isd.model.OrderBean"%>
 <%@page import="uts.isd.model.CustomerAccessLogBean"%>
 <%@page import="uts.isd.model.CustomerBean"%>
@@ -96,11 +94,8 @@
                         <th scope="col">Customer ID</th>
                         <th scope="col">Date of Order</th>
                         <th scope="col">Shipping Address</th>
-                        <th scope="col">Product ID</th>
-                        <th scope="col">Product Price</th>
+                        <th scope="col">Product Name</th>
                         <th scope="col">Product Quantity</th>
-                        <th scope="col">Total Price</th>
-                        <th scope="col">Order Status</th>
                         
                       </tr>
                     </thead>
@@ -115,11 +110,8 @@
                         <td><%= String.valueOf(ob.getCustomerId()).toString()%></td>
                         <td><%= ob.getDOO()==null? "In ordering process":ob.getDOO().toString()%></td>
                         <td><%= ob.getShippingAddress()==null? "Unfilled in":ob.getShippingAddress().toString()%></td>
-                        <td><%= String.valueOf(ob.getProductId()).toString()%></td>
-                        <td><%= String.valueOf(ob.getProductPrice())==null? "19.9":String.valueOf(ob.getProductPrice()).toString()%></td>
-                        <td><%= String.valueOf(ob.getProductQuanity())==null? "1":String.valueOf(ob.getProductQuanity()).toString()%></td>
-                        <td><%= String.valueOf(ob.getTotalPrice())==null? "String.valueOf(ob.getProductPrice()*ob.getProductPrice())":String.valueOf(ob.getTotalPrice()).toString()%></td>
-                        <td><%= ob.getStatus()==null? "In ordering process":ob.getStatus().toString()%></td>
+                        <td><%= ob.getProductName()==null? "Unfilled in":ob.getProductName().toString()%></td>
+                        <td><%= String.valueOf(ob.getProductQuantity()).toString()%></td>
                         <td style="height: 100px;">
                             <a role="button" href="${pageContext.request.contextPath}/OrderEdit?OID=<%= ob.getOrderId()%>">Update</a>
                             <a role="button" href="${pageContext.request.contextPath}/deleteOrder?OID=<%= ob.getOrderId()%>">Cancel</a>

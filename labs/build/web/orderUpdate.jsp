@@ -73,10 +73,10 @@
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="OrderNavBar.jsp" />
+                     <jsp:include page="orderNavBar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                    <h1>Update</h1> 
+                    <h1>Updating Order Details</h1> 
                     <div class="jumbotron">
                         <form method="POST" action="OrderEdit">
                             <input type="hidden" id="OID" name="OrderID" value="<%= current.getOrderId()%>">
@@ -92,8 +92,8 @@
                             </select>
                         </div>
                         <div class="col">
-                            <label for="inputProductQuanity">Product Quanity</label>
-                            <select id="inputProductQuanity" class="form-control"  name="productQuanity">
+                            <label for="inputProductQuantity">Product Quantity</label>
+                            <select id="inputProductQuantity" class="form-control"  name="productQuantity">
                                 <% for (int i =1 ;i<=5;i++){%>
                                 <option value="<%=i%>"><%=i%></option>
                                 <%}%>
@@ -149,6 +149,8 @@
                           <label class="form-check-label" for="agreeCheck">I agree to <a href="#">terms and conditions</a></label>
                         </div>
                       </div>
+                            <button type="submit" class="btn  btn-secondary btn-lg" href="/OrderView">Go back</button>
+                            <button type="submit" class="btn  btn-primary btn-lg" href>Update</button>
                 </div>
             </div>  
         </div>

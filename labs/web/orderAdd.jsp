@@ -72,16 +72,16 @@
                     <form action="AddNewOrder" method="POST">
                       <div class="row">
                         <div class="col">
-                            <label for="inputProductName">Product Name</label>
-                            <select id="inputProductName" class="form-control"  name="productName">
-                                <option value="IoTBay Laptop">IoTBay Laptop</option>
-                                <option value="IoTBay Controller">IoTBay Controller</option>
-                                <option value="IoTBay SmartPhone">IoTBay SmartPhone</option>
+                            <label for="inputproductName">Product Name</label>
+                            <select id="inputproductName" class="form-control"  name="productName">
+                                <option value="IoTBay 8G RAM">IoTBay 8G RAM</option>
+                                <option value="IoTBay 16G RAM">IoTBay 16G RAM</option>
+                                <option value="IoTBay 32G RAM">IoTBay 32G RAM</option>
                             </select>
                         </div>
                         <div class="col">
-                            <label for="inputProductQuanity">Product Quanity</label>
-                            <select id="inputProductQuanity" class="form-control"  name="productQuanity">
+                            <label for="inputproductQuantity">Product Quantity</label>
+                            <select id="inputproductQuantity" class="form-control"  name="productQuantity">
                                 <% for (int i =1 ;i<=5;i++){%>
                                 <option value="<%=i%>"><%=i%></option>
                                 <%}%>
@@ -138,7 +138,6 @@
                         </div>
                       </div>
                      
-                        
                       <button type="submit" class="btn btn-primary" href>Add</button>
 
                 </div>

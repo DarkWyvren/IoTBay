@@ -26,9 +26,8 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron"><a href="orderAdd.jsp">&gt;Start ordering&lt;</div>
-                    <div class="jumbotron"><a href="ShowOrderHistory">View my orders</div>
-                    <div class="jumbotron"><a href="${pageContext.request.contextPath}/OrderView">Manage my orders</div>
-                    <div class="jumbotron"><a href="orderTrack.jsp">Track my orders</div>
+                    <div class="jumbotron"><a href="ShowOrderHistory">View Order History</div>
+                    <div class="jumbotron"><a href="${pageContext.request.contextPath}/OrderView">View Order Details</div>
                 </div>
             </div>
         </div>
