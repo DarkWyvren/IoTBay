@@ -25,6 +25,7 @@ import javax.swing.text.DateFormatter;
 import uts.isd.model.CustomerAccessLogBean;
 import uts.isd.model.StaffAccessLogBean;
 import uts.isd.model.payment;
+import uts.isd.model.paymentprefBean;
 
 /* 
 * DBManager is the primary DAO class to interact with the database. 
@@ -1074,7 +1075,27 @@ public class DBManager {
         return result;
     }   
         
+    
+    public void addPaymentPref(paymentprefBean pb) throws SQLException {
+        st.executeUpdate("INSERT INTO sql12346043.PAYMENTPREFDB(Customer_ID, Payment_METHOD, Credicard)" + "VALUES ('"+pb.getCusid()+"', '"+pb.getPayment_METHOD()+"', '"+pb.getCreditcard_Details()+"')");
+    }
+    
+    public void updatePaymentPref(paymentprefBean pb) throws SQLException {
+        st.executeUpdate("UPDATE INTO sql12346043.PAYMENTPREFDB SET Payment_METHOD= '"+pb.getPayment_METHOD()+"', Credicard='"+pb.getCreditcard_Details()+"' WHERE Payment_ID = "+pb.getPayment_ID());
+    }
+    
+    public paymentprefBean getPaymentPref(int cusid) throws SQLException {
+        String query = "SELECT * FROM sql12346043.PAYMENTPREFDB WHERE  Customer_ID='"+cusid+"'";
+        ResultSet rs = st.executeQuery(query);
         
+        while(rs.next()){
+            String P_ID = rs.getString(2);
+            String CRE = rs.getString(4);
+             String Meth = rs.getString(3);
+            return new paymentprefBean (P_ID, Meth, null, CRE, 0); 
+        }         
+       return null; 
+    }
         
        
     //Add a supplier into the db

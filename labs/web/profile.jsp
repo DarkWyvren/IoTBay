@@ -69,6 +69,24 @@
             <div class="row" >
                 <div class="col-sm-12 col-md-3">
                      <jsp:include page="navbar.jsp" />
+                     <%if(cust!=null){%>
+                        <ul class="flex-sm-column nav  nav-pills ">
+                            <li class="nav-item">
+                                <a href="paymentPref?CID=<%=cust.getId() %>">
+                                    <div class="nav-fill navButt bg-secondary text-white">
+                                        <div style="margin: 25px; width:100%;">
+                                            <svg class="bi bi-credit-card" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"/>
+                                                <rect width="3" height="3" x="2" y="9" rx="1"/>
+                                                <path d="M1 5h14v2H1z"/>
+                                              </svg>
+                                            <b>Change payment details</b>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    <%}%>
                 </div>
                 
                 <div class="col-sm-12 col-md-9 p-4">
@@ -147,6 +165,8 @@
                       <%if(cust!=null){%>
                       <a class="btn btn-primary">Delete Account</a>
                       <%}%> 
+                      
+                      
                     </form> 
                 </div>
                    

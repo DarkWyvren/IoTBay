@@ -83,6 +83,9 @@ public class LoginController  extends HttpServlet {
             }else{
                 Staff current = (Staff)logindt;
                 req.getSession().setAttribute("login", null);
+                StaffAccessLogBean accesslog = (StaffAccessLogBean)req.getSession().getAttribute("sessionLog");
+                manager.endStaffLoginRecord(accesslog);
+                    req.getSession().setAttribute("sessionLog", null);
                 RequestDispatcher dispatch = req.getRequestDispatcher("index.jsp");
                 req.setAttribute("response",  "OK");
                 dispatch.forward(req, resp);
