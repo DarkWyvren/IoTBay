@@ -19,7 +19,9 @@ public class OrderBean implements Serializable{
         this.product = product;
         this.orderId = orderId;
         this.customerId = customerId;
-        this.productID = product.getID();
+        if(product!=null){
+            productID= product.getID();
+        }
         this.productQuantity = productQuantity;
         this.shippingAddress = shippingAddress;
         this.DOO = DOO;
@@ -65,6 +67,9 @@ public class OrderBean implements Serializable{
 
     public void setProduct(ProductBean product) {
         this.product = product;
+        if(product!=null){
+            productID= product.getID();
+        }
     }
     
     public Date getDOO() {

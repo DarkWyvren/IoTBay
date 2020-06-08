@@ -84,6 +84,9 @@ public class OrderAddController extends HttpServlet {
             System.out.println(paraNames);
             //try{
             switch(paraNames){
+                case "inputCustomerId":
+                    ob.setCustomerId(Integer.parseInt(request.getParameter(paraNames)));
+                    break;
                 case "dateday":
                     date[1] = Integer.parseInt(request.getParameter(paraNames));
                     break;    
@@ -118,6 +121,7 @@ public class OrderAddController extends HttpServlet {
             }*/
         }
         ob.setShippingAddress(address[0]+"|"+address[1]);
+        
         System.out.println(Arrays.toString(date));
         try{
         ob.setDOO(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
@@ -126,13 +130,34 @@ public class OrderAddController extends HttpServlet {
             request.setAttribute("response",  "Date has incorrect format");
             dispatch.forward(request, response);
         }
+        
+        String etext="";
+        
         if(!hastoc){
-            RequestDispatcher dispatch = request.getRequestDispatcher("orderAdd.jsp");
-            request.setAttribute("response",  "Please agree to the TOC");
-            dispatch.forward(request, response);
-            return;
+            etext = "Please agree to the TOC";
+           
         }
-
+        if(ob.getProductQuantity()<=0){
+            etext="cannot order nothing or less";
+        }
+        
+        if(etext.length()!=0){
+            try {
+                ProductBean pbean = manager.getProduct(ob.getProductID());
+                
+                
+                
+                 RequestDispatcher dispatch = request.getRequestDispatcher("orderAdd.jsp");
+                 request.setAttribute("product", pbean);
+                request.setAttribute("response",  etext);
+                dispatch.forward(request, response);
+                return;
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderAddController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        }
         
         
         try {

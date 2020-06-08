@@ -51,21 +51,9 @@ import java.util.Date;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     OrderBean od = null;
         int O_ID = Integer.parseInt(request.getParameter("OID"));
-               try {
-                   od = manager.getOrderBean(O_ID);
-               } catch (SQLException ex) {
-                   Logger.getLogger(OrderEditController.class.getName()).log(Level.SEVERE, null, ex);
-               }
-                int OrderId = od.getOrderId();
-                int CustomerId = od.getCustomerId();
-                Date DOO = od.getDOO();
-                String ShippingAddress = od.getShippingAddress();
-                String ProductName = od.getProductName();
-                int ProductQuantity = od.getProductQuantity();
-
         System.out.println("id:" +O_ID);
            try {
-               manager.deleteOrder(od);
+               manager.deleteOrder(O_ID);
            } catch (SQLException ex) {
                Logger.getLogger(OrderDeleteController.class.getName()).log(Level.SEVERE, null, ex);
            }

@@ -32,25 +32,6 @@
                             profilelink="profile.jsp";
 
                         }
-                        
-                        String errortext="";
-                        boolean haserror=false;
-                        Object init = request.getAttribute("response");
-                        if(init!=null){
-                            String postRes = (String)init;
-                            if(postRes.equals("OK")){
-                            }else if(postRes.length()>0){
-                                haserror = true;
-                                errortext = postRes;
-                            }
-                        }
-                        Calendar thing = Calendar.getInstance();
-                        
-                        if(accountsesh!=null&&cust.getDOB()!=null){
-                            System.out.println(cust.getDOB().toString()+ thing);
-                            thing.setTime(cust.getDOB());
-                        }
-                        
 
                         ArrayList datalist = new ArrayList();
                         Object  data= request.getAttribute("data");

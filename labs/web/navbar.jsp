@@ -98,7 +98,7 @@
             
         </form>
     </li>
-    
+    <%if(stuff==null){%>
     <li class="nav-item">
         <a href="store">
             <div class="nav-fill navButt bg-dark text-white">
@@ -112,6 +112,7 @@
             </div>
         </a>
     </li>
+    <%}%>
     <%if(stuff!=null){%>
     <li class="nav-item">    
         <a href="Management.jsp">
@@ -138,6 +139,7 @@
             </a>
         </li>
     <%}%>
+    <%if(stuff==null){%>
     <li class="nav-item">    
         <a href="orderManagement.jsp">
             <div class="nav-fill navButt  bg-light" style="color: #404040">
@@ -147,4 +149,5 @@
             </div>
         </a>
     </li>
+    <%}%>
 </ul>

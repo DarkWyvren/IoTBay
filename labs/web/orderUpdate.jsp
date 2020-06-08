@@ -19,28 +19,22 @@
                         
                         
                         
-                        CustomerBean cust = new CustomerBean();
-                        cust.setName("Guest");
-                        cust.setPassword("");
-
+                        CustomerBean cust = null;
+                        Staff stuff= new Staff();
                         Object accountsesh = session.getAttribute("login");
-                        if(accountsesh==null){
-                            session.setAttribute("login", cust);
-                        }else{
-                            cust = (CustomerBean)accountsesh;
-                        }
-                        Calendar thing = Calendar.getInstance();
-                        
-                        if(accountsesh!=null&&cust.getDOB()!=null){
-                            System.out.println(cust.getDOB().toString()+ thing);
-                            thing.setTime(cust.getDOB());
-                        }
-                        
+                        String profilelink= "#";
+                        String name="Guest";
+                        if(accountsesh!=null){
 
-                        ArrayList datalist = new ArrayList();
-                        Object  data= request.getAttribute("data");
-                        if(data!=null){
-                            datalist = (ArrayList)data;
+                            if(accountsesh instanceof CustomerBean){
+                                cust = (CustomerBean)accountsesh;
+                                name= cust.getName();
+                            }else{
+                                stuff = (Staff)accountsesh;
+                                name=stuff.getFullName();
+                            }
+                            profilelink="profile.jsp";
+
                         }
                         
                         boolean orderedUnAlready=false;
@@ -56,7 +50,11 @@
                                 errortext = postRes;
                             }
                         }
-                  
+                    OrderBean order = (OrderBean)request.getAttribute("order");
+                    if(order==null){
+                        order=new OrderBean();
+                    }
+                  ProductBean pt= order.getProduct();
 %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -79,35 +77,43 @@
                     <h1>Updating Order Details</h1> 
                     <div class="jumbotron">
                         <form method="POST" action="OrderEdit">
-                            <input type="hidden" id="OID" name="OrderID" value="<%= current.getOrderId()%>">
+                            <input type="hidden" id="OID" name="OrderID" value="<%= order.getOrderId()%>">
                         <table>
                             
                             <div class="row">
                         <div class="col">
-                            <label for="inputProductName">Product Name</label>
-                            <select id="inputProductName" class="form-control"  name="productName">
-                                <option value="IoTBay Laptop">IoTBay Laptop</option>
-                                <option value="IoTBay Controller">IoTBay Controller</option>
-                                <option value="IoTBay SmartPhone">IoTBay SmartPhone</option>
-                            </select>
+                            <% if(pt!=null){%>
+                                <label for="inputproductName">Product Name</label>
+                                <div class="w-100 h-100">
+                                <jsp:include page="ProductDiv.jsp" flush="true">
+                                    <jsp:param name="product" value="<%=pt.getName() %>"/>
+                                    <jsp:param name="productcat" value="<%=pt.getCategory() %>"/>
+                                    <jsp:param name="productprice" value="<%=pt.getPrice() %>"/>
+                                    <jsp:param name="productid" value="<%=pt.getID() %>"/>
+                                    <jsp:param name="canEdit" value="<%=false%>"/>
+                                    <jsp:param name="justView" value="<%=true%>"/>
+                                </jsp:include>
+                                </div>
+                                <input type="hidden" name="productID" value="<%=pt.getID() %>">
+                            <%}else{%>
+                                <a class="w-100 h-100 btn btn-light">
+                                    No product found
+                                </a>
+                            <%}%>
                         </div>
                         <div class="col">
                             <label for="inputProductQuantity">Product Quantity</label>
-                            <select id="inputProductQuantity" class="form-control"  name="productQuantity">
-                                <% for (int i =1 ;i<=5;i++){%>
-                                <option value="<%=i%>"><%=i%></option>
-                                <%}%>
-                            </select>
+                            <input type="number" value="<%=order.getProductQuantity() %>" class="form-control" id="inputProductQuantity" placeholder="69" name="productQuantity">
                         </div>    
                       </div>
                       <div class="row">
                             <div class="col">
                               <label for="inputAddress">Shipping Address</label>
-                              <input type="text" class="form-control" id="inputAddress"  placeholder="18-20 Perti St Dankstown Hobart Australia" name="address">
+                              <input type="text" value="<%=order.getShippingAddress().split("\\|")[0] %>"  class="form-control" id="inputAddress"  placeholder="18-20 Perti St Dankstown Hobart Australia" name="address">
                             </div>       
                             <div class="col">
                               <label for="inputPost">Postcode</label>
-                              <input type="number" class="form-control" id="inputPost" placeholder="1234" name="postalcode">
+                              <input type="number"  value="<%=order.getShippingAddress().split("\\|")[1] %>" class="form-control" id="inputPost" placeholder="1234" name="postalcode">
                             </div>  
                       </div>   
                       <div class="row">
@@ -122,7 +128,7 @@
                         <div class="col">
                             <label for="inputMonth">Month</label>
                             <select id="inputMonth" class="form-control"  name="datemonth">
-                                <% for (int i =6 ;i<=12;i++){%>
+                                <% for (int i =1 ;i<=12;i++){%>
                                 <option value="<%=i%>"><%=i%></option>
                                 <%}%>
                             </select>
@@ -138,8 +144,7 @@
                       </div>
                       <div class="row">
                             <div class="col">
-                              <label for="inputCustomerId">Your Customer ID</label>
-                              <input type="text" id="inputCustomerId" name="inputCustomerId" value="<%= (cust.getId())==0? "You are NOT Registered":String.valueOf(cust.getId()).toString()%>" readonly>
+                              <input type="hidden" id="inputCustomerId" name="inputCustomerId" value="<%= order.getCustomerId() %>" readonly>
                             </div>       
                       </div>  
                      
@@ -149,6 +154,10 @@
                           <label class="form-check-label" for="agreeCheck">I agree to <a href="#">terms and conditions</a></label>
                         </div>
                       </div>
+                            <div class="form-group">
+                                <label class="text-danger"><%=errortext%></label>
+                                
+                            </div>
                             <button type="reset" class="btn  btn-secondary btn-lg" href="">Go back</button>
                             <button type="submit" class="btn  btn-primary btn-lg" href>Update</button>
                 </div>

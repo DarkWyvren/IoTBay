@@ -98,11 +98,8 @@
                         </div>
                         <div class="col">
                             <label for="inputproductQuantity">Product Quantity</label>
-                            <select id="inputproductQuantity" class="form-control"  name="productQuantity">
-                                <% for (int i =1 ;i<=5;i++){%>
-                                <option value="<%=i%>"><%=i%></option>
-                                <%}%>
-                            </select>
+                            <input type="number" class="form-control" id="inputproductQuantity" class="form-control"  placeholder="1" name="productQuantity">
+                                
                         </div>    
                       </div>
                       <div class="row">
@@ -154,6 +151,9 @@
                         </div>
                       </div>
                       <% if(pt!=null){%>
+                      <div class="form-group">
+                        <label class="text-danger"><%=errortext%></label>
+                        </div>
                         <button type="submit" class="btn btn-primary" href>Add</button>
                       <%}%>
                 </div>

@@ -626,9 +626,9 @@ public class DBManager {
         String values=
               "Customer_ID = '"+ob.getCustomerId()+"',"+
               "Date_Of_Order = '"+dateformat.format(ob.getDOO())+"',"+
-              "Address = '"+ob.getShippingAddress()+"',"+
-              "Product_ID = '"+ob.getProductID()+"',"+
-              "Product_Quantity = '"+ob.getProductQuantity()+"'"
+              "Shipping_Address = '"+ob.getShippingAddress()+"',"+
+              "Product_ID = "+ob.getProductID()+","+
+              "Product_Quantity = "+ob.getProductQuantity()+""
               ;
         System.out.println(values);
         st.executeUpdate("UPDATE sql12346043.ORDERDB SET "+values+" WHERE Order_ID ="+ob.getOrderId());
@@ -637,9 +637,12 @@ public class DBManager {
     //delete a order from the database   
     public void deleteOrder(OrderBean od) throws SQLException{       
        //code for delete-operation   
-       st.executeUpdate("DELETE FROM sql12346043.ORDERDB WHERE Order_ID ='"+od.getOrderId()+"'");
+       st.executeUpdate("DELETE FROM sql12346043.ORDERDB WHERE Order_ID ="+od.getOrderId()+"");
     }
-
+    public void deleteOrder(int od) throws SQLException{       
+       //code for delete-operation   
+       st.executeUpdate("DELETE FROM sql12346043.ORDERDB WHERE Order_ID ="+od+"");
+    }
     public OrderBean getOrderBean(int order_ID) throws SQLException {   
         OrderBean orderBean = null;
             String query = "SELECT * FROM sql12346043.ORDERDB WHERE Order_ID="+order_ID+"";
@@ -672,7 +675,8 @@ public class DBManager {
      
         public ArrayList<OrderBean> fetchOrderList() throws SQLException{
            
-        String fetch = "SELECT * FROM sql12346043.ORDERDB";
+        String fetch = "SELECT ORDERDB.*,PRODUCTDB.ProductName " +
+                        "FROM ORDERDB INNER JOIN PRODUCTDB ON ORDERDB.Product_ID = PRODUCTDB.ProductID";
         ResultSet rs = st.executeQuery(fetch);
         ArrayList<OrderBean> listOrder = new ArrayList(); 
 
@@ -685,7 +689,9 @@ public class DBManager {
             int ProductQuantity = rs.getInt(6);
   
             OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, productID, ProductQuantity);
+            OrderFromDB.setProduct(new ProductBean(productID, rs.getString(7), 0.0, "", 0, 0));
             listOrder.add(OrderFromDB);
+            
         }     
         return listOrder;
     }

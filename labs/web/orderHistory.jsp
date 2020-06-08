@@ -12,33 +12,22 @@
 <!DOCTYPE html>
 <html>
     <%
-                        CustomerBean cust = new CustomerBean();
-                        cust.setName("Guest");
-                        cust.setPassword("");
-
+                        CustomerBean cust = null;
+                        Staff stuff= new Staff();
                         Object accountsesh = session.getAttribute("login");
-                        if(accountsesh==null){
-                            session.setAttribute("login", cust);
-                        }else{
-                            cust = (CustomerBean)accountsesh;
-                        }
-                        
-                        String errortext="";
-                        boolean haserror=false;
-                        Object init = request.getAttribute("response");
-                        if(init!=null){
-                            String postRes = (String)init;
-                            if(postRes.equals("OK")){
-                            }else if(postRes.length()>0){
-                                haserror = true;
-                                errortext = postRes;
+                        String profilelink= "#";
+                        String name="Guest";
+                        if(accountsesh!=null){
+
+                            if(accountsesh instanceof CustomerBean){
+                                cust = (CustomerBean)accountsesh;
+                                name= cust.getName();
+                            }else{
+                                stuff = (Staff)accountsesh;
+                                name=stuff.getFullName();
                             }
-                        }
-                        Calendar thing = Calendar.getInstance();
-                        
-                        if(accountsesh!=null&&cust.getDOB()!=null){
-                            System.out.println(cust.getDOB().toString()+ thing);
-                            thing.setTime(cust.getDOB());
+                            profilelink="profile.jsp";
+
                         }
                         
 
@@ -63,7 +52,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title><%=cust.getName()%>'s Order History</title>
+        <title><%=name%>'s Order History</title>
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
          <script src="lib/jquery/jquery-3.5.0.min.js"></script>
@@ -83,7 +72,7 @@
                 </div>
                 
                 <div class="col-sm-12 col-md-9 p-4">
-                    <h1 style='color: #721c24'>Viewing <%=cust.getName()%>'s Order History</h1>
+                    <h1 style='color: #721c24'>Viewing <%=name%>'s Order History</h1>
                     <form action="orderHistory" method="GET"  class="form-inline ">
                         <div class="row">
                             <div class="col-10 pr-1">

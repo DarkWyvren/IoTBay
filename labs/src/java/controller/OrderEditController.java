@@ -53,18 +53,13 @@ import uts.isd.model.dao.*;
         int O_ID = Integer.parseInt(request.getParameter("OID"));
                try {
                     ob = manager.getOrderBean(O_ID);
+                    ob.setProduct(manager.getProduct(ob.getProductID()));
                } catch (SQLException ex) {
                    Logger.getLogger(OrderEditController.class.getName()).log(Level.SEVERE, null, ex);
                };
-                int OrderId = ob.getOrderId();
-                int CustomerId = ob.getCustomerId();
-                Date DOO = ob.getDOO();
-                String ShippingAddress = ob.getShippingAddress();
-                String ProductName = ob.getProductName();
-                int ProductQuantity = ob.getProductQuantity();
         //int status = Integer.parseInt(request.getParameter("CStatus"));
         System.out.println("id:" +O_ID); 
-        request.setAttribute("OrderInfo2", ob);
+        request.setAttribute("order", ob);
         request.getRequestDispatcher("orderUpdate.jsp").include(request, response);
         
     }
@@ -76,50 +71,84 @@ import uts.isd.model.dao.*;
         int date[] = new int[3];
         String[] address = new String[2];
         while(paramNames.hasMoreElements()){
-            String paraNames = paramNames.nextElement();
-            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-            System.out.println(paraNames);
-            switch(paraNames){
-                case "dateday":
-                    date[1] = Integer.parseInt(request.getParameter(paraNames));
-                    break;    
-                case "datemonth":
-                    date[0] = Integer.parseInt(request.getParameter(paraNames));
-                    break;
-                case "dateyear":
-                    date[2] = Integer.parseInt(request.getParameter(paraNames));
-                    break;  
-                case "address":
-                    address[0] = request.getParameter(paraNames);
-                    break;
-                case "postalcode":
-                    address[1] = request.getParameter(paraNames);
-                    break; 
-                case "productName":
-                    ob.setProductName(request.getParameter(paraNames));
-                    break;  
-                case "productQuantity":
-                    ob.setProductQuantity(Integer.parseInt(request.getParameter(paraNames)));
-                    break; 
-                case "agreeCheck":
-                    hastoc=true;
-                    break;
+            try {
+                String paraNames = paramNames.nextElement();
+                SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                System.out.println(paraNames);
+                switch(paraNames){
+                    case "inputCustomerId":
+                        ob.setCustomerId(Integer.parseInt(request.getParameter(paraNames)));
+                        break;
+                    case "OrderID":
+                        ob.setOrderId(Integer.parseInt(request.getParameter(paraNames)));
+                        break;
+                    case "dateday":
+                        date[1] = Integer.parseInt(request.getParameter(paraNames));
+                        break;
+                    case "datemonth":
+                        date[0] = Integer.parseInt(request.getParameter(paraNames));
+                        break;
+                    case "dateyear":
+                        date[2] = Integer.parseInt(request.getParameter(paraNames));
+                        break;
+                    case "address":
+                        address[0] = request.getParameter(paraNames);
+                        break;
+                    case "postalcode":
+                        address[1] = request.getParameter(paraNames);
+                        break;
+                    case "productID":
+                        ob.setProduct(manager.getProduct(Integer.parseInt(request.getParameter(paraNames))));
+                        break;
+                    case "productQuantity":
+                        ob.setProductQuantity(Integer.parseInt(request.getParameter(paraNames)));
+                        break;
+                    case "agreeCheck":
+                        hastoc=true;
+                        break;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderEditController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         ob.setShippingAddress(address[0]+"|"+address[1]);
+        
         System.out.println(Arrays.toString(date));
         try{
-        ob.setDOO(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
+            ob.setProduct(manager.getProduct(ob.getProductID()));
+            ob.setDOO(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
         }catch(java.lang.IllegalArgumentException ec){
-            RequestDispatcher dispatch = request.getRequestDispatcher("orderAdd.jsp");
+            RequestDispatcher dispatch = request.getRequestDispatcher("orderUpdate.jsp");
             request.setAttribute("response",  "Date has incorrect format");
-            dispatch.forward(request, response);
-        }
-        if(!hastoc){
-            RequestDispatcher dispatch = request.getRequestDispatcher("orderAdd.jsp");
-            request.setAttribute("response",  "Please agree to the TOC");
+            request.setAttribute("order", ob);
             dispatch.forward(request, response);
             return;
+        }  catch (SQLException ex) {
+           Logger.getLogger(OrderEditController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        String etext="";
+        
+        if(!hastoc){
+            etext = "Please agree to the TOC";
+           
+        }
+        if(ob.getProductQuantity()<=0){
+            etext="cannot order nothing or less";
+        }
+        
+        if(etext.length()!=0){
+            try {
+                ProductBean pbean = manager.getProduct(ob.getProductID());
+                 RequestDispatcher dispatch = request.getRequestDispatcher("orderUpdate.jsp");
+                 request.setAttribute("product", pbean);
+                request.setAttribute("response",  etext);
+                dispatch.forward(request, response);
+                return;
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderAddController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         }
         
         try {
@@ -129,13 +158,13 @@ import uts.isd.model.dao.*;
                 Logger.getLogger(OrderEditController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        ArrayList<OrderBean> queryresult = null;
+         ArrayList<OrderBean> queryresult = null;
            try {
                queryresult = manager.fetchOrderList();
            } catch (SQLException ex) {
                Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
-        request.setAttribute("OrderInfo2",  queryresult);
+        request.setAttribute("OrderInfo",  queryresult);
         RequestDispatcher rd = request.getRequestDispatcher("order.jsp");
         rd.forward(request, response);
     }

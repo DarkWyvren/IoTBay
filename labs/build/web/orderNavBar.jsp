@@ -10,7 +10,7 @@
         <a href="index.jsp"><div class="nav-link nav-fill navButt"><h3>Home</h3></div></a>
     </li>
     <li class="nav-item">
-        <a href="Product.jsp"><div class="nav-link nav-fill navButt"><h5>Check our Products</h5></div></a>
+        <a href="store"><div class="nav-link nav-fill navButt"><h5>Check our Products</h5></div></a>
     </li>
     <li class="nav-item">
         <a href="orderAdd.jsp"><div class="nav-link nav-fill navButt"><h5>Add a Order</h5></div></a>
