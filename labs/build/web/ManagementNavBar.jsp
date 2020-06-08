@@ -10,7 +10,5 @@
     <li class="nav-item">
         <a href="index.jsp"><div class="nav-link nav-fill navButt"><h3>Home</h3></div></a>
     </li>
-    <li class="nav-item">
-        <a href="account_view.jsp"><div class="nav-link nav-fill navButt"><h5> </h5></div></a>
-    </li>
+    
 </ul>

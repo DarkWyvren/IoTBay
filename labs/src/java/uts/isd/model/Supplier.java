@@ -8,28 +8,48 @@ import java.io.Serializable;
  * @author mood35-Laptop
  */
 public class Supplier implements Serializable {
-    private String ContactName;
+    private int SupplierID;
+    private String CompanyName;
     private String CompanyAddress;
-    private String CompanyEmail;
     private String CompanyType;
-    private int ConNumber;
-    private int Status;
+    private String CompanyEmail;
+    private int CompanyStatus;
+    
 
-   /* public Supplier (String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) {
-        this.ContactName = ContactName;
-        this.CompanyAddress = CompanyAddress;
-        this.CompanyEmail = CompanyEmail;
-        this.CompanyType = CompanyType;
-        this.ConNumber = ConNumber;
-        this.Status = Status;
+    public Supplier (int S_ID, String CNAME, String CADDRESS, String CTYPE, String CEMAIL, int CSTATUS) {
+        this.SupplierID = S_ID;
+        this.CompanyName = CNAME;
+        this.CompanyAddress = CADDRESS;
+        this.CompanyType= CTYPE;
+        this.CompanyEmail= CEMAIL;
+        this.CompanyStatus = CSTATUS;
     }
-*/
-    public String getContactName() {
-        return ContactName;
+    
+    public Supplier (){
+      SupplierID = 0;
+      CompanyName = "";
+      CompanyAddress = "";
+      CompanyType = "";
+      CompanyEmail = "";
+      CompanyStatus = -1;
+        
+    }
+    
+    public int getSupplierID() {
+        return SupplierID;
     }
 
-    public void setContactName(String ContactName) {
-        this.ContactName = ContactName;
+    public void setSupplierID(int SupplierID) {
+        this.SupplierID = SupplierID;
+    }
+
+
+    public String getCompanyName() {
+        return CompanyName;
+    }
+
+    public void setCompanyName(String CompanyName) {
+        this.CompanyName = CompanyName;
     }
 
     public String getCompanyAddress() {
@@ -40,14 +60,6 @@ public class Supplier implements Serializable {
         this.CompanyAddress = CompanyAddress;
     }
 
-    public String getCompanyemail() {
-        return CompanyEmail;
-    }
-
-    public void setCompanyemail(String Companyemail) {
-        this.CompanyEmail = Companyemail;
-    }
-
     public String getCompanyType() {
         return CompanyType;
     }
@@ -56,22 +68,21 @@ public class Supplier implements Serializable {
         this.CompanyType = CompanyType;
     }
 
-    public int getConNumber() {
-        return ConNumber;
+    public String getCompanyEmail() {
+        return CompanyEmail;
     }
 
-    public void setConNumber(int ConNumber) {
-        this.ConNumber = ConNumber;
-    }   
-
-    public int getStatus() {
-        return Status;
+    public void setCompanyEmail(String CompanyEmail) {
+        this.CompanyEmail = CompanyEmail;
     }
 
-    public void setStatus(int status) {
-        this.Status = status;
+    public int getCompanyStatus() {
+        return CompanyStatus;
     }
 
+    public void setCompanyStatus(int CompanyStatus) {
+        this.CompanyStatus = CompanyStatus;
+    }
+
+    
 }
-
-

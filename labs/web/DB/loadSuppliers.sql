@@ -9,4 +9,8 @@
 
 
 insert into supplierdb
-Values (00001, 'UNIBITZ', 'U13 Featherweight Avenue, Springfield, NSW, 2630', 0477 630 961, 'RAM', 'unibitzservice@gmail.com');
+Values (00001, 'UNIBITZ', 'U13 Featherweight Avenue, Springfield, NSW, 2630', 'RAM', 'unibitzservice@gmail.com', 1);
+insert into supplierdb
+Values (00002, 'Trial1', 'U17 Featherweight Avenue, Springfield, NSW, 2630', 'RAM', 'trial1@trial1.com',2);
+insert into supplierdb
+Values (00003, 'Tr3', 'U3 Featherweight Avenue, Springfield, NSW, 2333', 'RAM', 'tr3@trial1.com',3);
