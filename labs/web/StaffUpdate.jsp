@@ -47,7 +47,7 @@
                             <tr><td>Email: </td><td><input type="email" value= "<%=current.getEmail().toString()%>" placeholder="Enter Email" name="Email"></td></tr>
                             <tr><td>Status: </td><td><input type="checkbox" value= "<%=current.getStatus() == 0 ? "Activate":"Deactivate"  %>" placeholder="" name="Status"></td></tr>   
                         </table>
-                               <input class="btn  btn-secondary btn-lg" type="reset" role="button" > <input class="btn  btn-primary btn-lg" type="submit" value="Update" role="button" > 
+                               <input class="button" type="submit" value="Update" role="button" > 
                         </form>
                     </div>
                 </div>
