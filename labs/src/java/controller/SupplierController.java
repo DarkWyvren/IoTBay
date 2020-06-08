@@ -50,20 +50,15 @@ import javax.servlet.annotation.WebServlet;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<Supplier> queryresult = null;
            try {
+               //get list from database and place results in an array querylist
                queryresult = manager.fetchSupplierList();
            } catch (SQLException ex) {
                Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
            }
         System.out.print(queryresult.toString() + "inside dogetmethod");
         RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp"); 
-        request.setAttribute("SupplierInfo",  queryresult);
+        request.setAttribute("SupplierInfo",  queryresult);//sendquerylist to supplier.jsp
         rd.forward(request, response);
-        /*try {
-               request.setAttribute("listSupplier", new DBManager.fetchSupplierList());
-           } catch (SQLException ex) {
-               Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
-           }
-        */
        
     }
 
