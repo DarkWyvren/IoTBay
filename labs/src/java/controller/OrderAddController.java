@@ -149,7 +149,7 @@ public class OrderAddController extends HttpServlet {
                Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
         request.setAttribute("OrderInfo",  queryresult);
-        RequestDispatcher rd = request.getRequestDispatcher("orderView.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("order.jsp");
         rd.forward(request, response); 
     }
 }

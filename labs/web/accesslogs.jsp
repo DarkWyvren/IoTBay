@@ -53,7 +53,6 @@
                         //add a controler for this, using request.setAttribute("name", value); 
                         ///and request.getRequestDispatcher("something.jsp").forward(request, response);
         %> 
-    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">

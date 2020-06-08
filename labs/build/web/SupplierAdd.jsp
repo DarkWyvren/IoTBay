@@ -48,7 +48,7 @@
                             </table>
                             <input type="reset"> 
                             <input type="submit" value="Register"> 
-                            <hidden value="SAdd"></hidden> 
+                            
                         </form>
                     </div>
                   
