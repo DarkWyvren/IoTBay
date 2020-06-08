@@ -78,6 +78,7 @@ import uts.isd.model.dao.DBManager;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Enumeration<String> paramNames = request.getParameterNames();
         Supplier sb = new Supplier();
+        String oldEmail = "";
         while(paramNames.hasMoreElements()){
             String paraNames = paramNames.nextElement();
             System.out.println(paraNames);
@@ -101,6 +102,10 @@ import uts.isd.model.dao.DBManager;
                 case "CEmail":
                     System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
                     sb.setCompanyEmail(request.getParameter(paraNames));
+                    break;
+                case "CEmail2":
+                    System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
+                    oldEmail = request.getParameter(paraNames);
                     break;    
                 case "CStatus":
                    System.out.println("LOOK AT ME DEBUG: " +request.getParameter(paraNames));
@@ -108,25 +113,42 @@ import uts.isd.model.dao.DBManager;
                     break;
             }
         }
-        try {
-                System.out.println("test: " +sb);   
-                manager.updateSupplier(sb);
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        ArrayList<Supplier> queryresult = null;
-           try {
-               queryresult = manager.fetchSupplierList();
-           } catch (SQLException ex) {
-               Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
-           }
-        request.setAttribute("SupplierInfo",  queryresult);
-        RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
-        rd.forward(request, response);
-        //request.setAttribute("response",   );
-        //request.getRequestDispatcher("Supplier.jsp").include(request, response);
+               try {
+                   String SE = (String)manager.getSupEmail(sb);
+                   System.out.println("TESTPLEASEWORK" +SE);
+                   if( SE != null && !oldEmail.equals(SE)) {
+                       System.out.println(manager.getSupEmail(sb));
+                       request.setAttribute("EmailExistErr", "Supplier Email Already Exists!");
+                       request.setAttribute("SupplierInfo2", sb);
+                       request.getRequestDispatcher("SupplierUpdate.jsp").include(request, response);
+                       return;
+                   }else if(sb.getCompanyName().length() == 0 || sb.getCompanyAddress().length() == 0 || sb.getCompanyEmail().length() == 0){
+                       request.setAttribute("InfoMissinErr", "Please fill out all the information!");
+                       request.setAttribute("SupplierInfo2", sb);
+                       request.getRequestDispatcher("SupplierUpdate.jsp").include(request, response);
+                       return;
+                   }else{
+                       try {
+                           System.out.println("test: " +sb);
+                           manager.updateSupplier(sb);
+                           
+                       } catch (SQLException ex) {
+                           Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                       
+                       ArrayList<Supplier> queryresult = null;
+                       try {
+                           queryresult = manager.fetchSupplierList();
+                       } catch (SQLException ex) {
+                           Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                       request.setAttribute("SupplierInfo",  queryresult);
+                       RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
+                       rd.forward(request, response);
+                   }
+               } catch (SQLException ex) {
+                   Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
+               }
     }
     
     

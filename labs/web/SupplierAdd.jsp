@@ -17,6 +17,12 @@
                         if(InfoErr == null){
                             InfoErr = "";
                         }
+                        
+                        Supplier sbia = (Supplier)request.getAttribute("incorrectdeets");
+                        if(sbia == null){
+                            sbia = new Supplier();
+                        }
+                        
                     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -45,7 +51,7 @@
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
                         <div class="row h2 text-right">
-                           <h2 class="float-right pb-8">Add new Supplier</h2> 
+                           <h2 class="float-right pb-8">Add New Supplier</h2> 
                         </div>
                         <div class="row h2 text-right">
                           <p class="float-right pb-8 text-danger"> <%=InfoErr%></p>  
@@ -57,32 +63,32 @@
                             <input type="hidden" id="stats" name="CStatus" value=1>
                             <div class="form-group">
                                 <label for="inputName">Company Name:</label>
-                                <input type="text" class="form-control" placeholder="Enter Company Name" name="CName">
+                                <input type="text" value="<%= sbia.getCompanyName()%>" class="form-control" placeholder="Enter Company Name" name="CName">
                             </div>
                             <div class="form-group">
                                 <label for="inputName">Address: </label>
-                                <input type="text" class="form-control" placeholder="Enter Address" name="CAddress">
+                                <input type="text" value="<%= sbia.getCompanyAddress()%>" class="form-control" placeholder="Enter Address" name="CAddress">
                             </div>
                             <div class="form-group">
                                 <label for="inputName">Company Type: </label>
                                 <select class="form-control" placeholder="" name="CType">                                   
-                                    <option>Case</option>
-                                    <option>CPU</option>
-                                    <option>Fan</option>
-                                    <option>MotherBoard</option>
-                                    <option>Peripherals</option>
-                                    <option>Power Supply</option>
-                                    <option>RAM</option>
-                                    <option>Rasberry Pi</option>
-                                    <option>SSD</option>
-                                    <option>System</option>
+                                    <option value ="Case" <%= sbia.getCompanyType().equals("Case") ? "selected":"" %> >Case</option>
+                                    <option value ="CPU" <%= sbia.getCompanyType().equals("CPU") ? "selected":"" %>>CPU</option>
+                                    <option value ="Fan" <%= sbia.getCompanyType().equals("Fan") ? "selected":"" %>>Fan</option>
+                                    <option value ="MotherBoard" <%= sbia.getCompanyType().equals("MotherBoard") ? "selected":"" %>>MotherBoard</option>
+                                    <option value ="Peripherals" <%= sbia.getCompanyType().equals("Peripherals") ? "selected":"" %>>Peripherals</option>
+                                    <option value ="Power Supply" <%= sbia.getCompanyType().equals("Power Supply") ? "selected":"" %>>Power Supply</option>
+                                    <option value ="RAM" <%= sbia.getCompanyType().equals("RAM") ? "selected":"" %>>RAM</option>
+                                    <option value ="Rasberry PI" <%= sbia.getCompanyType().equals("Rasberry PI") ? "selected":"" %>>Rasberry Pi</option>
+                                    <option value ="SSD" <%= sbia.getCompanyType().equals("SSD") ? "selected":"" %>>SSD</option>
+                                    <option value ="System" <%= sbia.getCompanyType().equals("System") ? "selected":"" %>>System</option>
                                     
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="inputName">Email:</label>
                                 <label type ="hidden" class="text-danger"><%= ErrorMsg%></label>
-                                <input type="email" class="form-control" placeholder="Enter Email" name="CEmail">
+                                <input type="email" value="<%= sbia.getCompanyEmail()%>" class="form-control" placeholder="Enter Email" name="CEmail">
                             </div>
                             <div class="float-right">
                                 <button class="btn btn-secondary p-2" type="reset" >Reset</button>

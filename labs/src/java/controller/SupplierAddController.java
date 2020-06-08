@@ -83,12 +83,13 @@ public class SupplierAddController extends HttpServlet {
         try {
                 if( manager.getSupEmail(sb) != null){
                     System.out.println(manager.getSupEmail(sb));
-                    request.setAttribute("EmailExistErr", "Supplier Email Already Exists!");
-                    request.getRequestDispatcher("SupplierAdd.jsp").include(request, response);
+                    request.setAttribute("EmailExistErr", "That Email Already Exists!");
+                    request.setAttribute("incorrectdeets", sb);
+                    request.getRequestDispatcher("SupplierEdit.jsp").include(request, response);
                     return;
                 }else if(sb.getCompanyName().length() == 0 || sb.getCompanyAddress().length() == 0 || sb.getCompanyEmail().length() == 0){
                     request.setAttribute("InfoMissinErr", "Please fill out all the information!");
-                    request.getRequestDispatcher("SupplierAdd.jsp").include(request, response);
+                    request.getRequestDispatcher("SupplierEdit.jsp").include(request, response);
                     return;
                 }
                 

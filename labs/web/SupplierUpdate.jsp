@@ -15,7 +15,23 @@
                         }else{
                               current = new Supplier();
                           }
-    int currentStatus = current.getCompanyStatus();
+
+    
+    Object ErrorMsg = request.getAttribute("EmailExistErr");
+                        if(ErrorMsg == null){
+                            ErrorMsg = "";
+                        }
+                        
+                        Object InfoErr =request.getAttribute("InfoMissinErr");
+                        if(InfoErr == null){
+                            InfoErr = "";
+                        }
+                        
+                        Supplier sbia = (Supplier)request.getAttribute("incorrectdeets");
+                        if(sbia == null){
+                            sbia = new Supplier();
+                        }
+                        
 %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,7 +59,12 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
-                        <h2 class="float-right pb-8">Edit Supplier Details</h2>    
+                        <div class="row h2 text-right">
+                           <h2 class="float-right pb-8">Edit Supplier Details</h2> 
+                        </div>
+                        <div class="row h2 text-right">
+                          <p class="float-right pb-8 text-danger"> <%=InfoErr%></p>  
+                        </div>   
                     </div>
                     <div class="jumbotron">
                         <form method="POST" action="SupplierEdit">
@@ -74,7 +95,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputName">Email:</label>
+                                <label type ="hidden" class="text-danger"><%= ErrorMsg%></label>
                                 <input type="email" class="form-control" value= "<%=current.getCompanyEmail().toString()%>" placeholder="Enter Email" name="CEmail">
+                                <input type="hidden" class="form-control" value= "<%=current.getCompanyEmail().toString()%>" placeholder="Enter Email" name="CEmail2">
                             </div>
                             <div class="form-group">
                                 <label for="inputName">Status</label>
