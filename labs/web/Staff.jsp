@@ -27,7 +27,6 @@
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron" href="."><a href="StaffInfo">View Staff List</div>
                          <div class="jumbotron"><a href="StaffAdd.jsp">Add to Staff List</div>
-                         <div class="jumbotron"><a href="StaffEdit.jsp">Edit Staff List</div>
                 </div>
             </div>
         </div>
