@@ -8,14 +8,14 @@ package controller;
    import java.io.IOException;
    import java.sql.Connection;
    import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Enumeration;
+    import java.util.ArrayList;
+    import java.util.Enumeration;
    import java.util.Scanner;
    import java.util.logging.Level;
    import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
+    import javax.servlet.RequestDispatcher;
    import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+    import javax.servlet.annotation.WebServlet;
    import javax.servlet.http.HttpServlet;
    import javax.servlet.http.HttpServletRequest;
    import javax.servlet.http.HttpServletResponse;
@@ -81,8 +81,22 @@ public class SupplierAddController extends HttpServlet {
             }
         }
         try {
+                if( manager.getSupEmail(sb) != null){
+                    System.out.println(manager.getSupEmail(sb));
+                    request.setAttribute("EmailExistErr", "That Email Already Exists!");
+                    request.setAttribute("incorrectdeets", sb);
+                    request.getRequestDispatcher("SupplierEdit.jsp").include(request, response);
+                    return;
+                }else if(sb.getCompanyName().length() == 0 || sb.getCompanyAddress().length() == 0 || sb.getCompanyEmail().length() == 0){
+                    request.setAttribute("InfoMissinErr", "Please fill out all the information!");
+                    request.getRequestDispatcher("SupplierEdit.jsp").include(request, response);
+                    return;
+                }
+                
+                else{
                 manager.addSupplier(sb);
                 System.out.println("test: " +sb);
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(SupplierAddController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -94,6 +108,7 @@ public class SupplierAddController extends HttpServlet {
                Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
            }
         request.setAttribute("SupplierInfo",  queryresult);
+        request.setAttribute("addmsg", "Supplier Updated: NEW SUPPLIER HAS BEEN ADDED");
         RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
         rd.forward(request, response);
         
