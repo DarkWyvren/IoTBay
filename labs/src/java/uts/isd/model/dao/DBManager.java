@@ -10,9 +10,9 @@ package uts.isd.model.dao;
  * @author willi
  */
 import uts.isd.model.CustomerBean;
+import uts.isd.model.OrderBean;
 import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
-import uts.isd.model.OrderBean;
 import uts.isd.model.Staff;
 import java.sql.*;
 import java.text.ParseException;
@@ -549,18 +549,25 @@ public class DBManager {
         }
         return false; 
     }
-    
+    */
 
     
     
 //Order Management [MVC]
     //Find all orders based on Date_Of_Order
-    /*public OrderBean findOrder(String Date_Of_Order) throws SQLException {  
-        return findOrder(Date_Of_Order, "");
-    }*/
+    public OrderBean findOrder(Date Date_Of_Order) throws SQLException {  
+        return findOrder(Date_Of_Order, 0);
+    }
+    //Find all orders based on Date_Of_Order
+    public OrderBean findOrder(int Order_ID) throws SQLException {  
+        return findOrder(null, Order_ID);
+    }
     //Find the specific order using Date_Of_Order and Order_ID
-    public OrderBean findOrder(String Date_Of_Order, int Order_ID) throws SQLException {   
+
+
+    public OrderBean findOrder(Date Date_Of_Order, int Order_ID) throws SQLException {   
         String query = "SELECT * FROM sql12346043.ORDERDB WHERE Date_Of_Order='"+Date_Of_Order+"' AND Order_ID = '"+Order_ID;
+
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String order_date = rs.getString(3);
@@ -569,77 +576,291 @@ public class DBManager {
             if(order_date.equals(Date_Of_Order)&& ord_id == (Order_ID)){
                 OrderBean ob = new OrderBean();
                 ob.setOrderId(ord_id);
-                ob.setCustomerId(rs.getInt(2));
                 
-                String[] dt = rs.getString(3).split("/");
+                String[] dt = rs.getString(2).split("/");
                 System.out.println(Arrays.toString(dt));
-                ob.setDOO(Date.valueOf(rs.getString(3)));
+                ob.setDOO(Date.valueOf(rs.getString(2)));
                 
-                ob.setShippingAddress(rs.getString(4));
-                ob.setStatus(rs.getString(5));
-                ob.setProductId(rs.getInt(6));
-                ob.setProductName(rs.getString(7));
-                ob.setProductPrice(rs.getDouble(8));
-                ob.setProductQuanity(rs.getInt(9));
-                ob.setTotalPrice(rs.getDouble(10));
-
+                ob.setShippingAddress(rs.getString(3));
+                ob.setProductName(rs.getString(4));
+                ob.setProductQuantity(rs.getInt(5));
+ 
                 return ob;
             }
         }            
         return null;   
     }
-    
+        
     //Add a order-data into the database   
     public void addOrder(OrderBean ob) throws SQLException {                   
     //code for add-operation    
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+              SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         String values=
-              "'"
-              +ob.getCustomerId()+"','"
-              +format.format(ob.getDOO())+"','"
-              +ob.getShippingAddress()+"','"
-              +ob.getStatus()+"','"
-              +ob.getProductId()+"','"
-              +ob.getProductName()+"','"
-              +ob.getProductPrice()+"','"
-              +ob.getProductQuanity()+"','"
-              +ob.getTotalPrice()+"'"
+              ""+ob.getCustomerId()+","+
+              "'"+dateformat.format(ob.getDOO())+"',"+
+              "'"+ob.getShippingAddress()+"',"+
+              "'"+ob.getProductName()+"',"+
+              ""+ob.getProductQuantity()+""
               ;
-        System.out.println(values);
-        st.executeUpdate("INSERT INTO sql12346043.ORDERDB(Customer_ID, Date_Of_Order, Address, Status, Product_ID, Product_Quanity, Total_Price)  VALUES("+values+")");   
-        ob.setOrderId(findOrder(format.format(ob.getDOO()),ob.getOrderId()).getOrderId());  
+        System.out.println(values); 
+
+        st.executeUpdate("INSERT INTO sql12346043.ORDERDB(Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)  VALUES("+values+")");    
+
     }
     
     //update a order details in the database   
 
     public void updateOrder(OrderBean ob) throws SQLException {       
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+      SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         String values=
               "Customer_ID = '"+ob.getCustomerId()+"',"+
-              "Date_Of_Order = '"+format.format(ob.getDOO())+"',"+
+              "Date_Of_Order = '"+dateformat.format(ob.getDOO())+"',"+
               "Address = '"+ob.getShippingAddress()+"',"+
-              "Status = '"+format.format(ob.getStatus())+"',"+
-              "Product_ID = '"+ob.getProductId()+"',"+
               "Product_Name = '"+ob.getProductName()+"',"+
-              "Product_Price = '"+ob.getProductPrice()+"',"+
-              "Product_Quanity = '"+ob.getProductQuanity()+"'"+
-              "Total_Price = '"+ob.getTotalPrice()+"'"
+              "Product_Quantity = '"+ob.getProductQuantity()+"'"
               ;
         System.out.println(values);
         st.executeUpdate("UPDATE sql12346043.ORDERDB SET "+values+" WHERE Order_ID ="+ob.getOrderId());
     } 
     
     //delete a order from the database   
-    public void deleteOrder(int Order_ID) throws SQLException{       
+    public void deleteOrder(OrderBean od) throws SQLException{       
        //code for delete-operation   
-       st.executeUpdate("DELETE FROM sql12346043.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
+       st.executeUpdate("DELETE FROM sql12346043.ORDERDB WHERE Order_ID ='"+od.getOrderId()+"'");
     }
 
+    public OrderBean getOrderBean(int order_ID) throws SQLException {   
+        OrderBean orderBean = null;
+            String query = "SELECT * FROM sql12346043.ORDERDB WHERE Order_ID="+order_ID+"";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                int OrderId = rs.getInt(1);
+                int CustomerId = rs.getInt(2);
+                Date DOO = rs.getDate(3);
+                String ShippingAddress = rs.getString(4);
+                String productName = rs.getString(5);
+                int ProductQuantity = rs.getInt(6);
+                System.out.println("Order id: " + OrderId);
+                orderBean = new OrderBean (OrderId, CustomerId, DOO, ShippingAddress, productName, ProductQuantity); 
+            } return orderBean;     
+    }
+    
+        public void showOrder(int OrderId, int CustomerId, Date DOO, String ShippingAddress, int ProductId, int ProductQuantity) throws SQLException{
+        String query = "SELECT FROM * sql12346043.ORDERDB";
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()){
+            OrderId = rs.getInt(1);
+            CustomerId = rs.getInt(2);
+            DOO = rs.getDate(3);
+            ShippingAddress = rs.getString(4);
+            ProductId = rs.getInt(5);
+            ProductQuantity = rs.getInt(6);
+        } 
+    }
+     
+        public ArrayList<OrderBean> fetchOrderList() throws SQLException{
+           
+        String fetch = "SELECT * FROM sql12346043.ORDERDB";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderBean> listOrder = new ArrayList(); 
+
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            String ShippingAddress = rs.getString(4);
+            String ProductName = rs.getString(5);
+            int ProductQuantity = rs.getInt(6);
+  
+            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, ProductName, ProductQuantity);
+            listOrder.add(OrderFromDB);
+        }     
+        return listOrder;
+    }
+    
+     public ArrayList<OrderBean> OrderLine(int Customer_id) throws SQLException{
+           
+        String fetch = "SELECT * FROM sql12346043.ORDERDB WHERE Customer_ID='"+Customer_id+"'";;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderBean> OrderLine = new ArrayList(); 
+       
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            String ShippingAddress = rs.getString(4);
+            String ProductName = rs.getString(5);
+            int ProductQuantity = rs.getInt(6);
+            
+            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, ProductName, ProductQuantity);
+            OrderLine.add(OrderFromDB);         
+        }     
+        return OrderLine;
+    }
+    
+     public void showOrderHistory(int OrderId, int CustomerId, Date DOO) throws SQLException{
+        String query = "SELECT FROM * sql12346043.ORDERDB";
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()){
+            OrderId = rs.getInt(1);
+            CustomerId = rs.getInt(2);
+            DOO = rs.getDate(3);
+        } 
+    }
+     
+        public ArrayList<OrderBean> fetchOrderHistoryList() throws SQLException{
+           
+        String fetch = "SELECT * FROM sql12346043.ORDERDB";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderBean> listOrderHistory = new ArrayList(); 
+
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            
+            OrderBean OrderHistoryFromDB = new OrderBean(OrderId, CustomerId, DOO);
+            listOrderHistory.add(OrderHistoryFromDB);
+            
+            
+        }     
+        return listOrderHistory;
+    }
+    
+     public ArrayList<OrderBean> OrderHistoryLine(int Customer_id) throws SQLException{
+           
+        String fetch = "SELECT * FROM sql12346043.ORDERDB WHERE Customer_ID='"+Customer_id+"'";;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderBean> OrderHistoryLine = new ArrayList(); 
+       
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            
+            OrderBean OrderHistoryFromDB = new OrderBean(OrderId, CustomerId, DOO);
+            OrderHistoryLine.add(OrderHistoryFromDB);
+            
+            
+        }     
+        return OrderHistoryLine;
+    }
+     
+     /*
+         //Add a order-data into the database   
+    public void addOrderHistory(OrderHistoryBean ohb) throws SQLException {                   
+    //code for add-operation    
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        String values=
+              "'"
+              +ohb.getOrderId()+"','"
+              +ohb.getCustomerId()+"','"
+              +format.format(ohb.getDOO())+"','"
+              +ohb.getStatus()+"','"
+              +ohb.getPaymentMethod()+"','"
+              +ohb.getOriginalPrice()+"','"
+              +ohb.getPaidMoney()+"','"
+              +ohb.getSavedMoney()+"'"
+              ;
+        System.out.println(values);
+        st.executeUpdate("INSERT INTO APP.ORDER_HISTORY(Order_ID, Customer_ID, Date_Of_Order, Status, Payment_Method, Original_Price, Paid_Money, Saved_Money)  VALUES("+values+")");    
+    }
+    
+    //update a order details in the database   
+    public void updateOrderHistory(OrderHistoryBean ohb) throws SQLException {       
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        String values=
+              "Order_ID = '"+ohb.getCustomerId()+"',"+
+              "Customer_ID = '"+ohb.getCustomerId()+"',"+
+              "Date_Of_Order = '"+format.format(ohb.getDOO())+"',"+
+              "Status = '"+format.format(ohb.getStatus())+"',"+
+              "Payment_Method = '"+ohb.getPaymentMethod()+"',"+
+              "Original_Price = '"+ohb.getOriginalPrice()+"',"+
+              "Paid_Money = '"+ohb.getPaidMoney()+"',"+
+              "Saved_Money = '"+ohb.getSavedMoney()+"'"
+              ;
+        System.out.println(values);
+        st.executeUpdate("UPDATE APP.ORDER_HISTORY SET "+values+" WHERE Order_ID ="+ohb.getOrderId());
+    } 
+    
+    //delete a order from the database   
+    public void deleteOrderHistory(int Order_ID) throws SQLException{       
+       //code for delete-operation   
+       st.executeUpdate("DELETE FROM APP.ORDER_HISTORY WHERE Order_ID ='"+Order_ID+"'");
+    }
+    
+        public void showOrderHistory(int OrderId, int CustomerId, Date DOO, String Status, String PaymentMethod, double OriginalPrice, double PaidMoney, double SavedMoney) throws SQLException{
+        String query = "SELECT FROM * APP.ORDER_HISTORY";
+        ResultSet rs = st.executeQuery(query);
+
+        while(rs.next()){
+            OrderId = rs.getInt(1);
+            CustomerId = rs.getInt(2);
+            DOO = rs.getDate(3);
+            Status = rs.getString(4);
+            PaymentMethod = rs.getString(5);
+            OriginalPrice = rs.getDouble(6);
+            PaidMoney = rs.getDouble(7);
+            SavedMoney = rs.getDouble(7);
+        } 
+    }
+     
+        public ArrayList<OrderHistoryBean> fetchOrderHistoryList() throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.ORDER_HISTORY";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderHistoryBean> listOrderHistory = new ArrayList(); 
+
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            String Status = rs.getString(4);
+            String PaymentMethod = rs.getString(5);
+            double OriginalPrice = rs.getDouble(6);
+            double PaidMoney = rs.getDouble(7);
+            double SavedMoney = rs.getDouble(8);
+            
+            OrderHistoryBean OrderHistoryFromDB = new OrderHistoryBean(OrderId, CustomerId, DOO, Status, PaymentMethod, OriginalPrice, PaidMoney, SavedMoney);
+            listOrderHistory.add(OrderHistoryFromDB);
+            
+            
+        }     
+        return listOrderHistory;
+    }
+    
+     public ArrayList<OrderHistoryBean> OrderHistoryLine(int Customer_id) throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.ORDER_HISTORY WHERE Customer_ID='"+Customer_id+"'";;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<OrderHistoryBean> OrderHistoryLine = new ArrayList(); 
+       
+        while(rs.next()){
+            int OrderId = rs.getInt(1);
+            int CustomerId = rs.getInt(2);
+            Date DOO = rs.getDate(3);
+            String Status = rs.getString(4);
+            String PaymentMethod = rs.getString(5);
+            double OriginalPrice = rs.getDouble(6);
+            double PaidMoney = rs.getDouble(7);
+            double SavedMoney = rs.getDouble(8);
+            
+            OrderHistoryBean OrderHistoryFromDB = new OrderHistoryBean(OrderId, CustomerId, DOO, Status, PaymentMethod, OriginalPrice, PaidMoney, SavedMoney);
+            OrderHistoryLine.add(OrderHistoryFromDB);
+            
+            
+        }     
+        return OrderHistoryLine;
+    }*/
     
     
     
     
     
+    
+
     
     //STAFF INFO
         //find staff from db
@@ -749,12 +970,18 @@ public class DBManager {
                 "'"+stf.getAddress() + "',"+
               "'"+stf.getPosition() + "',"+
                ""+stf.getStatus() + "";
+
+
        st.executeUpdate("INSERT INTO sql12346043.STAFF(EMAIL, FULLNAME, ADDRESS, POS, STATUS) VALUES("+values+")");
+
     }
      
         public ArrayList<Staff> fetchStaffList() throws SQLException
         {
+
+
             String fetch = "SELECT * FROM sql12346043.STAFF";
+
             ResultSet rs = st.executeQuery(fetch);
             ArrayList<Staff> temp1 = new ArrayList();
             while(rs.next()){
@@ -840,7 +1067,11 @@ public class DBManager {
     //Update a Suppliers information
     public void updatePayment(String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {       
        //code for update-operation   
+
+
+
        st.executeUpdate("UPDATE INTO sql12346043.PAYMENTDB SET Payment_ID ="+Payment_ID+", SET Payment_DATE ="+Payment_DATE+", SET Payment_METHOD ="+Payment_METHOD+", SET Creditcard ="+Creditcard+", SET Amount ="+Amount+",");  
+
     }   
     //delete a supplier from db
     public void deletePayment(String Payment_ID) throws SQLException{

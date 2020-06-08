@@ -21,9 +21,9 @@
     * @author Max
     */
     @WebServlet(
-    name = "getOrderHistory", 
-    urlPatterns = "/ShowOrderHistory")
-    public class OrderHistoryViewController extends HttpServlet {
+    name = "getOrder", 
+    urlPatterns = "/OrderView")
+    public class OrderViewController extends HttpServlet {
 
        private DBConnector db;
        private DBManager manager;
@@ -37,7 +37,7 @@
                conn = db.openConnection();
                manager = new DBManager(conn);
            } catch (ClassNotFoundException | SQLException ex) {
-               Logger.getLogger(OrderHistoryViewController.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
            }      
        }
 
@@ -47,13 +47,13 @@
        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<OrderBean> queryresult = null;
            try {
-               queryresult = manager.fetchOrderHistoryList();
+               queryresult = manager.fetchOrderList();
            } catch (SQLException ex) {
-               Logger.getLogger(OrderHistoryViewController.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
         System.out.print(queryresult.toString() + "inside dogetmethod");
-        RequestDispatcher rd = request.getRequestDispatcher("orderHistory.jsp"); 
-        request.setAttribute("OrderHistoryInfo",  queryresult);
+        RequestDispatcher rd = request.getRequestDispatcher("order.jsp"); 
+        request.setAttribute("OrderInfo",  queryresult);
         rd.forward(request, response);  
     }   
 
@@ -64,7 +64,7 @@
            try {
                db.closeConnection();
            } catch (SQLException ex) {
-               Logger.getLogger(OrderHistoryViewController.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
        }
    }

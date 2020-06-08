@@ -42,6 +42,7 @@ public class paymentaddservlet extends HttpServlet {
                session.setAttribute("existErr","Payment already exists in the Database!");
                request.getRequestDispatcher("paymentadd.jsp").include(request, response);
            }else{
+
                manager.addPayment( Payment_ID, Payment_DATE,  Payment_METHOD,  Creditcard_Details,  Integer.parseInt(Payment_Amount));
                payment payment=new payment(Payment_ID, Payment_DATE,  Payment_METHOD,  Creditcard_Details,  Integer.parseInt(Payment_Amount));
                session.setAttribute("payment", payment);
