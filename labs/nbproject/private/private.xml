@@ -3,31 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/Staff.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/controller/SupplierAddController.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/controller/paymentconncontroller.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/navbar.jsp</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/controller/SupplierController.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/dao/DBConnector.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/SupplierAdd.jsp</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/DB/Products.sql</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/SupplierUpdate.jsp</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/register.jsp</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/controller/UpdateProfileController.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/dao/DBManager.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/controller/SupplierDeleteController.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/dao/DB.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/header.jsp</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/controller/SupplierEditController.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/CustomerBean.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/profile.jsp</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/OrderBean.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/controller/paymentUpdateServlet.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/DB/Suppliers.sql</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/Supplier.jsp</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/Management.jsp</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/Supplier.java</file>
-            <file>file:/C:/Users/mood35-Laptop/Documents/GitHub/IoTBay/labs/web/DB/Orders.sql</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/Supplier.java</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/DB/StaffInfo.sql</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/SupplierAdd.jsp</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/stylesheet.css</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/Staff.jsp</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/dao/DBManager.java</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/StaffUpdate.jsp</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/DB/Suppliers.sql</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/controller/SupplierAddController.java</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/SupplierUpdate.jsp</file>
         </group>
     </open-files>
 </project-private>
