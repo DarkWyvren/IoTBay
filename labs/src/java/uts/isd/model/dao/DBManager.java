@@ -552,8 +552,41 @@ public class DBManager {
         }
         return result;
      }
+     
+     public Staff getStaff(int Staff_id) throws SQLException {   
+        Staff staff = null;
+            String query = "SELECT * FROM APP.STAFF WHERE  ID="+Staff_id+"";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                int Id = rs.getInt(1);
+                System.out.println(Id);
+                String Name = rs.getString(2);
+                String Address = rs.getString(3);
+                String Pos = rs.getString(4);
+                String Email = rs.getString(5);
+                int Status = rs.getInt(6);
+                System.out.println("Staff Name: " +Name);
+                staff = new Staff (Id, Name, Address, Pos, Email, Status); 
+            } return staff;     
+    }
+     
+     public void deleteStaff(Staff stf) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.STAFF WHERE ID =" +stf.getId());
+  
+    }
 
+     public void updateStaff(Staff stf) throws SQLException {
+        String values=
+              
+              "FullName = '"+stf.getFullName()+"',"+
+              "Address = '"+stf.getAddress()+"',"+
+              "Pos = '"+stf.getPosition()+"',"+
+              "Email = '"+stf.getEmail()+"'"
+              ;
+        System.out.println(+stf.getId());
+        st.executeUpdate("UPDATE APP.STAFF SET "+values+" WHERE ID ="+stf.getId());   
 
+    }
     
     public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
         String query = "SELECT * FROM APP.PAYMENTDB WHERE  PAYMENTID='"+Payment_ID+"'"+ (" AND PAYMENTDATE = '"+Payment_DATE+"'");

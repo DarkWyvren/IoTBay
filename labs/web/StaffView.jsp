@@ -59,6 +59,10 @@
                     <td style="color: <%=st.getStatus() == 0? "red":"green" %>" >
                         <%=st.getStatus() == 0 ? "Deactive":"Active" %>
                     </td>
+                    <td style="height: 100px">
+                        <a role="button" href="${pageContext.request.contextPath}/StaffEdit?Id=<%= st.getId()%>" >Edit</a>
+                        <a role="button" href="${pageContext.request.contextPath}/deleteStaff?Id=<%= st.getId()%>">Delete</a>
+                    </td>
                 </tr>    
                 <% } %>
             </tbody>
