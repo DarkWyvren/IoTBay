@@ -15,6 +15,7 @@ import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
 import uts.isd.model.Staff;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -660,6 +661,20 @@ public class DBManager {
             } return orderBean;     
     }
     
+    public int getOrderBeanID(OrderBean o) throws SQLException {   
+        OrderBean orderBean = null;
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            String query = "SELECT * FROM sql12346043.ORDERDB WHERE Customer_ID="+o.getCustomerId()+" AND "+
+                     "Product_ID="+o.getProductID()+" AND "+
+                     "Product_Quantity="+o.getProductQuantity()+" AND "+
+                    "Date_Of_Order='"+dateformat.format(o.getDOO())+"'";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                return rs.getInt(1);
+                 
+            } return 0;     
+    }
+    
         public void showOrder(int OrderId, int CustomerId, Date DOO, String ShippingAddress, int ProductId, int ProductQuantity) throws SQLException{
         String query = "SELECT FROM * sql12346043.ORDERDB";
         ResultSet rs = st.executeQuery(query);
@@ -699,7 +714,8 @@ public class DBManager {
     
      public ArrayList<OrderBean> OrderLine(int Customer_id) throws SQLException{
            
-        String fetch = "SELECT * FROM sql12346043.ORDERDB WHERE Customer_ID='"+Customer_id+"'";;
+        String fetch = "SELECT * FROM sql12346043.ORDERDB WHERE Customer_ID="+Customer_id+"";;
+         System.out.println("CUSSSSSSSSSSSSSS"+Customer_id);
         ResultSet rs = st.executeQuery(fetch);
         ArrayList<OrderBean> OrderLine = new ArrayList(); 
        
@@ -960,7 +976,7 @@ public class DBManager {
     }
     
     public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
-        String query = "SELECT * FROM sql12346043.PAYMENTDB WHERE  PAYMENTID='"+Payment_ID+"'"+ (" AND PAYMENTDATE = '"+Payment_DATE+"'");
+        String query = "SELECT * FROM sql12346043.PAYMENTDB WHERE  PAYMENT_ID='"+Payment_ID+"'"+ (" AND PAYMENT_DATE = '"+Payment_DATE+"'");
         ResultSet rs = st.executeQuery(query);
         
         while(rs.next()){
@@ -1092,15 +1108,18 @@ public class DBManager {
             String P_ID = rs.getString(2);
             String CRE = rs.getString(4);
              String Meth = rs.getString(3);
-            return new paymentprefBean (P_ID, Meth, null, CRE, 0); 
+             paymentprefBean pb =  new paymentprefBean (P_ID, Meth, null, CRE, 0);;
+             pb.setCusid(cusid);
+            return pb;
         }         
        return null; 
     }
         
        
     //Add a supplier into the db
-    public void addPayment (String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {
-        st.executeUpdate("INSERT INTO sql12346043.PAYMENTDB" + "VALUES ("+Payment_ID+", "+Payment_DATE+", "+Payment_METHOD+", "+Creditcard+", "+Amount+")");
+    public void addPayment (String order_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {
+        DecimalFormat df=new DecimalFormat("0.00");
+        st.executeUpdate("INSERT INTO sql12346043.PAYMENTDB (Payment_METHOD, Order_id, Payment_DATE, Amount, Credicard)" + "VALUES ('"+Payment_METHOD+"',"+order_ID+",'"+Payment_DATE+"', "+df.format(Amount)+",'"+Creditcard+"')");
     }
     //Update a Suppliers information
     public void updatePayment(String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {       

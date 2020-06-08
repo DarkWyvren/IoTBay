@@ -167,14 +167,16 @@ public class OrderAddController extends HttpServlet {
                 Logger.getLogger(OrderAddController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        ArrayList<OrderBean> queryresult = null;
+        
            try {
-               queryresult = manager.fetchOrderList();
+               ob.setOrderId(manager.getOrderBeanID(ob));
+               request.setAttribute("order", ob);
+                request.setAttribute("paymentpref", manager.getPaymentPref(ob.getCustomerId()));
            } catch (SQLException ex) {
                Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
-        request.setAttribute("OrderInfo",  queryresult);
-        RequestDispatcher rd = request.getRequestDispatcher("order.jsp");
+        
+        RequestDispatcher rd = request.getRequestDispatcher("paymentadd.jsp");
         rd.forward(request, response); 
     }
 }
