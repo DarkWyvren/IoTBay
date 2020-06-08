@@ -99,8 +99,8 @@ public class OrderAddController extends HttpServlet {
                 case "postalcode":
                     address[1] = request.getParameter(paraNames);
                     break; 
-                case "productName":
-                    ob.setProductName(request.getParameter(paraNames));
+                case "productid":
+                    ob.setProductID( Integer.parseInt(request.getParameter(paraNames)));
                     break; 
                 case "productQuantity":
                     ob.setProductQuantity(Integer.parseInt(request.getParameter(paraNames)));

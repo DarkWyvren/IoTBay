@@ -10,25 +10,25 @@ public class OrderBean implements Serializable{
     private CustomerBean customer;
     private ProductBean product;
     
-    private int orderId, customerId, productQuantity;
-    private String shippingAddress, productName;
+    private int orderId, customerId, productQuantity,productID;
+    private String shippingAddress;
     private Date DOO;
 
-    public OrderBean(CustomerBean customer, ProductBean product, int orderId, int customerId, Date DOO, String shippingAddress, String productName, int productQuantity) {
+    public OrderBean(CustomerBean customer, ProductBean product, int orderId, int customerId, Date DOO, String shippingAddress, int productQuantity) {
         this.customer = customer;
         this.product = product;
         this.orderId = orderId;
         this.customerId = customerId;
-        this.productName = productName;
+        this.productID = product.getID();
         this.productQuantity = productQuantity;
         this.shippingAddress = shippingAddress;
         this.DOO = DOO;
     }
     
-    public OrderBean(int orderId, int customerId, Date DOO, String shippingAddress, String productName, int productQuantity) {
+    public OrderBean(int orderId, int customerId, Date DOO, String shippingAddress, int productID, int productQuantity) {
         this.orderId = orderId;
         this.customerId = customerId;
-        this.productName = productName;
+        this.productID = productID;
         this.productQuantity = productQuantity;
         this.shippingAddress = shippingAddress;
         this.DOO = DOO;
@@ -45,7 +45,7 @@ public class OrderBean implements Serializable{
         product = null;
         orderId = 0;
         customerId = 0;
-        productName = null;
+        productID = -1;
         productQuantity = 0;
         shippingAddress = null;
         DOO = null;
@@ -100,12 +100,12 @@ public class OrderBean implements Serializable{
     }
 
 
-    public String getProductName() {
-        return productName;
+    public int getProductID() {
+        return productID;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
     
     public int getProductQuantity() {
@@ -118,7 +118,7 @@ public class OrderBean implements Serializable{
 
     @Override
     public String toString() {
-        return "OrderBean{" + "orderId=" + orderId + ", customerId=" + customerId + ", address=" + shippingAddress + ", productName=" + productName + ", quantity=" + productQuantity + ", DOO=" + DOO + '}';
+        return "OrderBean{" + "orderId=" + orderId + ", customerId=" + customerId + ", address=" + shippingAddress + ", productID=" + productID + ", quantity=" + productQuantity + ", DOO=" + DOO + '}';
     }
 
     

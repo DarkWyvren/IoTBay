@@ -89,7 +89,7 @@
                                 <jsp:param name="justView" value="<%=true%>"/>
                             </jsp:include>
                             </div>
-                            <input type="hidden" value="<%=pt.getID() %>">
+                            <input type="hidden" name="productid" value="<%=pt.getID() %>">
                             <%}else{%>
                             <a class="w-100 h-100 btn btn-light" href="store">
                                 No product selected

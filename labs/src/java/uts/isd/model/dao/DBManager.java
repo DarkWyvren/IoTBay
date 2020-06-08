@@ -586,14 +586,15 @@ public class DBManager {
             if(order_date.equals(Date_Of_Order)&& ord_id == (Order_ID)){
                 OrderBean ob = new OrderBean();
                 ob.setOrderId(ord_id);
-                
+                int CustomerId = rs.getInt(2);
+                ob.setCustomerId(CustomerId);
                 String[] dt = rs.getString(2).split("/");
                 System.out.println(Arrays.toString(dt));
-                ob.setDOO(Date.valueOf(rs.getString(2)));
+                ob.setDOO(Date.valueOf(rs.getString(3)));
                 
-                ob.setShippingAddress(rs.getString(3));
-                ob.setProductName(rs.getString(4));
-                ob.setProductQuantity(rs.getInt(5));
+                ob.setShippingAddress(rs.getString(4));
+                ob.setProductID(rs.getInt(5));
+                ob.setProductQuantity(rs.getInt(6));
  
                 return ob;
             }
@@ -609,12 +610,12 @@ public class DBManager {
               ""+ob.getCustomerId()+","+
               "'"+dateformat.format(ob.getDOO())+"',"+
               "'"+ob.getShippingAddress()+"',"+
-              "'"+ob.getProductName()+"',"+
+              ""+ob.getProductID()+","+
               ""+ob.getProductQuantity()+""
               ;
         System.out.println(values); 
 
-        st.executeUpdate("INSERT INTO sql12346043.ORDERDB(Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)  VALUES("+values+")");    
+        st.executeUpdate("INSERT INTO sql12346043.ORDERDB(Customer_ID, Date_Of_Order, Shipping_Address, Product_ID, Product_Quantity)  VALUES("+values+")");    
 
     }
     
@@ -626,7 +627,7 @@ public class DBManager {
               "Customer_ID = '"+ob.getCustomerId()+"',"+
               "Date_Of_Order = '"+dateformat.format(ob.getDOO())+"',"+
               "Address = '"+ob.getShippingAddress()+"',"+
-              "Product_Name = '"+ob.getProductName()+"',"+
+              "Product_ID = '"+ob.getProductID()+"',"+
               "Product_Quantity = '"+ob.getProductQuantity()+"'"
               ;
         System.out.println(values);
@@ -648,10 +649,10 @@ public class DBManager {
                 int CustomerId = rs.getInt(2);
                 Date DOO = rs.getDate(3);
                 String ShippingAddress = rs.getString(4);
-                String productName = rs.getString(5);
+                int productID= rs.getInt(5);
                 int ProductQuantity = rs.getInt(6);
                 System.out.println("Order id: " + OrderId);
-                orderBean = new OrderBean (OrderId, CustomerId, DOO, ShippingAddress, productName, ProductQuantity); 
+                orderBean = new OrderBean (OrderId, CustomerId, DOO, ShippingAddress, productID, ProductQuantity); 
             } return orderBean;     
     }
     
@@ -680,10 +681,10 @@ public class DBManager {
             int CustomerId = rs.getInt(2);
             Date DOO = rs.getDate(3);
             String ShippingAddress = rs.getString(4);
-            String ProductName = rs.getString(5);
+            int productID= rs.getInt(5);
             int ProductQuantity = rs.getInt(6);
   
-            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, ProductName, ProductQuantity);
+            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, productID, ProductQuantity);
             listOrder.add(OrderFromDB);
         }     
         return listOrder;
@@ -700,10 +701,10 @@ public class DBManager {
             int CustomerId = rs.getInt(2);
             Date DOO = rs.getDate(3);
             String ShippingAddress = rs.getString(4);
-            String ProductName = rs.getString(5);
+            int productID= rs.getInt(5);
             int ProductQuantity = rs.getInt(6);
             
-            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, ProductName, ProductQuantity);
+            OrderBean OrderFromDB = new OrderBean(OrderId, CustomerId, DOO, ShippingAddress, productID, ProductQuantity);
             OrderLine.add(OrderFromDB);         
         }     
         return OrderLine;

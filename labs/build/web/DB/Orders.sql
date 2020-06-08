@@ -10,10 +10,12 @@ CREATE TABLE ORDERDB (
     Customer_ID int,
     Date_Of_Order DATE, 
     Shipping_Address varchar(255),
-    Product_Name varchar(128),
+    Product_ID int NOT NULL,
     Product_Quantity int,
 
-    PRIMARY KEY(Order_ID)
+    PRIMARY KEY(Order_ID),
+    FOREIGN KEY(Product_ID) REFERENCES PRODUCTDB(ProductID),
+    FOREIGN KEY(Customer_ID) REFERENCES CUSTOMERDB(Customer_ID)
 );
 
     /*INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_ID, Product_Quantity)

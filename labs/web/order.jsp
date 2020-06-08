@@ -2,6 +2,7 @@
     Document   : order
     Author     : Forever
 --%>
+<%@page import="uts.isd.model.Staff"%>
 <%@page import="uts.isd.model.OrderBean"%>
 <%@page import="uts.isd.model.CustomerAccessLogBean"%>
 <%@page import="uts.isd.model.CustomerBean"%>
@@ -14,15 +15,22 @@
 <!DOCTYPE html>
 <html>
     <%
-                        CustomerBean cust = new CustomerBean();
-                        cust.setName("Guest");
-                        cust.setPassword("");
-
+                       CustomerBean cust = null;
+                        Staff stuff= new Staff();
                         Object accountsesh = session.getAttribute("login");
-                        if(accountsesh==null){
-                            session.setAttribute("login", cust);
-                        }else{
-                            cust = (CustomerBean)accountsesh;
+                        String profilelink= "#";
+                        String name="Guest";
+                        if(accountsesh!=null){
+
+                            if(accountsesh instanceof CustomerBean){
+                                cust = (CustomerBean)accountsesh;
+                                name= cust.getName();
+                            }else{
+                                stuff = (Staff)accountsesh;
+                                name=stuff.getFullName();
+                            }
+                            profilelink="profile.jsp";
+
                         }
                         
                         String errortext="";
@@ -65,7 +73,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Managing<%=cust.getName()%>'s Order</title>
+        <title>Managing<%=name%>'s Order</title>
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
          <script src="lib/jquery/jquery-3.5.0.min.js"></script>
@@ -85,7 +93,7 @@
                 </div>
                 
                 <div class="col-sm-12 col-md-9 p-4">
-                    <h1 style='color: #218838'>Managing <%=cust.getName()%>'s Order</h1>
+                    <h1 style='color: #218838'>Managing <%=name%>'s Order</h1>
                     <table class="table">
                     <thead>
                       <tr>
@@ -110,7 +118,7 @@
                         <td><%= String.valueOf(ob.getCustomerId()).toString()%></td>
                         <td><%= ob.getDOO()==null? "In ordering process":ob.getDOO().toString()%></td>
                         <td><%= ob.getShippingAddress()==null? "Unfilled in":ob.getShippingAddress().toString()%></td>
-                        <td><%= ob.getProductName()==null? "Unfilled in":ob.getProductName().toString()%></td>
+                        <td><%= ob.getProduct()==null? "Unfilled in":ob.getProduct().getName()%></td>
                         <td><%= String.valueOf(ob.getProductQuantity()).toString()%></td>
                         <td style="height: 100px;">
                             <a role="button" href="${pageContext.request.contextPath}/OrderEdit?OID=<%= ob.getOrderId()%>">Update</a>
