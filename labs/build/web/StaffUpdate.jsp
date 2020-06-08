@@ -46,6 +46,7 @@
                             <tr><td>Company Type: </td><td><input type="text" value= "<%=current.getPosition().toString()%>" placeholder="Enter Company Type" name="Pos"></td></tr>
                             <tr><td>Email: </td><td><input type="email" value= "<%=current.getEmail().toString()%>" placeholder="Enter Email" name="Email"></td></tr>
                             <tr><td>Status: </td><td><input type="checkbox" value= "<%=current.getStatus() == 0 ? "Activate":"Deactivate"  %>" placeholder="" name="Status"></td></tr>   
+                            <tr></tr>                     
                         </table>
                                <input class="button" type="submit" value="Update" role="button" > 
                         </form>
