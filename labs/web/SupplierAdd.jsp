@@ -56,6 +56,7 @@
                                     <option>Peripherals</option>
                                     <option>Power Supply</option>
                                     <option>RAM</option>
+                                    <option>Rasberry Pi</option>
                                     <option>SSD</option>
                                     <option>System</option>
                                     
@@ -65,13 +66,9 @@
                                 <label for="inputName">Email:</label>
                                 <input type="email" class="form-control" placeholder="Enter Email" name="CEmail">
                             </div>
-                            <div class="float-middle">
-                                <a class="btn btn-secondary"  role="button">
-                                   <input type="reset">  
-                                </a>
-                                <a class="btn btn-primary"  role="button">
-                                   <input type="submit" value="Register"> 
-                                </a>  
+                            <div class="mx-auto align-middle">
+                                <input class="btn btn-secondary p-4 "  role="button" type="reset" >  
+                                <input  class="btn btn-primary p-4 "  role="button" type="submit" value="Register">
                             </div> 
                         </form>
                     </div>

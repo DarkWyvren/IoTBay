@@ -282,7 +282,7 @@ public class DBManager {
     
            //find supplier from db using supplier id
      public Supplier findSupplier(String CompanyName, String CompanyType) throws SQLException {   
-        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupName='"+CompanyName+"' AND Password = '"+CompanyType+"'";
+        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupName='"+CompanyName+"' AND SupType = '"+CompanyType+"'";
         ResultSet rs = st.executeQuery(query);
         
         while(rs.next()){

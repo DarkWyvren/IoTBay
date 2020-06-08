@@ -45,18 +45,34 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron jumbotron-fluid h-5">
-                        <div class="container">
-                        <div class="row">
-                          <div class="col-sm">
-                          </div>
-                          <div class="col-sm">
-                            <input class="form-control mr-sm-2 h-75" type="text" placeholder="Search by Type">
-                          </div>
-                          <div class="col-sm">
-                            <input class="form-control mr-sm-2 h-75" type="text" id="myInput" onkeyup="myFunction()" placeholder="CompanyName" title="Type in a name">
-                          </div>
-                        </div>
-                    </div>
+                        <form method="get" action="">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="form-control" placeholder="" name="CompanyType">                                   
+                                            <option value="">Select Type</option>
+                                            <option value="Case">Case</option>
+                                            <option value="CPU">CPU</option>
+                                            <option value="Fan">Fan</option>
+                                            <option value="MotherBoard">MotherBoard</option>
+                                            <option value="Peripherals">Peripherals</option>
+                                            <option value="Power Supply">Power Supply</option>
+                                            <option value="RAM">RAM</option>
+                                            <option value="Rasberry Pi">Rasberry Pi</option>
+                                            <option value="SSD">SSD</option>
+                                            <option value="System">System</option>                                    
+                                        </select>
+                                    </div>
+                                    <div class="col-sm">
+                                      <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Type In Company Name" name="CompanyName">
+                                      <button type="submit"><i class="fa fa-search"></i>Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> 
+
                     </div>
                     <div class="jumbotron">                     
                         <div>                       
