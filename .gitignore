@@ -22,3 +22,4 @@ labs/nbproject/private/private.properties
 labs/nbproject/project.properties
 /labs/dist/
 *.class
+*.xml
