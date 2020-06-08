@@ -16,6 +16,47 @@ CREATE TABLE ORDERDB (
     PRIMARY KEY(Order_ID)
 );
 
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (2, '2020-06-06', '15 IoTBat Test St Central|1241', 'IoTBay 64G RAM', 2);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (3, '2020-06-06', '21 IoTBat ATest St Central|1241', 'IoTBay 4G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (5, '2020-06-06', '22 IoTBat BTest St Central|1241', 'IoTBay 64G RAM', 2);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (6, '2020-06-07', '22 IoTBat CTest St Central|1241', 'IoTBay 4G RAM', 2);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (4, '2020-06-07', '11 IoTBat DTest St Central|1241', 'IoTBay 32G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (7, '2020-06-07', '32 IoTBat ETest St Central|1241', 'IoTBay 64G RAM', 2);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (1, '2020-06-07', '21IoTBat FTest St Central|1241', 'IoTBay 32G RAM', 2);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (3, '2020-06-08', '55 IoTBat GTest St Central|1241', 'IoTBay 4G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (4, '2020-06-08', '33 IoTBat FTest St Central|1241', 'IoTBay 64G RAM', 2);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (5, '2020-06-08', '53 IoTBat ETest St Central|1241', 'IoTBay 64G RAM', 3);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (2, '2020-06-09', '24 IoTBat ATest St Central|1241', 'IoTBay 32G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (5, '2020-06-09', '53 IoTBat CTest St Central|1241', 'IoTBay 8G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (11, '2020-06-09', '74 IoTBat DTest St Central|1241', 'IoTBay 32G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (17, '2020-06-09', '85 IoTBat WTest St Central|1241', 'IoTBay 64G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (31, '2020-06-10', '23 IoTBat STest St Central|1241', 'IoTBay 64G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (22, '2020-06-10', '44 IoTBat NTest St Central|1241', 'IoTBay 16G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (31, '2020-06-10', '42 IoTBat BTest St Central|1241', 'IoTBay 8G RAM', 2);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (44, '2020-06-10', '32 IoTBat STest St Central|1241', 'IoTBay 64G RAM', 1);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (35, '2020-06-10', '64 IoTBat DTest St Central|1241', 'IoTBay 64G RAM', 2);
+INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_Name, Product_Quantity)
+VALUES (26, '2020-06-10', '78 IoTBat HTest St Central|1241', 'IoTBay 64G RAM', 3);
+
     /*INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_ID, Product_Quantity)
     VALUES (1, NULL, NULL, NULL, NULL);
     INSERT INTO ORDERDB (Customer_ID, Date_Of_Order, Shipping_Address, Product_ID, Product_Quantity)

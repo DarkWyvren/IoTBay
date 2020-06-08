@@ -119,9 +119,9 @@ public class OrderAddController extends HttpServlet {
         }
         ob.setShippingAddress(address[0]+"|"+address[1]);
         System.out.println(Arrays.toString(date));
-        //try{
+        try{
         ob.setDOO(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
-        /*}catch(java.lang.IllegalArgumentException ec){
+        }catch(java.lang.IllegalArgumentException ec){
             RequestDispatcher dispatch = request.getRequestDispatcher("orderAdd.jsp");
             request.setAttribute("response",  "Date has incorrect format");
             dispatch.forward(request, response);
@@ -131,7 +131,7 @@ public class OrderAddController extends HttpServlet {
             request.setAttribute("response",  "Please agree to the TOC");
             dispatch.forward(request, response);
             return;
-        }*/
+        }
 
         
         

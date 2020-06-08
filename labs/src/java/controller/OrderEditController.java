@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
@@ -105,6 +106,22 @@ import uts.isd.model.dao.*;
                     break;
             }
         }
+        ob.setShippingAddress(address[0]+"|"+address[1]);
+        System.out.println(Arrays.toString(date));
+        try{
+        ob.setDOO(java.sql.Date.valueOf(date[2]+"-"+date[0]+"-"+date[1]));
+        }catch(java.lang.IllegalArgumentException ec){
+            RequestDispatcher dispatch = request.getRequestDispatcher("orderAdd.jsp");
+            request.setAttribute("response",  "Date has incorrect format");
+            dispatch.forward(request, response);
+        }
+        if(!hastoc){
+            RequestDispatcher dispatch = request.getRequestDispatcher("orderAdd.jsp");
+            request.setAttribute("response",  "Please agree to the TOC");
+            dispatch.forward(request, response);
+            return;
+        }
+        
         try {
                 manager.updateOrder(ob);
                 System.out.println("test: " +ob);
@@ -112,17 +129,15 @@ import uts.isd.model.dao.*;
                 Logger.getLogger(OrderEditController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        ArrayList<Supplier> queryresult = null;
+        ArrayList<OrderBean> queryresult = null;
            try {
-               queryresult = manager.fetchSupplierList();
+               queryresult = manager.fetchOrderList();
            } catch (SQLException ex) {
                Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
-        request.setAttribute("OrderInfo",  queryresult);
+        request.setAttribute("OrderInfo2",  queryresult);
         RequestDispatcher rd = request.getRequestDispatcher("order.jsp");
         rd.forward(request, response);
-        //request.setAttribute("response",   );
-        //request.getRequestDispatcher("Supplier.jsp").include(request, response);
     }
 }
 
