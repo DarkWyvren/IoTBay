@@ -1,0 +1,137 @@
+<%-- 
+    Document   : order
+    Author     : Forever
+--%>
+
+<%@page import="uts.isd.model.OrderHistoryBean"%>
+<%@page import="uts.isd.model.OrderBean"%>
+<%@page import="uts.isd.model.CustomerAccessLogBean"%>
+<%@page import="uts.isd.model.CustomerBean"%>
+<%@page import="uts.isd.model.dao.DBConnector"%>
+<%@page import="uts.isd.model.dao.DBManager"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Calendar"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+          
+<!DOCTYPE html>
+<html>
+    <%
+                        CustomerBean cust = new CustomerBean();
+                        cust.setName("Guest");
+                        cust.setPassword("");
+
+                        Object accountsesh = session.getAttribute("login");
+                        if(accountsesh==null){
+                            session.setAttribute("login", cust);
+                        }else{
+                            cust = (CustomerBean)accountsesh;
+                        }
+                        
+                        String errortext="";
+                        boolean haserror=false;
+                        Object init = request.getAttribute("response");
+                        if(init!=null){
+                            String postRes = (String)init;
+                            if(postRes.equals("OK")){
+                            }else if(postRes.length()>0){
+                                haserror = true;
+                                errortext = postRes;
+                            }
+                        }
+                        Calendar thing = Calendar.getInstance();
+                        
+                        if(accountsesh!=null&&cust.getDOB()!=null){
+                            System.out.println(cust.getDOB().toString()+ thing);
+                            thing.setTime(cust.getDOB());
+                        }
+                        
+
+                        ArrayList datalist = new ArrayList();
+                        Object  data= request.getAttribute("data");
+                        if(data!=null){
+                            datalist = (ArrayList)data;
+                        }
+                        //add a controler for this, using request.setAttribute("name", value); 
+                        ///and request.getRequestDispatcher("something.jsp").forward(request, response);
+                        
+    
+                        ArrayList OrderList = new ArrayList();
+                        Object  OrderInfo= request.getAttribute("OrderInfo");
+                        if(OrderInfo!=null){
+                            OrderList = (ArrayList)OrderInfo;
+                        }
+    
+        %> 
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Managing<%=cust.getName()%>'s Order</title>
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+         <script src="lib/jquery/jquery-3.5.0.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+  
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    </head>
+        
+          
+    <body>
+        <div class="container">
+            <jsp:include page="header.jsp" />
+            <div class="row" >
+                <div class="col-sm-12 col-md-3">
+                     <jsp:include page="orderViewNavBar.jsp" />
+                </div>
+                
+                <div class="col-sm-12 col-md-9 p-4">
+                    <h1 style='color: #218838'>Managing <%=cust.getName()%>'s Order</h1>
+                    <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Order Number</th>
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Date of Order</th>
+                        <th scope="col">Shipping Address</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Product Price</th>
+                        <th scope="col">Product Quantity</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Order Status</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(int i = 0;i<OrderList.size();i++){ 
+                          OrderBean ob = (OrderBean)OrderList.get(i);
+                          
+                        %> 
+                      <tr>
+                        <th scope="row"><%=i%></th>
+                        <td><%= String.valueOf(ob.getOrderId()).toString() %></td>
+                        <td><%= String.valueOf(ob.getCustomerId()).toString()%></td>
+                        <td><%= ob.getDOO()==null? "In ordering process":ob.getDOO().toString()%></td>
+                        <td><%= ob.getShippingAddress()==null? "Unfilled in":ob.getShippingAddress().toString()%></td>
+                        <td><%= String.valueOf(ob.getProductId()).toString()%></td>
+                        <td><%= String.valueOf(ob.getProductPrice())==null? "19.9":String.valueOf(ob.getProductPrice()).toString()%></td>
+                        <td><%= String.valueOf(ob.getProductQuanity())==null? "1":String.valueOf(ob.getProductQuanity()).toString()%></td>
+                        <td><%= String.valueOf(ob.getTotalPrice())==null? "String.valueOf(ob.getProductPrice()*ob.getProductPrice())":String.valueOf(ob.getTotalPrice()).toString()%></td>
+                        <td><%= ob.getStatus()==null? "In ordering process":ob.getStatus().toString()%></td>
+                        <td style="height: 100px;">
+                            <a role="button" href="${pageContext.request.contextPath}/OrderEdit?OID=<%= ob.getOrderId()%>">Update</a>
+                            <a role="button" href="${pageContext.request.contextPath}/deleteOrder?OID=<%= ob.getOrderId()%>">Cancel</a>
+                        </td>
+                      </tr>
+                      <%}%>
+                    </tbody>
+                  </table>
+                    
+                </div>
+                   
+            </div>
+        </div>
+    </body>
+</html>

@@ -22,14 +22,13 @@
             <jsp:include page="header.jsp" />
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
-                     <jsp:include page="navbar.jsp" />
+                     <jsp:include page="orderNavBar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                    <div class="jumbotron"><a href="product.jsp">&gt;Start ordering&lt;</div>
+                    <div class="jumbotron"><a href="orderAdd.jsp">&gt;Start ordering&lt;</div>
                     <div class="jumbotron"><a href="ShowOrderHistory">View my orders</div>
+                    <div class="jumbotron"><a href="${pageContext.request.contextPath}/OrderView">Manage my orders</div>
                     <div class="jumbotron"><a href="orderTrack.jsp">Track my orders</div>
-                    <div class="jumbotron"><a href="orderUpdate.jsp">Update a onhold order</div>
-                    <div class="jumbotron"><a href="orderRemove.jsp">Remove a onhold order</div>
                 </div>
             </div>
         </div>

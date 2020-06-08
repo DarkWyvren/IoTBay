@@ -15,6 +15,49 @@ public class OrderBean implements Serializable{
     private String shippingAddress, status, productName;
     private Date DOO;
 
+    public OrderBean(CustomerBean customer, ProductBean product, int orderId, int customerId, Date DOO, String shippingAddress, String status, int productId, String productName, double productPrice, int productQuanity, double totalPrice) {
+        this.customer = customer;
+        this.product = product;
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.productId = productId;
+        this.productQuanity = productQuanity;
+        this.productPrice = productPrice;
+        this.totalPrice = totalPrice;
+        this.shippingAddress = shippingAddress;
+        this.status = status;
+        this.productName = productName;
+        this.DOO = DOO;
+    }
+    
+    public OrderBean(int orderId, int customerId, Date DOO, String shippingAddress, String status, int productId, String productName, double productPrice, int productQuanity, double totalPrice) {
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.productId = productId;
+        this.productQuanity = productQuanity;
+        this.productPrice = productPrice;
+        this.totalPrice = totalPrice;
+        this.shippingAddress = shippingAddress;
+        this.status = status;
+        this.productName = productName;
+        this.DOO = DOO;
+    }
+    
+    public OrderBean() {
+        customer = null;
+        product = null;
+        orderId = 0;
+        customerId = 0;
+        productId = 0;
+        productQuanity = 0;
+        productPrice = 0;
+        totalPrice = 0;
+        shippingAddress = null;
+        status = null;
+        productName = null;
+        DOO = null;
+    }
+
     public CustomerBean getCustomer() {
         return customer;
     }

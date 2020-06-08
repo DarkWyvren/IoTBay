@@ -19,9 +19,11 @@
         <a href="Product.jsp"><div class="nav-link nav-fill navButt"><h5>Check our Products</h5></div></a>
     </li>
     <li class="nav-item">
-        <a href="orderAdd.jsp"><div class="nav-link nav-fill navButt"><h5>Add a Order</h5></div></a>
+        <a href="ShowOrderHistory"><div class="nav-link nav-fill navButt"><h5>View Order History</h5></div></a>
     </li>
     <li class="nav-item">
         <a href="${pageContext.request.contextPath}/OrderView" ><div class="nav-link nav-fill navButt"><h5>Manage Orders</h5></div></a>
     </li>
+    
 </ul>
+

@@ -3,12 +3,8 @@
     Author     : Forever
 --%>
 
-<%@page import="uts.isd.model.OrderHistoryBean"%>
-<%@page import="uts.isd.model.OrderBean"%>
-<%@page import="uts.isd.model.CustomerAccessLogBean"%>
-<%@page import="uts.isd.model.CustomerBean"%>
-<%@page import="uts.isd.model.dao.DBConnector"%>
-<%@page import="uts.isd.model.dao.DBManager"%>
+<%@page import="uts.isd.model.*"%>
+<%@page import="uts.isd.model.dao.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -87,11 +83,11 @@
                 </div>
                 
                 <div class="col-sm-12 col-md-9 p-4">
-                    <h1><%=cust.getName()%>'s Order History</h1>
+                    <h1 style='color: #721c24'>Viewing <%=cust.getName()%>'s Order History</h1>
                     <form action="orderHistory" method="GET"  class="form-inline ">
                         <div class="row">
                             <div class="col-10 pr-1">
-                                <input type="text" class="form-control lineBox w-100" id="inputDate" placeholder="before 08/06/2020" name="search_date">
+                                <input type="text" class="form-control lineBox w-100" id="inputDate" placeholder="Before 10/06/2020" name="search_date">
                             </div>
                             <div class="col-2 pl-0">
                                 <button type="submit" class="btn">
@@ -119,7 +115,7 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Customer IDs</th>
-                        <th scope="col">Order IDs</th>
+                        <th scope="col">Order Numbers</th>
                         <th scope="col">Date of Order</th>
                         <th scope="col">Order Status</th>
                         <th scope="col">Payment Method</th>
@@ -143,7 +139,9 @@
                         <td><%= String.valueOf(ohb.getOriginalPrice()).toString()%></td>
                         <td><%= String.valueOf(ohb.getPaidMoney())==null? "In ordering process":String.valueOf(ohb.getPaidMoney()).toString()%></td>
                         <td><%= String.valueOf(ohb.getSavedMoney())==null? "Try coupon":String.valueOf(ohb.getSavedMoney()).toString()%></td>
-                        
+                        <td style="height: 100px;">
+                            <a role="button" href="${pageContext.request.contextPath}/OrderView?OID=<%= ohb.getOrderId()%>" >Manage</a>
+                        </td>
                       </tr>
                       <%}%>
                     </tbody>

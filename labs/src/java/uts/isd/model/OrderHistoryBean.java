@@ -44,9 +44,9 @@ public class OrderHistoryBean {
         customer = null;
         orderId = 0;
         customerId = 0;
-        originalPrice = -1;
-        paidMoney = -1;
-        savedMoney = -1;
+        originalPrice = 0;
+        paidMoney = 0;
+        savedMoney = 0;
         status = null;
         paymentMethod = null;
         DOO = null;

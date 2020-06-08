@@ -11,8 +11,8 @@ DROP TABLE PRODUCTDB;
 
 CREATE TABLE PRODUCTDB (
     Product_ID int NOT NULL, 
-    ProductName VARCHAR(100) NOT NULL,
-    Price double NOT NULL,
+    ProductName VARCHAR(100) NOT NULL unique,
+    Price double NOT NULL unique,
     Category VARCHAR(100) NOT NULL,
     SupplierID int NOT NULL,
 
