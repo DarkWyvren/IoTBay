@@ -31,14 +31,14 @@ public class paymentUpdateServlet extends HttpServlet {
        String Payment_DATE=request.getParameter("Payment_DATE");
        String Creditcard_Details=request.getParameter("Creditcard_Details");
        String Payment_Amount=request.getParameter("Payment_Amount");
-       payment payment=new payment(Payment_ID,Payment_METHOD,Payment_DATE,Creditcard_Details,Payment_Amount);
+       payment payment=new payment(Payment_ID,Payment_METHOD,Payment_DATE,Creditcard_Details,Integer.parseInt(Payment_Amount));
        DBManager manager=(DBManager)session.getAttribute("manager");
       
       
       try{
           if (payment != null){
               session.setAttribute("payment", payment);
-              manager.updatePayment(Payment_ID,Payment_METHOD,Payment_DATE,Creditcard_Details,Payment_Amount);
+              manager.updatePayment(Payment_ID,Payment_METHOD,Payment_DATE,Creditcard_Details,Integer.parseInt(Payment_Amount));
               session.setAttribute("updated", "Update was successful");
               request.getRequestDispatcher("paymentupdat.jsp").include(request, response);
           }else{

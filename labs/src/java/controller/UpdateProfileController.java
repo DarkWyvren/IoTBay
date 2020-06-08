@@ -178,6 +178,14 @@ public class UpdateProfileController extends HttpServlet {
             
             if(res.equals("OK")){
                 req.getSession().setAttribute("login", sb);
+                try {
+                    manager.updateStaff(sb);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UpdateProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                    req.setAttribute("response",  "SQL Died FUCK");
+                }
+            }else{
+                req.setAttribute("response",  res);
             }
             RequestDispatcher dispatch = req.getRequestDispatcher("profile.jsp");
             dispatch.forward(req, resp);
