@@ -276,8 +276,8 @@ public class DBManager {
               "ProductName = '"+pb.getName()+"',"+
               "ProductPrice = "+pb.getPrice()+","+
               "Category = '"+pb.getCategory()+"',"+
-              "Supplier = '"+pb.getSupplier()+""+
-              "Quantity = '"+pb.getQuantity()+""
+              "SupplierID = "+pb.getSupplier()+","+
+              "Quantity = "+pb.getQuantity()+""
               ;
         System.out.println(+pb.getID());
         st.executeUpdate("UPDATE APP.PRODUCTDB SET "+values+" WHERE ProductID ="+pb.getID());   

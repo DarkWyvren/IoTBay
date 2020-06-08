@@ -86,6 +86,10 @@ public class ProductEditController extends HttpServlet{
             String paraNames = paramNames.nextElement();
             System.out.println(paraNames);
             switch(paraNames){
+                
+                case "ProductID":
+                    pb.setID (Integer.parseInt(request.getParameter(paraNames)));
+                    break;
                 case "PName":
                     pb.setName(request.getParameter(paraNames));
                     break;
@@ -98,7 +102,8 @@ public class ProductEditController extends HttpServlet{
                 case "PSupplier":
                     pb.setSupplier(Integer.parseInt(request.getParameter(paraNames)));
                     break;
-                case "PQuantity":
+                case "PQUANT":
+                    System.out.println("This is a test" + request.getParameter(paraNames));
                     pb.setQuantity(Integer.parseInt(request.getParameter(paraNames)));    
                 /*case "CompanyStatus":
                     sb.setCompanyStatus(request.getParameter(paraNames));
