@@ -8,6 +8,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+        ArrayList staffList = new ArrayList();
+        Object data = request.getAttribute("Staff");
+        if(data!=null)
+        {
+            staffList = (ArrayList)data;
+        }
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -33,6 +41,8 @@
                        <tr><td> <input type="text" id="myInput" onkeyup="" placeholder="Search for names.." title="Type in a name">
                                . </td><td><input type="submit" name="submit" value="Search"> </td></tr>
                         <tr></tr>
+                            <%for(int i = 0; i < staffList.size(); i++){ %>
+                            
                             <tr><td>Name: </td><td><input type="text" value= ""  name="FullName"></td></tr>
                             <tr><td>Address: </td><td><input type="text" value= ""  name="Address"></td></tr>
                             <tr><td>Position: </td><td><input type="text" value= ""  name="Pos"></td></tr>

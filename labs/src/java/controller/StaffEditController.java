@@ -65,7 +65,7 @@ public class StaffEditController extends HttpServlet
         }
         System.out.println("inside doget" + queryResult);
         RequestDispatcher rd = request.getRequestDispatcher("StaffEdit.jsp");
-        request.setAttribute("StaffInfo", queryResult);
+        request.setAttribute("Staff", queryResult);
         rd.forward(request, response);
     }
 }
