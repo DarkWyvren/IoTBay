@@ -13,6 +13,7 @@ import uts.isd.model.CustomerBean;
 import uts.isd.model.ProductBean;
 import uts.isd.model.Supplier;
 import uts.isd.model.OrderBean;
+import uts.isd.model.Staff;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -296,8 +297,12 @@ public class DBManager {
                 String C_Email = rs.getString(5);
                 int C_Status = rs.getInt(6);
 
+              //  return new Supplier (C_Name, C_Address, C_Type, C_Email, C_Status); 
+
+
                 System.out.println("Company Name: " +C_Name);
                 return new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
+
             }
         }         
        return null;   
@@ -414,7 +419,7 @@ public class DBManager {
             String C_Type = rs.getString(4);
             String C_Email = rs.getString(5);
             int C_Status = rs.getInt(6);
-            temp.add(new Supplier(C_Name, C_Address, C_Type, C_Email, C_Status));
+        //    temp.add(new Supplier(C_Name, C_Address, C_Type, C_Email, C_Status));
         } 
             
             return temp;
@@ -520,6 +525,69 @@ public class DBManager {
     }
 
     
+    
+    
+    
+    
+    
+    //STAFF INFO
+        //find staff from db
+     public ArrayList<Staff> findStaff(String name) throws SQLException 
+     {   
+        String query = "SELECT * FROM APP.STAFF WHERE FULLNAME='"+name+"'";
+        ResultSet rs = st.executeQuery(query);
+        ArrayList<Staff> result = new ArrayList();
+        while(rs.next())
+        {
+            String FullName = rs.getString(3);
+            String Email = rs.getString(2);
+            String Address = rs.getString(4);
+            String Position = rs.getString(5);
+            int Status = rs.getInt(6);
+            int Id = rs.getInt(1);
+            if(FullName.equals(name))
+            {
+                result.add(new Staff(Id, Email, FullName, Address, Position, Status));
+            }
+        }
+        return result;
+     }
+     
+     public Staff getStaff(int Staff_id) throws SQLException {   
+        Staff staff = null;
+            String query = "SELECT * FROM APP.STAFF WHERE  ID="+Staff_id+"";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                int Id = rs.getInt(1);
+                System.out.println(Id);
+                String Name = rs.getString(2);
+                String Address = rs.getString(3);
+                String Pos = rs.getString(4);
+                String Email = rs.getString(5);
+                int Status = rs.getInt(6);
+                System.out.println("Staff Name: " +Name);
+                staff = new Staff (Id, Name, Address, Pos, Email, Status); 
+            } return staff;     
+    }
+     
+     public void deleteStaff(Staff stf) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.STAFF WHERE ID =" +stf.getId());
+  
+    }
+
+     public void updateStaff(Staff stf) throws SQLException {
+        String values=
+              
+              "FullName = '"+stf.getFullName()+"',"+
+              "Address = '"+stf.getAddress()+"',"+
+              "Pos = '"+stf.getPosition()+"',"+
+              "Email = '"+stf.getEmail()+"'"
+              ;
+        System.out.println(+stf.getId());
+        st.executeUpdate("UPDATE APP.STAFF SET "+values+" WHERE ID ="+stf.getId());   
+
+    }
+    
     public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
         String query = "SELECT * FROM APP.PAYMENTDB WHERE  PAYMENTID='"+Payment_ID+"'"+ (" AND PAYMENTDATE = '"+Payment_DATE+"'");
         ResultSet rs = st.executeQuery(query);
@@ -534,10 +602,42 @@ public class DBManager {
                 String P_CREDITCARD = rs.getString(5);
                 int P_AMOUNT = rs.getInt(6);
                 return new payment (P_ID, P_DATE, P_METHOD, P_CREDITCARD, P_AMOUNT); 
+
             }
         }         
        return null;   
     }
+
+       //Add a staff into the db
+    public void addStaff (Staff stf) throws SQLException {
+       String values = 
+               
+               "'"+stf.getEmail() + "',"+
+              "'"+stf.getFullName() + "',"+
+                "'"+stf.getAddress() + "',"+
+              "'"+stf.getPosition() + "',"+
+               ""+stf.getStatus() + "";
+       st.executeUpdate("INSERT INTO APP.STAFF(EMAIL, FULLNAME, ADDRESS, POS, STATUS) VALUES("+values+")");
+    }
+     
+        public ArrayList<Staff> fetchStaffList() throws SQLException
+        {
+            String fetch = "SELECT * FROM APP.STAFF";
+            ResultSet rs = st.executeQuery(fetch);
+            ArrayList<Staff> temp1 = new ArrayList();
+            while(rs.next()){
+            String Name = rs.getString(3);
+            String Address = rs.getString(4);
+            String Position = rs.getString(5);
+            String Email = rs.getString(2);
+            int Id = rs.getInt(1);
+            int Status = rs.getInt(6);
+            temp1.add(new Staff(Id, Email, Name, Address, Position, Status));
+        } 
+            return temp1;
+        }
+
+
        
     //Add a supplier into the db
     public void addPayment (String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {
