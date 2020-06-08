@@ -4,20 +4,34 @@
     Author     : willi
 --%>
 
+<%@page import="uts.isd.model.Staff"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="uts.isd.model.CustomerBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-                        CustomerBean cust = new CustomerBean();
-                        cust.setName("Guest");
-                        cust.setPassword("");
+                        CustomerBean cust = null;
+                        Staff stuff = null;
 
                         Object accountsesh = session.getAttribute("login");
-                        if(accountsesh==null){
-                            session.setAttribute("login", cust);
-                        }else{
-                            cust = (CustomerBean)accountsesh;
+                        
+                        String name="";
+                        String email="";
+                        String address="";
+                        
+                        
+                        if(accountsesh!=null){
+                            if(accountsesh instanceof CustomerBean){
+                                cust = (CustomerBean)accountsesh;
+                                name = cust.getName();
+                                email = cust.getEmail();
+                                address = cust.getAddress();
+                            }else{
+                                stuff = (Staff)accountsesh;
+                                name = stuff.getFullName();
+                                email = stuff.getEmail();
+                                address = stuff.getAddress();
+                            }
                         }
                         
                         String errortext="";
@@ -33,7 +47,7 @@
                         }
                         Calendar thing = Calendar.getInstance();
                         
-                        if(accountsesh!=null&&cust.getDOB()!=null){
+                        if(cust!=null&&accountsesh!=null&&cust.getDOB()!=null){
                             System.out.println(cust.getDOB().toString()+ thing);
                             thing.setTime(cust.getDOB());
                         }
@@ -43,7 +57,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title><%=cust.getName()%>'s Profile</title>
+        <title><%=name%>'s Profile</title>
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
          <script src="lib/jquery/jquery-3.5.0.min.js"></script>
@@ -58,21 +72,22 @@
                 </div>
                 
                 <div class="col-sm-12 col-md-9 p-4">
-                    <h1><%=cust.getName()%>'s Profile</h1>
+                    <h1><%=name%>'s Profile</h1>
                     <form action="updateProf" method="POST">
                       <div class="form-group">
                         <label for="inputName">Full Name</label>
-                        <input type="text" value="<%=cust.getName()%>" class="form-control" id="inputName" placeholder="Enter name" name="full_name">
+                        <input type="text" value="<%=name%>" class="form-control" id="inputName" placeholder="Enter name" name="full_name">
                       </div>
                       <div class="form-group">
                         <label for="inputEmail">Email address</label>
-                        <input type="email" value="<%=cust.getEmail()%>" class="form-control" id="inputEmail" placeholder="Enter email" name="email">
+                        <input type="email" value="<%=email%>" class="form-control" id="inputEmail" placeholder="Enter email" name="email">
                       </div>  
                       <div class="form-group">
                         <label for="inputPassword">Password</label>
                         <input type="password" class="form-control" id="inputPassword"  aria-describedby="passHelp" placeholder="Password" name="password">
                         <small id="passHelp" class="form-text text-muted">Use a strong password that's not shared by any other site</small>
                       </div>
+                        <%if(cust!=null){%>
                       <div class="row">
                         <div class="col">
                             <label for="inputDay">Day</label>
@@ -99,16 +114,18 @@
                             </select>
                         </div>    
                       </div>
+                      <%}%>
                       <div class="row">
                             <div class="col">
                               <label for="inputAddress">Address</label>
-                              <input type="text" class="form-control" id="inputAddress"  value="<%=cust.getAddress().split("\\|")[0]%>" placeholder="18-20 Perti St Dankstown Hobart Australia" name="address">
+                              <input type="text" class="form-control" id="inputAddress"  value="<%=address.split("\\|")[0]%>" placeholder="18-20 Perti St Dankstown Hobart Australia" name="address">
                             </div>       
                             <div class="col">
                               <label for="inputPost">Postcode</label>
-                              <input type="number" class="form-control" id="inputPost"  value="<%=cust.getAddress().split("\\|").length>1?cust.getAddress().split("\\|")[1]:0%>" placeholder="1234" name="postalcode">
+                              <input type="number" class="form-control" id="inputPost"  value="<%=address.split("\\|").length>1?address.split("\\|")[1]:0%>" placeholder="1234" name="postalcode">
                             </div>  
                       </div>        
+                       <%if(cust!=null){%>
                       <div class="row">
                             <div class="col">
                               <label for="inputTitle">Title</label>
@@ -119,13 +136,17 @@
                               <input type="tel" class="form-control" id="inputPhone" value="<%=cust.getPhone()%>"pattern="+[0-9]{2}-[0-9]{10}" placeholder="+12-3456789012" name="phone">
                             </div>  
                       </div>  
-                            
+                       <%}%> 
                       <div class="row" style = "height:20px;"></div>
                         
                       <button type="submit" class="btn btn-primary">Submit</button>
                       <%if(haserror){%>
                         <small id="error_response" class="form-text text-danger"><%=errortext%></small>
                       <%}%>
+                      
+                      <%if(cust!=null){%>
+                      <a class="btn btn-primary">Delete Account</a>
+                      <%}%> 
                     </form> 
                 </div>
                    

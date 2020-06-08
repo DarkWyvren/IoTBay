@@ -4,6 +4,7 @@
     Author     : willi
 --%>
 
+<%@page import="uts.isd.model.Staff"%>
 <%@page import="uts.isd.model.CustomerBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="row h-10  no-gutters" style="">
@@ -15,28 +16,35 @@
     </div>
     <%
         CustomerBean cust = new CustomerBean();
-        cust.setName("Guest");
-        cust.setPassword("");
-
+        Staff stuff= new Staff();
         Object accountsesh = session.getAttribute("login");
-        if(accountsesh==null){
-            session.setAttribute("login", cust);
-        }else{
-            cust = (CustomerBean)accountsesh;
+        String profilelink= "#";
+        String name="Guest";
+        if(accountsesh!=null){
+            
+            if(accountsesh instanceof CustomerBean){
+                cust = (CustomerBean)accountsesh;
+                name= cust.getName();
+            }else{
+                stuff = (Staff)accountsesh;
+                name=stuff.getFullName();
+            }
+            profilelink="profile.jsp";
+            
         }
 
-        String profilelink= cust.getPassword().isEmpty()?"#":"profile.jsp";
+        
     %>
     <div class="h-100 col-sm-12 col-md-3 bg-dark text-white p-3">
         <div class="container" style = "width:200px">
         <div class=" row"  style="height: 80px; ">
-            <h4>Welcome <a href="<%=profilelink%>"><b id="USERNAME"> <%= cust.getName() %> </b></a></h4>
-            <% if(cust.getPassword().trim().length()==0){ %>
+            <h4>Welcome <a href="<%=profilelink%>"><b id="USERNAME"> <%=name%> </b></a></h4>
+            <% if(accountsesh==null){ %>
                 <p>Login to save ur details</p>
             <% } %>
         </div>
         <div class="row">
-            <% if(cust.getPassword().trim().length()==0){ %>
+            <% if(accountsesh==null){ %>
             <a href="register.jsp" class="btn btn-primary"  role="button" >Register</a>
             <a href="login.jsp" class="btn btn-secondary ml-2"  role="button" >Login</a>
             <% } else { %>

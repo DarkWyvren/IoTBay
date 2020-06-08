@@ -18,7 +18,7 @@ public class CustomerBean implements Serializable{
     int id;
 
     public CustomerBean() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     public void setId(int id) {

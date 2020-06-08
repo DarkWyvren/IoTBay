@@ -4,22 +4,26 @@
     Author     : willi
 --%>
 
+<%@page import="uts.isd.model.Staff"%>
 <%@page import="uts.isd.model.CustomerBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <% 
     CustomerBean cust = new CustomerBean();
+    Staff stuff = null;
     cust.setName("Guest");
     cust.setPassword("");
 
     Object accountsesh = session.getAttribute("login");
-    if(accountsesh==null){
-        session.setAttribute("login", cust);
-    }else{
-        cust = (CustomerBean)accountsesh;
-    }
+    if(accountsesh!=null){
+        if(accountsesh instanceof CustomerBean){
+            cust = (CustomerBean)accountsesh;
 
+        }else{
+            stuff = (Staff)accountsesh;
+        }
+    }
 %>
 <ul class="flex-sm-column nav  nav-pills ">
     <li class="nav-item">
@@ -51,43 +55,76 @@
                 </div>
             </div>
             
-            <div class="form-group p-2 mt-2">
+            <div class="form-group p-2 mt-2 ">
                 <div class="form-check ml-2 ">
-                    <input class="form-check-input" type="checkbox" value="" id="catagory1"  name="category_1">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory1"  name="Computers">
                     <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory1">
-                      Some category
+                      Computers
                     </label>
                 </div>
             </div>
-            <div class="form-group p-2 ">
+            <div class="form-group p-2 " >
                 <div class="form-check ml-2 ">
-                    <input class="form-check-input" type="checkbox" value="" id="catagory2"  name="category_2">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory2"  name="Accessories">
                     <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory2">
-                      Some category2
+                      Accessories
                     </label>
                 </div>
             </div>
             <div class="form-group p-2 mb-2">
                 <div class="form-check ml-2 ">
-                    <input class="form-check-input" type="checkbox" value="" id="catagory3"  name="category_3">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory3"  name="Cables">
                     <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory3">
-                      Some category3
+                      Cables
                     </label>
                 </div>
             </div>
+            <div class="form-group p-2 mb-2">
+                <div class="form-check ml-2 ">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory4"  name="Cases">
+                    <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory4">
+                      Cases
+                    </label>
+                </div>
+            </div>
+            <div class="form-group p-2 mb-2">
+                <div class="form-check ml-2 ">
+                    <input class="form-check-input" type="checkbox" value="" id="catagory5"  name="Books">
+                    <label class="form-check-label  text-white ml-2 " style="font-family: IBM_Plex, Helvetica ,sans-serif; font-size: 10pt;" for="catagory5">
+                      Books
+                    </label>
+                </div>
+            </div>
+            
         </form>
     </li>
     
     <li class="nav-item">
-        <a href="store.jsp"><div class="nav-link nav-fill navButt"><h5>Products for Sale</h5></div></a>
+        <a href="store.jsp">
+            <div class="nav-fill navButt bg-dark text-white">
+                <div style="margin: 25px; width:100%;">
+                    <svg class="bi bi-house-door-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
+                        <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                      </svg>
+                    <b>Store</b>
+                </div>
+            </div>
+        </a>
     </li>
+    <%if(stuff!=null){%>
     <li class="nav-item">    
-        <a href="Management.jsp"><div class="nav-link nav-fill navButt"><h5>Management</h5></div></a>
+        <a href="Management.jsp">
+            <div class="nav-fill navButt  bg-light" style="color: #404040">
+                <div style="margin: 25px; width:100%;">
+                    <b>Management</b>
+                </div>
+            </div>
+        </a>
     </li>
-    <%if(!cust.getName().equals("Guest")){%>
+    <%}%>
+    <%if(accountsesh!=null){%>
         <li class="nav-item">
-
-
             <a href="accessLogs">
                 <div class="nav-fill navButt bg-light" style="color: #404040">
                     <div style="margin: 25px; width:100%;">

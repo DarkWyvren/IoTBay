@@ -34,7 +34,7 @@ public class ProductBean implements Serializable{
     }
     
     public void setID(int id) {
-        this.productid = productid;
+        this.productid = id;
     }
     
     public String getName() {
@@ -53,7 +53,7 @@ public class ProductBean implements Serializable{
     
     
     public void setPrice(Double Price) {
-        this.price = price;
+        this.price = Price;
     }
     
     

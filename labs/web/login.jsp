@@ -30,17 +30,11 @@
                 <div class="col-sm-12 col-md-9 p-4"> <!-- Register blocc -->
                     
                     <%
-                        CustomerBean cust = new CustomerBean();
-                        cust.setName("Guest");
-                        cust.setPassword("");
+                        
 
                         Object accountsesh = session.getAttribute("login");
-                        if(accountsesh==null){
-                            session.setAttribute("login", cust);
-                        }else{
-                            cust = (CustomerBean)accountsesh;
-                        }
-                        boolean loggedin=cust.getPassword().trim().length()!=0;
+                        
+                        boolean loggedin=accountsesh!=null;
                         String errortext="";
                         boolean haserror=false;
                         Object init = request.getAttribute("response");

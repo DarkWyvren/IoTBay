@@ -23,9 +23,11 @@
              <div class="row" >
                  <div class="col-sm-12 col-md-3">
                      <jsp:include page="SupplierNavBar.jsp" />
+                     
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
+
                         <h2 class="float-right pb-8">Add new Supplier</h2> 
                         <a class="float-right pb-8">or go back</a>
                         
@@ -50,6 +52,7 @@
                             <input type="submit" value="Register"> 
                             
                         </form>
+
                     </div>
                   
                 </div>
