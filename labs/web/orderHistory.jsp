@@ -130,7 +130,7 @@
                         <td><%= String.valueOf(ohb.getOrderId()).toString()%></td>
                         <td><%= ohb.getDOO()==null? "In ordering process":ohb.getDOO().toString()%></td>
                         <td style="height: 100px;">
-                            <a role="button" href="${pageContext.request.contextPath}/OrderView?OID=<%= ohb.getOrderId()%>" >Manage</a>
+                            <a role="button" href="${pageContext.request.contextPath}/OrderEdit?OID=<%= ohb.getOrderId()%>" >Manage</a>
                         </td>
                       </tr>
                       <%}%>
