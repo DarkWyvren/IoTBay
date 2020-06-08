@@ -149,7 +149,7 @@
                           <label class="form-check-label" for="agreeCheck">I agree to <a href="#">terms and conditions</a></label>
                         </div>
                       </div>
-                            <button type="submit" class="btn  btn-secondary btn-lg" href="/OrderView">Go back</button>
+                            <button type="reset" class="btn  btn-secondary btn-lg" href="">Go back</button>
                             <button type="submit" class="btn  btn-primary btn-lg" href>Update</button>
                 </div>
             </div>  

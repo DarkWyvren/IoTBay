@@ -10,9 +10,6 @@
         <a href="index.jsp"><div class="nav-link nav-fill navButt"><h3>Home</h3></div></a>
     </li>
     <li class="nav-item">
-        <a href="Management.jsp"><div class="nav-link nav-fill navButt"><h5>Go back to Main Management</h5></div></a>
-    </li>
-    <li class="nav-item">
         <a href="orderManagement.jsp"><div class="nav-link nav-fill navButt"><h5>Go back to Order Management</h5></div></a>
     </li>
     <li class="nav-item">
