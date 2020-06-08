@@ -5,16 +5,13 @@
         <group>
             <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/Supplier.java</file>
             <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/DB/StaffInfo.sql</file>
-            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/controller/StaffController.java</file>
-            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/StaffView.jsp</file>
             <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/SupplierAdd.jsp</file>
-            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/Staff.java</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/Staff.jsp</file>
             <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/uts/isd/model/dao/DBManager.java</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/StaffUpdate.jsp</file>
             <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/DB/Suppliers.sql</file>
-            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/controller/StaffEditController.java</file>
             <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/controller/SupplierAddController.java</file>
-            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/StaffAdd.jsp</file>
-            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/src/java/controller/StaffAddController.java</file>
+            <file>file:/E:/Danny16/Documents/GitHub/IoTBay/labs/web/SupplierUpdate.jsp</file>
         </group>
     </open-files>
 </project-private>
