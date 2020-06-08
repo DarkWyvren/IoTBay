@@ -64,6 +64,53 @@
                         <input type="password" class="form-control" id="inputPassword"  aria-describedby="passHelp" placeholder="Password" name="password">
                         <small id="passHelp" class="form-text text-muted">Use a strong password that's not shared by any other site</small>
                       </div>
+                      <div class="row">
+                        <div class="col">
+                            <label for="inputDay">Day</label>
+                            <select id="inputDay" class="form-control"  name="dateday">
+                                <% for (int i =1 ;i<=31;i++){%>
+                                <option value="<%=i%>"><%=i%></option>
+                                <%}%>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="inputMonth">Month</label>
+                            <select id="inputMonth" class="form-control"  name="datemonth">
+                                <% for (int i =1 ;i<=12;i++){%>
+                                <option value="<%=i%>"><%=i%></option>
+                                <%}%>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="inputYear">Year</label>
+                            <select id="inputYear" class="form-control"  name="dateyear">
+                                <% for (int i =2020 ;i>1900;i--){%>
+                                <option value="<%=i%>"><%=i%></option>
+                                <%}%>
+                            </select>
+                        </div>    
+                      </div>
+                      <div class="row">
+                            <div class="col">
+                              <label for="inputAddress">Address</label>
+                              <input type="text" class="form-control" id="inputAddress"  placeholder="18-20 Perti St Dankstown Hobart Australia" name="address">
+                            </div>       
+                            <div class="col">
+                              <label for="inputPost">Postcode</label>
+                              <input type="number" class="form-control" id="inputPost" placeholder="1234" name="postalcode">
+                            </div>  
+                      </div>        
+                      <div class="row">
+                            <div class="col">
+                              <label for="inputTitle">Title</label>
+                              <input type="text" class="form-control" id="inputTitle"  placeholder="Mr, Mrs, etc" name="title">
+                            </div>       
+                            <div class="col">
+                              <label for="inputPhone">Phone</label>
+                              <input type="tel" class="form-control" id="inputPhone"  pattern="+[0-9]{2}-[0-9]{10}" placeholder="+12-3456789012" name="phone">
+                            </div>  
+                      </div>  
+                            
                       <div class="form-group">
                         <div class="form-check">
                           <input type="checkbox" class="form-check-input" id="agreeCheck"  name="agreeCheck">

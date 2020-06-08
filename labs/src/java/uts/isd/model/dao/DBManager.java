@@ -12,8 +12,17 @@ package uts.isd.model.dao;
 import uts.isd.model.CustomerBean;
 import uts.isd.model.Product;
 import uts.isd.model.Supplier;
+import uts.isd.model.OrderBean;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Random;
+import javax.swing.text.DateFormatter;
+import uts.isd.model.CustomerAccessLogBean;
+import uts.isd.model.payment;
 
 /* 
 * DBManager is the primary DAO class to interact with the database. 
@@ -44,11 +53,14 @@ public class DBManager {
                 cb.setEmail(cust_email);
                 cb.setPassword(cust_password);
                 cb.setName(rs.getString(4));
-                
+                cb.setId(rs.getInt(1));
                 String[] dt = rs.getString(5).split("/");
                 System.out.println(Arrays.toString(dt));
                 
                 cb.setDOB(Date.valueOf(rs.getString(5)));
+                cb.setAddress(rs.getString(6));
+                cb.setPhone(rs.getString(7));
+                cb.setTitle(rs.getString(8));
                 return cb;
             }
         }
@@ -57,109 +69,246 @@ public class DBManager {
        //add the results to a ResultSet       
        //search the ResultSet for a user using the parameters               
        return null;   
-    }
-    //Add a user-data into the database   
-    public void addCustomer(String email, String name, String password, String gender, String favcol) throws SQLException {                   
-//code for add-operation       
-      st.executeUpdate("sql query");   
+    } 
+    
+    
+    
 
+    //Add a user-data into the database   
+    public void addCustomer(CustomerBean cb) throws SQLException {                   
+//code for add-operation       
+//VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
+      SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+      String values=
+              "'"
+              +cb.getEmail()+"','"
+              +cb.getPassword()+"','"
+              +cb.getName()+"','"
+              +format.format(cb.getDOB())+"','"+
+              cb.getAddress()+"','"
+              +cb.getPhone()+"','"
+              +cb.getTitle()+"'"
+              ;
+      System.out.println(values);
+      st.executeUpdate("INSERT INTO APP.CUSTOMERDB(Email, Password,FullName,DOB,Address,Phone,Title)  VALUES("+values+")");   
+      cb.setId(findCustomer(cb.getEmail(),cb.getPassword()).getId());
+
+    }
+    public CustomerAccessLogBean addCustomerLoginRecord(CustomerBean cb) throws SQLException {                   
+//code for add-operation       
+//VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
+      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
+      SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+      java.util.Date d =  new java.util.Date();
+      String values=
+              ""
+              +cb.getId()+",'"
+              +dateformat.format(d)+"','"
+              +timeformat.format(d)+"'"
+              ;
+      System.out.println(values);
+      st.executeUpdate("INSERT INTO APP.CUSTOMER_SESSION(Customer_ID, LOGGEDIN_DATE,LOGGEDIN_TIME)  VALUES("+values+")");   
+      CustomerAccessLogBean cab = new CustomerAccessLogBean();
+      cab.setCustomer(cb);
+      cab.setLoggedin(d);
+      return cab;
+    }
+    
+    public void endCustomerLoginRecord(CustomerAccessLogBean cb) throws SQLException {                   
+//code for add-operation       
+//VALUES(0,'pepe@gmail.com','password','Pai pei','12/17/1947','123 Hujianyan St, HongDoui, Singapore',35702572,'Mr');
+      SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy");
+      SimpleDateFormat timeformat = new SimpleDateFormat("H:m:s");
+      java.util.Date d =  new java.util.Date();
+      
+      
+      String values=
+              "LOGGEDOUT_DATE = '"+dateformat.format(d)+"',"+
+              "LOGGEDOUT_TIME = '"+timeformat.format(d)+"'"
+              ;
+      System.out.println(values);
+      st.executeUpdate(
+                "UPDATE APP.CUSTOMER_SESSION SET "+values+" "
+                        + "WHERE"
+                        + " Customer_ID = "+cb.getCustomerid()+
+                          " AND LOGGEDIN_TIME = '"+timeformat.format(cb.getLoggedin())+"'"+
+                          " AND LOGGEDIN_DATE = '"+dateformat.format(cb.getLoggedin())+"'" );   
+      cb.setLoggedout(d);
+    }
+    
+    public ArrayList<CustomerAccessLogBean> listCustomerLoginRecord(int cid) throws SQLException, ParseException {                   
+        ArrayList<CustomerAccessLogBean> result = new ArrayList<>();
+      String query = "SELECT * FROM APP.CUSTOMER_SESSION WHERE  Customer_ID="+cid;
+        ResultSet rs = st.executeQuery(query);
+        
+        SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd H:m:s");
+        while(rs.next()){
+             CustomerAccessLogBean cb = new CustomerAccessLogBean();
+                cb.setCustomerid(cid);
+                cb.setLoggedin(timeformat.parse(rs.getString(2)+" "+rs.getString(3)));
+                cb.setLoggedout(rs.getString(4)==null?cb.getLoggedin():(timeformat.parse(rs.getString(4)+" "+rs.getString(5))));
+                //apply time here.
+                //add search and delete and ur done yey
+                result.add(cb);
+        }
+        return result;
     }
 
     //update a user details in the database   
-    public void updateCustomer( String email, String name, String password, String gender, String favcol) throws SQLException {       
-       //code for update-operation   
+    public void updateCustomer(CustomerBean cb) throws SQLException {       
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        String values=
+              "Email = '"+cb.getEmail()+"',"+
+              "Password = '"+cb.getPassword()+"',"+
+              "FullName = '"+cb.getName()+"',"+
+              "DOB = '"+format.format(cb.getDOB())+"',"+
+              "Address = '"+cb.getAddress()+"',"+
+              "Phone = '"+cb.getPhone()+"',"+
+              "Title = '"+cb.getTitle()+"'"
+              ;
+        System.out.println(values);
+        st.executeUpdate("UPDATE APP.CUSTOMERDB SET "+values+" WHERE Customer_ID ="+cb.getId());   
 
     }       
 
     //delete a user from the database   
     public void deleteCustomer(String email) throws SQLException{       
-       //code for delete-operation   
-
+       st.executeUpdate("DELETE FROM APP.CUSTOMERDB WHERE Email='"+email+"'");
     }
 
 
-//PRODUCT 
-    //Find Product by ID in the database   
     
-    // public CustomerBean findCustomer(String emaild) throws SQLException {  
-    //    return findCustomer(emaild, "");
-    // }
+    
+    
+// Product Information
     
 
-    public Product findProduct(String Product_ID) throws SQLException {   
-        String query = "SELECT * FROM APP.PRODUCTDB WHERE  Product_ID='"+Product_ID;
-        ResultSet rs = st.executeQuery(query);
-        while(rs.next()){
-            String prod_id = rs.getString(2);
-            System.out.println(prod_id);
-            if(prod_id.equals(Product_ID)){
-<<<<<<< Updated upstream
-                ProductBean pb = new ProductBean();
-                pb.setID(prod_id);
-=======
-                Product pb = new Product();
-                pb.setID(rs.getInt(3));
->>>>>>> Stashed changes
-                pb.setName(rs.getString(4));
-                pb.setPrice(rs.getDouble(5));
-                pb.setCategory(rs.getString(6));
-                pb.setSupplier(rs.getString(7));
-                
-                String[] dt = rs.getString(5).split("/");
-                System.out.println(Arrays.toString(dt));
-                
-                return pb;
-            }
+    // view Product Information
+    
+    public void showProduct(int ProID, String ProName, double ProPrice, String ProCategory, int ProSupplierid, int ProQuantity) throws SQLException{
+    String query = "SELECT FROM * APP.PRODUCTDB";
+    ResultSet rs = st.executeQuery(query);
+    while(rs.next()){
+        
+            ProID = rs.getInt(1);
+            ProName = rs.getString(2);
+            ProPrice = rs.getDouble(3);
+            ProCategory = rs.getString(4);
+            ProSupplierid = rs.getInt(5);
+            ProQuantity = rs.getInt(6);
         }
-      return null;
-    }
+     }
     
-    //delete a product from the database   
-    public void deleteProduct(String ID) throws SQLException{       
-       //code for delete-operation   
-
-    }
-    
-    
-    //add a product from the database   
-    public void addProduct(String ID, String name, String price, String supplierid) throws SQLException{       
-       //code for add-operation   
-        st.executeUpdate("sql query");
-
-    }
-    
-    
-    //update a product from the database   
-    public void updateProduct(String ID, String name, String price, String supplierid) throws SQLException{       
-       //code for update-operation   
-
-    }
-    
-    public Arraylist<Product> fetchProductList() throws SQLException{
-            String fetch = "SELECT * FROM APP.PRODUCTDB";
-            ResultSet rs = st.executeQuery(fetch);
-            Arraylist<Product> temp = new Arraylist();
-            while(rs.next()){
-            int Product_ID = rs.getInt(3);
-            String ProductName = rs.getString(4);
-            double price = rs.getDouble(5);
-            String Category = rs.getString(6);
-            int SupplierID = rs.getInt(7);
-            temp.add(new Product(Product_ID, ProductName, price, Category, SupplierID));
-        } 
+    // Find Products from DB using Product ID (Primary Key) 
+        public Product findProduct(String ProName, String ProCategory) throws SQLException {   
+            String query = "SELECT * FROM APP.PRODUCTDB WHERE  ProductName='"+ProName+"' AND Password = '"+ProCategory+"'";
+            ResultSet rs = st.executeQuery(query);
+        
+             while(rs.next()){
+                    String P_Name = rs.getString(2);
+                    String P_Category = rs.getString(4);
             
-            return temp;
+
+            if(P_Name.equals(ProName) && P_Category.equals(ProCategory) ){ 
+                int P_ID = rs.getInt(1);               
+                Double P_Price = rs.getDouble(3);
+                Integer P_SupplierID = rs.getInt(5);
+                Integer P_Quantity = rs.getInt(6);
+
+               // int C_Status = rs.getInt(6); //
+
+                System.out.println("Product Name: " +P_Name);
+                return new Product (P_ID, P_Name, P_Price, P_Category, P_SupplierID, P_Quantity); 
+            }
+        }         
+       return null;   
     }
-
-    private static class ProductArraylist<T> {
-
-        public ProductArraylist() {
-        }
-
-        private void add(Product product) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+    
+    
+           public Product getProduct(int ProID) throws SQLException {   
+        Product product = null;
+            String query = "SELECT * FROM APP.PRODUCTDB WHERE  ProductID="+ProID+"";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                int P_ID = rs.getInt(1);
+                System.out.println(P_ID);
+                String P_Name = rs.getString(2);
+                Double P_Price = rs.getDouble(3);
+                String P_Category = rs.getString(4);
+                Integer P_SupplierID = rs.getInt(5);
+                Integer P_Quantity = rs.getInt(6);
+                
+                System.out.println("Product Name: " +P_Name);
+                product = new Product (P_ID, P_Name, P_Price, P_Category, P_SupplierID, P_Quantity); 
+            } return product;     
     }
+           
+    // Add a Product into the DB
+    
+    public void addProduct(Product pb) throws SQLException {
+        String values=
+              //"ProductID = '"+sb.getProductID()+"',"+
+              ""+pb.getID()+","+
+              "'"+pb.getName()+"',"+
+              ""+pb.getPrice()+","+
+              "'"+pb.getCategory()+"',"+
+              ""+pb.getSupplier()+""+
+              ""+pb.getQuantity()+""
+              ;
+        System.out.println(values);
+        st.executeUpdate("INSERT INTO APP.PRODUCTDB(ProductID, ProductName, ProductPrice, Category, SupplierID, Quantity)  VALUES("+values+")");   
+
+    }
+    
+    // Delete a Product from the DB 
+    
+    public void deleteProduct(Product pd) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.PRODUCTDB WHERE SupplierID =" +pd.getID());
+  
+    }
+    
+    // Update a Product in the DB
+    
+    public void updateProduct(Product pb) throws SQLException {
+        String values=
+              //"SupplierID = '"+sb.getSupplierID()+"',"+
+                
+            //"ProductID = '"+pb.getID()+","+
+              "ProductName = '"+pb.getName()+"',"+
+              "ProductPrice = "+pb.getPrice()+","+
+              "Category = '"+pb.getCategory()+"',"+
+              "Supplier = '"+pb.getSupplier()+""+
+              "Quantity = '"+pb.getQuantity()+""
+              ;
+        System.out.println(+pb.getID());
+        st.executeUpdate("UPDATE APP.PRODUCTDB SET "+values+" WHERE ProductID ="+pb.getID());   
+
+    }  
+    
+    // Show Products from the DB (Fetch Array List) 
+
+
+    public ArrayList<Product> fetchProductList() throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.PRODUCTDB";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Product> listProduct = new ArrayList(); 
+       
+        while(rs.next()){
+                int P_ID = rs.getInt(1);
+                String P_Name = rs.getString(2);
+                Double P_Price = rs.getDouble(3);
+                String P_Category = rs.getString(4);
+                Integer P_SupplierID = rs.getInt(5);
+                Integer P_Quantity = rs.getInt(6);
+            
+            Product ProductFromDB = new Product(P_ID, P_Name, P_Price, P_Category, P_SupplierID, P_Quantity);
+            listProduct.add(ProductFromDB);
+            
+        }     
+        return listProduct;
+    }
+    
 
 
  
@@ -174,7 +323,7 @@ public class DBManager {
     
     
     
-    //SUPPLIER INFO
+    //SUPPLIER INFORMATION
     //can view supplier info
      public void showSupplier(String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) throws SQLException{
         String query = "SELECT FROM * APP.SUPPLIERDB";
@@ -189,45 +338,277 @@ public class DBManager {
         } 
      }
     
-        //find supplier from db
-    /* public Supplier findSupplier(String ContactName, String CompanyEmail) throws SQLException {   
-        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND EMAILADDRESS = '"+CompanyEmail+"'");
+           //find supplier from db using supplier id
+     public Supplier findSupplier(String CompanyName, String CompanyType) throws SQLException {   
+        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupName='"+CompanyName+"' AND Password = '"+CompanyType+"'";
         ResultSet rs = st.executeQuery(query);
+        
         while(rs.next()){
-            String Com_Name = rs.getString(2);
-            String Com_Email = rs.getString(3);
-            System.out.println(Com_Name+","+Com_Email);
-            if(Com_Name.equals(ContactName)&& Com_Email.equals(CompanyEmail)){
-                Supplier sb = new Supplier();
-                sb.setContactName(Com_Name);
-                sb.setCompanyemail(Com_Email);
-                
-                return sb;
+            String C_Name = rs.getString(2);
+            String C_Type = rs.getString(4);
+            
 
+            if(C_Name.equals(CompanyName) && C_Type.equals(CompanyType) ){ 
+                int S_ID = rs.getInt(1);               
+                String C_Address = rs.getString(3);
+                String C_Email = rs.getString(5);
+                int C_Status = rs.getInt(6);
+
+                System.out.println("Company Name: " +C_Name);
+                return new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
             }
-        }
-       //setup the select sql query string       
-       //execute this query using the statement field       
-       //add the results to a ResultSet       
-       //search the ResultSet for a user using the parameters               
+        }         
        return null;   
-
     }
-    */
-       
+     
+        public Supplier getSupplier(int Supplier_id) throws SQLException {   
+        Supplier supplier = null;
+            String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupplierID="+Supplier_id+"";
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                int S_ID = rs.getInt(1);
+                System.out.println(S_ID);
+                String C_Name = rs.getString(2);
+                String C_Address = rs.getString(3);
+                String C_Type = rs.getString(4);
+                String C_Email = rs.getString(5);
+                int C_Status = rs.getInt(6);
+                System.out.println("Company Name: " +C_Name);
+                supplier = new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
+            } return supplier;     
+    }
+        
     //Add a supplier into the db
-    public void addSupplier (String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) throws SQLException {
-        st.executeUpdate("INSERT INTO SUPPLIERDB" + "VALUES ("+ContactName+", "+CompanyAddress+", "+ConNumber+", "+CompanyType+", "+CompanyEmail+", "+Status+")");
-    }
+    public void addSupplier(Supplier sb) throws SQLException {
+        String values=
+              //"SupplierID = '"+sb.getSupplierID()+"',"+
+              "'"+sb.getCompanyName()+"',"+
+              "'"+sb.getCompanyAddress()+"',"+
+              "'"+sb.getCompanyType()+"',"+
+              "'"+sb.getCompanyEmail()+"',"+
+              ""+sb.getCompanyStatus()+""
+              ;
+        System.out.println(values);
+        st.executeUpdate("INSERT INTO APP.SUPPLIERDB(SupName,SupAddress,SupType,SupEmail,SupStatus)  VALUES("+values+")");   
+
+    }  
+    /*public void addSupplier (String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int CompanyStatus) throws SQLException {
+        st.executeUpdate("INSERT INTO APP.SUPPLIERDB" + "VALUES ("+CompanyName+", "+CompanyAddress+", "+CompanyType+", "+CompanyEmail+", "+CompanyStatus+")");
+    }*/
     //Update a Suppliers information
-    public void updateSupplier (String ContactName, String CompanyAddress,int ConNumber, String CompanyType, String CompanyEmail, int Status) throws SQLException {
-        st.executeUpdate("INSERT INTO SUPPLIERDB SET CONTACTNAME ="+ContactName+", SET COMADDRESS  "+CompanyAddress+", SET COMNUMBER "+ConNumber+", SET COMTYPE "+CompanyType+", SET STATUS "+Status+" WHERE EMAILADDRESS ='"+CompanyEmail+"'");
-    }
+    public void updateSupplier(Supplier sb) throws SQLException {
+        String values=
+              //"SupplierID = '"+sb.getSupplierID()+"',"+
+              "SupName = '"+sb.getCompanyName()+"',"+
+              "SupAddress = '"+sb.getCompanyAddress()+"',"+
+              "SupType = '"+sb.getCompanyType()+"',"+
+              "SupEmail = '"+sb.getCompanyEmail()+"'"
+              ;
+        System.out.println(+sb.getSupplierID());
+        st.executeUpdate("UPDATE APP.SUPPLIERDB SET "+values+" WHERE SupplierID ="+sb.getSupplierID());   
+
+    }  
+    
+    /*public void updateSupplier (int SupplierID, String CompanyName, String CompanyAddress, String CompanyType, String CompanyEmail, int Status) throws SQLException {
+        st.executeUpdate("UPDATE APP.SUPPLIERDB SET SupName ="+CompanyName+", SET SupAddress  "+CompanyAddress+", SET SupType "+CompanyType+",SET SupEmail "+CompanyEmail+", SET SupStatus "+Status+" WHERE SupplierID ='"+SupplierID+"'");
+    }*/
+    
+    
     //delete a supplier from db
-    public void deleteSupplier(String CompanyEmail) throws SQLException{
-        st.executeUpdate("DELETE FROM APP.SUPPLIER WHERE EMAILADDRESS ='"+CompanyEmail+"'");
+    public void deleteSupplier(Supplier sd) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.SUPPLIERDB WHERE SupplierID =" +sd.getSupplierID());
   
     }
-   
 
+    public ArrayList<Supplier> fetchSupplierList() throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.SUPPLIERDB";
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Supplier> listSupplier = new ArrayList(); 
+       
+        while(rs.next()){
+            int S_ID = rs.getInt(1);
+            String C_NAME = rs.getString(2);
+            String C_ADDRESS = rs.getString(3);
+            String C_TYPE = rs.getString(4);
+            String C_EMAIL = rs.getString(5);
+            int C_STATUS = rs.getInt(6);
+            
+            Supplier SupplierFromDB = new Supplier(S_ID, C_NAME, C_ADDRESS, C_TYPE, C_EMAIL, C_STATUS);
+            listSupplier.add(SupplierFromDB);
+            
+        }     
+        return listSupplier;
+    }
+    
+     public ArrayList<Supplier> Oneline(int Supplier_id) throws SQLException{
+           
+        String fetch = "SELECT * FROM APP.SUPPLIERDB WHERE  SupplierID='"+Supplier_id+"'";;
+        ResultSet rs = st.executeQuery(fetch);
+        ArrayList<Supplier> oneline = new ArrayList(); 
+       
+        while(rs.next()){
+            int S_ID = rs.getInt(1);
+            String C_NAME = rs.getString(2);
+            String C_ADDRESS = rs.getString(3);
+            String C_TYPE = rs.getString(4);
+            String C_EMAIL = rs.getString(5);
+            int C_STATUS = rs.getInt(6);
+            
+            Supplier SupplierFromDB = new Supplier(S_ID, C_NAME, C_ADDRESS, C_TYPE, C_EMAIL, C_STATUS);
+            oneline.add(SupplierFromDB);
+            
+            
+        }     
+        return oneline;
+    }
+    /*public Arraylist<Supplier> fetchSupplierList(int sid) throws SQLException{
+        Arraylist<Supplier> temp = new Arraylist();    
+        String fetch = "SELECT * FROM APP.SUPPLIERDB where SupplierID" +sid;
+        ResultSet rs = st.executeQuery(fetch);
+            while(rs.next()){
+            String C_Name = rs.getString(2);
+            String C_Address = rs.getString(3);
+            String C_Type = rs.getString(4);
+            String C_Email = rs.getString(5);
+            int C_Status = rs.getInt(6);
+            temp.add(new Supplier(C_Name, C_Address, C_Type, C_Email, C_Status));
+        } 
+            
+            return temp;
+    }   
+     
+    //check if supplier exists using company name and type
+    public boolean checkSupplier(String ContactName, String CompanyType) throws SQLException{
+       String fetch = "SELECT * FROM APP.SUPPLIERDB WHERE  CONTACTNAME='"+ContactName+"'"+ (" AND COMTYPE = '"+CompanyType+"'");
+       ResultSet rs = st.executeQuery(fetch);
+       
+        while(rs.next()){
+            String C_Name = rs.getString(2);
+            String C_Type = rs.getString(4);
+            if(C_Name.equals(ContactName) && C_Type.equals(CompanyType)){
+                return true;
+            }
+        }
+        return false; 
+    }
+    
+
+    
+    
+//Order Management [MVC]
+    //Find all orders based on Date_Of_Order
+    /*public OrderBean findOrder(String Date_Of_Order) throws SQLException {  
+        return findOrder(Date_Of_Order, "");
+    }*/
+    //Find the specific order using Date_Of_Order and Order_ID
+    public OrderBean findOrder(String Date_Of_Order, int Order_ID) throws SQLException {   
+        String query = "SELECT * FROM APP.ORDERDB WHERE Date_Of_Order='"+Date_Of_Order+"' AND Order_ID = '"+Order_ID;
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+            String order_date = rs.getString(3);
+            int ord_id = rs.getInt(1);
+            System.out.println(order_date+","+ord_id);
+            if(order_date.equals(Date_Of_Order)&& ord_id == (Order_ID)){
+                OrderBean ob = new OrderBean();
+                ob.setOrderId(ord_id);
+                ob.setCustomerId(rs.getInt(2));
+                
+                String[] dt = rs.getString(3).split("/");
+                System.out.println(Arrays.toString(dt));
+                ob.setDOO(Date.valueOf(rs.getString(3)));
+                
+                ob.setShippingAddress(rs.getString(4));
+                ob.setStatus(rs.getString(5));
+                ob.setProductId(rs.getInt(6));
+                ob.setProductName(rs.getString(7));
+                ob.setProductPrice(rs.getDouble(8));
+                ob.setProductQuanity(rs.getInt(9));
+                ob.setTotalPrice(rs.getDouble(10));
+
+                return ob;
+            }
+        }            
+        return null;   
+    }
+    
+    //Add a order-data into the database   
+    public void addOrder(OrderBean ob) throws SQLException {                   
+    //code for add-operation    
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        String values=
+              "'"
+              +ob.getCustomerId()+"','"
+              +format.format(ob.getDOO())+"','"
+              +ob.getShippingAddress()+"','"
+              +ob.getStatus()+"','"
+              +ob.getProductId()+"','"
+              +ob.getProductName()+"','"
+              +ob.getProductPrice()+"','"
+              +ob.getProductQuanity()+"','"
+              +ob.getTotalPrice()+"'"
+              ;
+        System.out.println(values);
+        st.executeUpdate("INSERT INTO APP.ORDERDB(Customer_ID, Date_Of_Order, Address, Status, Product_ID, Product_Quanity, Total_Price)  VALUES("+values+")");   
+        ob.setOrderId(findOrder(format.format(ob.getDOO()),ob.getOrderId()).getOrderId());  
+    }
+    
+    //update a order details in the database   
+    public void updateOrder(OrderBean ob) throws SQLException {       
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        String values=
+              "Customer_ID = '"+ob.getCustomerId()+"',"+
+              "Date_Of_Order = '"+format.format(ob.getDOO())+"',"+
+              "Address = '"+ob.getShippingAddress()+"',"+
+              "Status = '"+format.format(ob.getStatus())+"',"+
+              "Product_ID = '"+ob.getProductId()+"',"+
+              "Product_Name = '"+ob.getProductName()+"',"+
+              "Product_Price = '"+ob.getProductPrice()+"',"+
+              "Product_Quanity = '"+ob.getProductQuanity()+"'"+
+              "Total_Price = '"+ob.getTotalPrice()+"'"
+              ;
+        System.out.println(values);
+        st.executeUpdate("UPDATE APP.ORDERDB SET "+values+" WHERE Order_ID ="+ob.getOrderId());
+    } 
+    
+    //delete a order from the database   
+    public void deleteOrder(int Order_ID) throws SQLException{       
+       //code for delete-operation   
+       st.executeUpdate("DELETE FROM APP.ORDERDB WHERE Order_ID ='"+Order_ID+"'");
+    }
+
+    
+    public payment findpayment(String Payment_ID, String Payment_DATE) throws SQLException {   
+        String query = "SELECT * FROM APP.PAYMENTDB WHERE  PAYMENTID='"+Payment_ID+"'"+ (" AND PAYMENTDATE = '"+Payment_DATE+"'");
+        ResultSet rs = st.executeQuery(query);
+        
+        while(rs.next()){
+            String P_ID = rs.getString(1);
+            String P_DATE = rs.getString(4);
+            System.out.println(P_ID+","+P_DATE);
+            
+            if(P_ID.equals(Payment_ID)&& P_DATE.equals(Payment_DATE)){
+                String P_METHOD = rs.getString(2);
+                String P_CREDITCARD = rs.getString(5);
+                int P_AMOUNT = rs.getInt(6);
+                return new payment (P_ID, P_DATE, P_METHOD, P_CREDITCARD, P_AMOUNT); 
+            }
+        }         
+       return null;   
+    }
+       
+    //Add a supplier into the db
+    public void addPayment (String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {
+        st.executeUpdate("INSERT INTO APP.PAYMENTDB" + "VALUES ("+Payment_ID+", "+Payment_DATE+", "+Payment_METHOD+", "+Creditcard+", "+Amount+")");
+    }
+    //Update a Suppliers information
+    public void updatePayment(String Payment_ID, String Payment_DATE, String Payment_METHOD, String Creditcard, int Amount) throws SQLException {       
+       //code for update-operation   
+       st.executeUpdate("INSERT INTO APP.PAYMENTDB SET Payment_ID ="+Payment_ID+", SET Payment_DATE ="+Payment_DATE+", SET Payment_METHOD ="+Payment_METHOD+", SET Creditcard ="+Creditcard+", SET Amount ="+Amount+",");  
+    }   
+    //delete a supplier from db
+    public void deletePayment(String Payment_ID) throws SQLException{
+        st.executeUpdate("DELETE FROM APP.PAYMENTDB WHERE PAYMENTID ='"+Payment_ID+"'");
+  
+    }
 }

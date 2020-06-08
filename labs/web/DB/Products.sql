@@ -7,30 +7,25 @@
  * Author:  antho
  * Created: 04/06/2020
  */
+/*DROP TABLE PRODUCTDB;
+*/
 
 CREATE TABLE PRODUCTDB (
-    Product_ID int NOT NULL, 
+    ProductID int NOT NULL, 
     ProductName VARCHAR(100) NOT NULL,
-    Price double NOT NULL,
+    ProductPrice double NOT NULL,
     Category VARCHAR(100) NOT NULL,
-<<<<<<< Updated upstream
-    SupplierID (100) NOT NULL,
-    PRIMARY KEY(Product_ID)
-)
-=======
-    SupplierID int NOT NULL,
+    Supplier int NOT NULL,
+    Quantity int NOT NULL,
 
-    PRIMARY KEY(Product_ID),
-    
+    PRIMARY KEY (ProductID)
 
 );
 
-INSERT INTO PRODUCTDB(Product_ID, ProductName, Price, Category, SupplierID)
+INSERT INTO PRODUCTDB (ProductID, ProductName, ProductPrice, Category, Supplier, Quantity)
 Values
-(123456, 'Rasberry Pi', 10, 'Complete', 123512);
-
+(123456, 'Rasberry Pi', 10, 'Complete', 123452, 1000);
 
 
 select * from PRODUCTDB;
 
->>>>>>> Stashed changes

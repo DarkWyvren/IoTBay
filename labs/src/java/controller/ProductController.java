@@ -5,31 +5,30 @@
  */
 package controller;
 
+ import java.io.IOException;
+ import java.sql.Connection;
+ import java.sql.SQLException;
+ import java.util.ArrayList;
+ import java.util.Scanner;
+ import java.util.logging.Level;
+ import java.util.logging.Logger;
+ import javax.servlet.RequestDispatcher;
+ import javax.servlet.ServletException;
+ import javax.servlet.annotation.WebServlet;
+ import javax.servlet.http.HttpServlet;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+ import javax.servlet.http.HttpSession;
+ import uts.isd.model.dao.*;
+ import uts.isd.model.Product;
+
 /**
  *
  * @author antho
  */
-    import java.io.IOException;
-    import java.sql.Connection;
-    import java.sql.SQLException;
-    import java.util.ArrayList;
-    import java.util.Scanner;
-    import java.util.logging.Level;
-    import java.util.logging.Logger;
-    import javax.servlet.RequestDispatcher;
-    import javax.servlet.ServletException;
-    import javax.servlet.annotation.WebServlet;
-    import javax.servlet.http.HttpServlet;
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpServletResponse;
-    import javax.servlet.http.HttpSession;
-    import uts.isd.model.dao.*;
-    import uts.isd.model.Product;
-
- 
 @WebServlet(
-  name = "getProduct", 
-  urlPatterns = "/ShowProduct")
+  name = "getProducts", 
+  urlPatterns = "/ShowProducts")
 
    public class ProductController extends HttpServlet {
        private DBConnector db; // db 
@@ -59,20 +58,21 @@ package controller;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<Product> queryresult = null;
            try {
-               queryresult = manager.fetchProductList();
+              queryresult = manager.fetchProductList();
            } catch (SQLException ex) {
                Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
            }
-        System.out.print(queryresult.toString() + "inside dogetmethod");
+      //   System.out.print(queryresult.toString() + "inside dogetmethod");
         RequestDispatcher rd = request.getRequestDispatcher("Product.jsp"); 
         request.setAttribute("ProductInfo",  queryresult);
         rd.forward(request, response);
-        /*try {
-               request.setAttribute("listSupplier", new DBManager.fetchProductList());
-           } catch (SQLException ex) {
-               Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
-           }
-        */
+      //   try {
+       //        request.setAttribute("listProduct", new DBManager.fetchProductList());
+      //     } catch (SQLException ex) {
+      //         Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+           //}
+      
        
     }
-}
+
+   }

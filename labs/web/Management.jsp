@@ -25,9 +25,11 @@
                      <jsp:include page="ManagementNavBar.jsp" />
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
-                         <div  class="jumbotron"><a href="cataloguemanagement.jsp"</a> Catalogue Management</div>
+                         <div  class="jumbotron"><a href="ShowProducts"</a> Catalogue Management</div>
                          <div class="jumbotron"><a href="staffmanagement.jsp" </a>Staff Information</div>
-                         <div class="jumbotron"><a href="Supplier.jsp">Supplier Information Management</a></div>
+                         <div  class="jumbotron"><a href="orderManagement.jsp"</a> Order Management</div>
+                         <div class="jumbotron"><a href="ShowSupplier">Supplier Information Management</a></div>
+                         <div class="jumbotron"><a href="payment.jsp">Payment Management</a></div>
                 </div>
             </div>
         </div>

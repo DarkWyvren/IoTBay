@@ -11,11 +11,6 @@ import java.io.Serializable;
  *
  * @author antho
  */
-<<<<<<< Updated upstream:labs/src/java/uts/isd/model/ProductBean.java
-public class ProductBean implements Serializable{
-    private String id, name, price, category, supplier;
- 
-=======
 public class Product implements Serializable{
     
     private int productid;
@@ -23,7 +18,17 @@ public class Product implements Serializable{
     private double price;
     private String category;
     private int supplier;
+    private int quantity;
            
+    public Product (int P_ID, String PNAME, Double PPrice, String PCATEGORY, int SUP_ID, int PQUANT) {
+        this.productid = P_ID;
+        this.name=PNAME;
+        this.price=PPrice;
+        this.category=PCATEGORY;
+        this.supplier=SUP_ID;
+        this.quantity=PQUANT;
+        
+    }
  
   public Product () {
       productid = 0;
@@ -31,20 +36,16 @@ public class Product implements Serializable{
       price = 0;
       category = "";
       supplier = 0;
+      quantity = 0;
              
   }
-
-    public Product(int Product_ID, String ProductName, double price, String Category, int SupplierID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
->>>>>>> Stashed changes:labs/src/java/uts/isd/model/Product.java
   
-    public String getID() {
-            return id;
+    public int getID() {
+            return productid;
     }
     
-    public void setID(String id) {
-        this.id = id;
+    public void setID(int id) {
+        this.productid = productid;
     }
     
     public String getName() {
@@ -57,7 +58,7 @@ public class Product implements Serializable{
     }
     
     
-    public String getPrice () {
+    public double getPrice() {
         return price;
     }
     
@@ -77,17 +78,23 @@ public class Product implements Serializable{
     }
     
     
-    public String getSupplier() {
+    public int getSupplier() {
         return supplier;
     }
     
     
-    public void setSupplier(String supplier){
+    public void setSupplier(int supplier){
         this.supplier = supplier;
     }
     
+    public int getQuantity() {
+        return quantity;
+    }
     
     
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
     
     
     
@@ -96,7 +103,7 @@ public class Product implements Serializable{
     
    @Override
    public String toString() {
-    return "Product:" +id+", "+name+", "+price+", "+category+ ", "+supplier;
+    return "Product:" +productid+", "+name+", "+price+", "+category+ ", "+supplier+", "+quantity;
    }
    
     
