@@ -7,7 +7,7 @@ Email varchar (128) UNIQUE,
 FullName varchar (128),
 Address varchar (255),
 Pos varchar (128),
-Status int not NULL,
+Status int,
 
 PRIMARY KEY(ID)
 );

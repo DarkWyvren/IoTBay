@@ -68,15 +68,19 @@ public class StaffAddController extends HttpServlet
                 {
                     case "FullName":
                         st.setFullName(request.getParameter(parNames));
+                        break;
                     case "Address":
                     st.setAddress(request.getParameter(parNames));
                     break;
-                case "Position":
+                case "Pos":
                     st.setPosition(request.getParameter(parNames));
                     break;
                 case "Email":
                     st.setEmail(request.getParameter(parNames));
                     break;    
+                case "Status":
+                    st.setStatus(Integer.parseInt(request.getParameter(parNames)));
+                    break;
                 }
             }
             try
@@ -94,8 +98,8 @@ public class StaffAddController extends HttpServlet
            } catch (SQLException ex) {
                Logger.getLogger(StaffController.class.getName()).log(Level.SEVERE, null, ex);
            }
-        request.setAttribute("SupplierInfo",  queryResult);
-        RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
+        request.setAttribute("StaffInfo",  queryResult);
+        RequestDispatcher rd = request.getRequestDispatcher("StaffView.jsp");
         rd.forward(request, response);
         }
 }

@@ -56,8 +56,10 @@
                     <td><%= st.getPosition().toString()%></td>
                     <td><%= st.getStatus()%></td>
                     <td><%= st.getAddress()%></td>
-                </tr>
-                
+                    <td style="color: <%=st.getStatus() == 0? "red":"green" %>" >
+                        <%=st.getStatus() == 0 ? "Deactive":"Active" %>
+                    </td>
+                </tr>    
                 <% } %>
             </tbody>
         </table>
