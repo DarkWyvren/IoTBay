@@ -52,6 +52,24 @@ public class OrderAddController extends HttpServlet {
            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
        }
    }
+        
+     
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ;
+        try {
+            ProductBean pbean = manager.getProduct(Integer.parseInt(request.getParameter("productID")));
+       
+            request.setAttribute("product", pbean);
+            RequestDispatcher rd = request.getRequestDispatcher("orderAdd.jsp");
+            rd.forward(request, response); 
+            
+            
+         } catch (SQLException ex) {
+            Logger.getLogger(OrderAddController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }    
+        
     
     @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

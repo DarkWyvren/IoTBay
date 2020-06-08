@@ -14,8 +14,9 @@
     p.setPrice(Double.parseDouble(request.getParameter("productprice")));
     p.setID(Integer.parseInt(request.getParameter("productid")));
     boolean canEdit = (Boolean.parseBoolean(request.getParameter("canEdit")));
+    boolean justView = (Boolean.parseBoolean(request.getParameter("justView")));
 %>
-<div class="col-6 col-lg-2 col-md-4 float-left filterDiv p-2 container-fluid <%=p.getCategory().toLowerCase()%>">
+<div class="<%=justView?"":"col-6 col-lg-2 col-md-4 float-left filterDiv "%> p-2 container-fluid <%=p.getCategory().toLowerCase()%>">
     
     <div class="row  m-0">
         <img class="w-100 "src="productimage<%=(p.getID()%5) %>.png">
@@ -30,7 +31,7 @@
             $<%=p.getPrice() %>
         </p>
     </div>
-   
+     <%if(!justView){%>
     <div class="row ml-0 p-0 mr-0  pb-1 " style="">
          <%if(canEdit){%>
         <a href="#" class="btn btn-warning col-md-4 col-sm-12  h-20  mb-0">
@@ -40,10 +41,10 @@
               </svg>
         </a>
         <%}%>
-        <a href="#" class="btn btn-success  col-md-8 h-20  col-sm-12  mb-0">
+        <a href="AddNewOrder?productID=<%=p.getID()%>" class="btn btn-success  col-md-8 h-20  col-sm-12  mb-0">
             <p class=" mb-0">Buy</p>
         </a>
     </div>
-    
+     <%}%>
     
 </div>

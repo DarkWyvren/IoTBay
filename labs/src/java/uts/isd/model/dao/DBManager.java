@@ -205,7 +205,7 @@ public class DBManager {
      }
 
     public ProductBean findProduct(String Product_ID) throws SQLException {   
-        String query = "SELECT * FROM sql12346043.PRODUCTDB WHERE  Product_ID='"+Product_ID;
+        String query = "SELECT * FROM sql12346043.PRODUCTDB WHERE  Product_ID='"+Product_ID+"'";
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             String prod_id = rs.getString(2);
@@ -286,7 +286,9 @@ public class DBManager {
                 
                 System.out.println("Product Name: " +P_Name);
                 product = new ProductBean (P_ID, P_Name, P_Price, P_Category, P_SupplierID, P_Quantity); 
-            } return product;     
+                return product;     
+            } 
+            return null;     
     }
            
     // Add a Product into the DB

@@ -30,21 +30,22 @@
                 <div class="col-sm-12 col-md-9 p-4"> <!-- Register blocc -->
                     
                     <%
-                        CustomerBean cust = new CustomerBean();
-                        cust.setName("Guest");
-                        cust.setPassword("");
-
+                        CustomerBean cust = null;
+                        Staff stuff= new Staff();
                         Object accountsesh = session.getAttribute("login");
-                        if(accountsesh==null){
-                            session.setAttribute("login", cust);
-                        }else{
-                            cust = (CustomerBean)accountsesh;
-                        }
-                        Calendar thing = Calendar.getInstance();
-                        
-                        if(accountsesh!=null&&cust.getDOB()!=null){
-                            System.out.println(cust.getDOB().toString()+ thing);
-                            thing.setTime(cust.getDOB());
+                        String profilelink= "#";
+                        String name="Guest";
+                        if(accountsesh!=null){
+
+                            if(accountsesh instanceof CustomerBean){
+                                cust = (CustomerBean)accountsesh;
+                                name= cust.getName();
+                            }else{
+                                stuff = (Staff)accountsesh;
+                                name=stuff.getFullName();
+                            }
+                            profilelink="profile.jsp";
+
                         }
                         
 
@@ -67,17 +68,33 @@
                                 errortext = postRes;
                             }
                         }
+                        
+                        ProductBean pt= (ProductBean)request.getAttribute("product");
+                        
+                        
                     %>
                     <h1>Making an Order</h1>
                     <form action="AddNewOrder" method="POST">
                       <div class="row">
                         <div class="col">
+                            <% if(pt!=null){%>
                             <label for="inputproductName">Product Name</label>
-                            <select id="inputproductName" class="form-control"  name="productName">
-                                <option value="IoTBay 8G RAM">IoTBay 8G RAM</option>
-                                <option value="IoTBay 16G RAM">IoTBay 16G RAM</option>
-                                <option value="IoTBay 32G RAM">IoTBay 32G RAM</option>
-                            </select>
+                            <div class="w-100 h-100">
+                            <jsp:include page="ProductDiv.jsp" flush="true">
+                                <jsp:param name="product" value="<%=pt.getName() %>"/>
+                                <jsp:param name="productcat" value="<%=pt.getCategory() %>"/>
+                                <jsp:param name="productprice" value="<%=pt.getPrice() %>"/>
+                                <jsp:param name="productid" value="<%=pt.getID() %>"/>
+                                <jsp:param name="canEdit" value="<%=false%>"/>
+                                <jsp:param name="justView" value="<%=true%>"/>
+                            </jsp:include>
+                            </div>
+                            <input type="hidden" value="<%=pt.getID() %>">
+                            <%}else{%>
+                            <a class="w-100 h-100 btn btn-light" href="store">
+                                No product selected
+                            </a>
+                            <%}%>
                         </div>
                         <div class="col">
                             <label for="inputproductQuantity">Product Quantity</label>
@@ -126,8 +143,7 @@
                       </div>
                       <div class="row">
                             <div class="col">
-                              <label for="inputCustomerId">Your Customer ID</label>
-                              <input type="text" id="inputCustomerId" name="inputCustomerId" value="<%= (cust.getId())==0? "You are NOT Registered":String.valueOf(cust.getId()).toString()%>" readonly>
+                              <input type="hidden" id="inputCustomerId" name="inputCustomerId" value="<%= cust==null? "You are NOT Registered":String.valueOf(cust.getId()).toString()%>" readonly>
                             </div>       
                       </div>  
                      
@@ -137,9 +153,9 @@
                           <label class="form-check-label" for="agreeCheck">I agree to <a href="#">terms and conditions</a></label>
                         </div>
                       </div>
-                     
-                      <button type="submit" class="btn btn-primary" href>Add</button>
-
+                      <% if(pt!=null){%>
+                        <button type="submit" class="btn btn-primary" href>Add</button>
+                      <%}%>
                 </div>
             </div>
         </div>

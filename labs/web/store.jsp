@@ -86,6 +86,7 @@
                             <jsp:param name="productprice" value="<%=pb.getPrice() %>"/>
                             <jsp:param name="productid" value="<%=pb.getID() %>"/>
                             <jsp:param name="canEdit" value="<%=stuff!=null%>"/>
+                            <jsp:param name="justView" value="<%=false%>"/>
                         </jsp:include>
                         <%}%>
                      </div>
