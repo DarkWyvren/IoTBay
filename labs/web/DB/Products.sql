@@ -9,22 +9,23 @@
  */
 /*DROP TABLE PRODUCTDB;
 */
+DROP TABLE PRODUCTDB;
 
 CREATE TABLE PRODUCTDB (
-    ProductID int NOT NULL, 
+    ProductID int GENERATED ALWAYS AS IDENTITY NOT NULL, 
     ProductName VARCHAR(100) NOT NULL,
     ProductPrice double NOT NULL,
     Category VARCHAR(100) NOT NULL,
-    Supplier int NOT NULL,
+    SupplierID int NOT NULL,
     Quantity int NOT NULL,
 
     PRIMARY KEY (ProductID)
 
 );
 
-INSERT INTO PRODUCTDB (ProductID, ProductName, ProductPrice, Category, Supplier, Quantity)
+INSERT INTO PRODUCTDB (ProductName, ProductPrice, Category, SupplierID, Quantity)
 Values
-(123456, 'Rasberry Pi', 10, 'Complete', 123452, 1000);
+('Rasberry Pi', 10, 'Complete', 123452, 1000);
 
 
 select * from PRODUCTDB;

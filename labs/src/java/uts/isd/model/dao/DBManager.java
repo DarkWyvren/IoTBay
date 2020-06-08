@@ -248,22 +248,21 @@ public class DBManager {
     public void addProduct(Product pb) throws SQLException {
         String values=
               //"ProductID = '"+sb.getProductID()+"',"+
-              ""+pb.getID()+","+
               "'"+pb.getName()+"',"+
               ""+pb.getPrice()+","+
               "'"+pb.getCategory()+"',"+
-              ""+pb.getSupplier()+""+
+              ""+pb.getSupplier()+","+
               ""+pb.getQuantity()+""
               ;
         System.out.println(values);
-        st.executeUpdate("INSERT INTO APP.PRODUCTDB(ProductID, ProductName, ProductPrice, Category, SupplierID, Quantity)  VALUES("+values+")");   
+        st.executeUpdate("INSERT INTO APP.PRODUCTDB(ProductName, ProductPrice, Category, SupplierID, Quantity)  VALUES("+values+")");   
 
     }
     
     // Delete a Product from the DB 
     
     public void deleteProduct(Product pd) throws SQLException{
-        st.executeUpdate("DELETE FROM APP.PRODUCTDB WHERE SupplierID =" +pd.getID());
+        st.executeUpdate("DELETE FROM APP.PRODUCTDB WHERE ProductID =" +pd.getID());
   
     }
     
@@ -273,7 +272,7 @@ public class DBManager {
         String values=
               //"SupplierID = '"+sb.getSupplierID()+"',"+
                 
-            //"ProductID = '"+pb.getID()+","+
+              //"ProductID = '"+pb.getID()+","+
               "ProductName = '"+pb.getName()+"',"+
               "ProductPrice = "+pb.getPrice()+","+
               "Category = '"+pb.getCategory()+"',"+

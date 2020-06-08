@@ -80,7 +80,7 @@ public class ProductAddController extends HttpServlet {
                 case "PSupplier":
                     pb.setSupplier(Integer.parseInt(request.getParameter(paraNames)));
                     break;
-                case "PQuantity":
+                case "PQUANT":
                     pb.setQuantity(Integer.parseInt(request.getParameter(paraNames)));
                // case "CStatus":
                //    pb.setCompanyStatus(Integer.parseInt(request.getParameter(paraNames)));
