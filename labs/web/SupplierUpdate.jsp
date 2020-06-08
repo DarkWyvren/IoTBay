@@ -83,9 +83,9 @@
                                     <option value=0 <%=current.getCompanyStatus() == 0 ? "selected":""%>>Inactive</option> 
                                 </select>
                             </div>
-                            <div class="float-middle">
-                                <input class="btn btn-secondary p-4"  role="button" type="reset" >  
-                                <input  class="btn btn-primary p-4"  role="button" type="submit" value="Update">  
+                            <div class="float-right">
+                                <button class="btn btn-secondary p-2" type="reset" >Reset</button>
+                                <button class="btn btn-primary p-2"   type="submit" value="Register">Update Supplier</button>
                             </div>
                         </form>
                     </div>

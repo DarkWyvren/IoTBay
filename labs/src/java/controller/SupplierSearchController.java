@@ -59,15 +59,9 @@ import uts.isd.model.dao.DBManager;
             Supplier sb = null;
             String type = request.getParameter("CompanyType");
             String name = request.getParameter("CompanyName");
-            System.out.println("-THIS IS A DEBUG- Name: " +type+ "name: " +name + "test: " +sb);
-               try {
-                   sb = manager.findSupplier(type, name);
-               } catch (SQLException ex) {
-                   Logger.getLogger(SupplierEditController.class.getName()).log(Level.SEVERE, null, ex);
-               }
          ArrayList<Supplier> queryresult = null;
            try {
-               queryresult = manager.fetchSupplierList();
+               queryresult = manager.findSupplier(name, type);
            } catch (SQLException ex) {
                Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
            }
@@ -75,7 +69,7 @@ import uts.isd.model.dao.DBManager;
         RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp"); 
         request.setAttribute("SupplierInfo",  queryresult);
         rd.forward(request, response);
-        System.out.println("-THIS IS A DEBUG- Name: " +type+ "name: " +name + "test: " +sb); 
+        System.out.println("-THIS IS A DEBUG- TYPE: " +type+ " NAME: " +name + "test: " +queryresult.toString()); 
         request.setAttribute("SupplierInfo2", sb);
         request.getRequestDispatcher("Supplier.jsp").include(request, response);
         

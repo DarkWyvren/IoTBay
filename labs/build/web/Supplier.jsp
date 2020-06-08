@@ -15,6 +15,15 @@
                         if(SupplierInfo!=null){
                             SupplierList = (ArrayList)SupplierInfo;
                         }
+        Object successfuladdmsg = request.getAttribute("addmsg");
+        if(successfuladdmsg == null){
+                            successfuladdmsg = "";
+                        }
+        
+        Object successfuldeletemsg = request.getAttribute("DeleteMsg");
+        if(successfuldeletemsg == null){
+                            successfuldeletemsg = "";
+                        }
     %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -45,13 +54,18 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron jumbotron-fluid h-5">
-                        <form method="get" action="">
+                        <form method="get" action="SearchSupplier">
                             <div class="container">
+                                <div class="row pl-3">
+                                    <h1>Supplier List</h1>
+                                </div>
+                                <div class="row pl-3">
+                                    <p class ="text-success" type="hidden"><%=successfuladdmsg %></p>
+                                    <p class ="text-danger" type="hidden"><%=successfuldeletemsg %></p>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm">
-                                    </div>
-                                    <div class="col-sm">
-                                        <select class="form-control" placeholder="" name="CompanyType">                                   
+                                       <select class="form-control" placeholder="" name="CompanyType">                                   
                                             <option value="">Select Type</option>
                                             <option value="Case">Case</option>
                                             <option value="CPU">CPU</option>
@@ -66,8 +80,10 @@
                                         </select>
                                     </div>
                                     <div class="col-sm">
-                                      <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Type In Company Name" name="CompanyName">
-                                      <button type="submit"><i class="fa fa-search"></i>Search</button>
+                                        <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Type In Company Name" name="CompanyName">   
+                                    </div>
+                                    <div class="col-sm">
+                                        <button class="btn btn-primary p-1" type="submit"><i class="fa fa-search"></i>Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -105,13 +121,11 @@
                                         <a role="button" href="${pageContext.request.contextPath}/SupplierEdit?SID=<%= sb.getSupplierID()%>">Update</a>
                                         <a role="button" href="${pageContext.request.contextPath}/deleteSupplier?SID=<%= sb.getSupplierID()%>">Delete</a>
                                     </td>
-                                </tr>
-                                
-                                
+                                </tr>  
                               <%}%>
                             </tbody>
                         </table>
-                            
+                        <a href="ShowSupplier"><div class="nav-link nav-fill navButt float-right"><h5>Show All Suppliers</h5></div></a>
                     </div>                    
                 </div>
             </div>

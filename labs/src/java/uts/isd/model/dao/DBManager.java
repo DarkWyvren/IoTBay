@@ -282,30 +282,37 @@ public class DBManager {
      }
     
            //find supplier from db using supplier id
-     public Supplier findSupplier(String CompanyName, String CompanyType) throws SQLException {   
-        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupName='"+CompanyName+"' AND SupType = '"+CompanyType+"'";
+     public ArrayList<Supplier> findSupplier(String CompanyName, String CompanyType) throws SQLException {   
+        String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupName='"+CompanyName+"' OR SupType = '"+CompanyType.trim()+"'";
         ResultSet rs = st.executeQuery(query);
+        ArrayList<Supplier> listSupplier = new ArrayList(); 
         
         while(rs.next()){
+            
             String C_Name = rs.getString(2);
             String C_Type = rs.getString(4);
-            
-
-            if(C_Name.equals(CompanyName) && C_Type.equals(CompanyType) ){ 
+            //if(C_Name.equals(CompanyName) || C_Type.equals(CompanyType) ){ 
                 int S_ID = rs.getInt(1);               
                 String C_Address = rs.getString(3);
                 String C_Email = rs.getString(5);
                 int C_Status = rs.getInt(6);
-
-              //  return new Supplier (C_Name, C_Address, C_Type, C_Email, C_Status); 
-
-
                 System.out.println("Company Name: " +C_Name);
-                return new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
-
-            }
+                Supplier sd = new Supplier (S_ID, C_Name, C_Address, C_Type, C_Email, C_Status); 
+                listSupplier.add(sd);   
+            //}
         }         
-       return null;   
+       return listSupplier;   
+    }
+     
+    public Object getSupEmail(Supplier sb) throws SQLException {
+    String query = "SELECT * FROM APP.SUPPLIERDB WHERE  SupEmail= '"+sb.getCompanyEmail()+"'";
+    ResultSet rs = st.executeQuery(query);
+     while(rs.next()){
+         return rs.getString(5);
+     }
+    System.out.println("the email was: " +rs);
+    return null;
+//To change body of generated methods, choose Tools | Templates.
     }
      
         public Supplier getSupplier(int Supplier_id) throws SQLException {   
@@ -654,4 +661,6 @@ public class DBManager {
         st.executeUpdate("DELETE FROM APP.PAYMENTDB WHERE PAYMENTID ='"+Payment_ID+"'");
   
     }
+
+    
 }

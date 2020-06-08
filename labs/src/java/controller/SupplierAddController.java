@@ -81,8 +81,21 @@ public class SupplierAddController extends HttpServlet {
             }
         }
         try {
+                if( manager.getSupEmail(sb) != null){
+                    System.out.println(manager.getSupEmail(sb));
+                    request.setAttribute("EmailExistErr", "Supplier Email Already Exists!");
+                    request.getRequestDispatcher("SupplierAdd.jsp").include(request, response);
+                    return;
+                }else if(sb.getCompanyName().length() == 0 || sb.getCompanyAddress().length() == 0 || sb.getCompanyEmail().length() == 0){
+                    request.setAttribute("InfoMissinErr", "Please fill out all the information!");
+                    request.getRequestDispatcher("SupplierAdd.jsp").include(request, response);
+                    return;
+                }
+                
+                else{
                 manager.addSupplier(sb);
                 System.out.println("test: " +sb);
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(SupplierAddController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -94,6 +107,7 @@ public class SupplierAddController extends HttpServlet {
                Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
            }
         request.setAttribute("SupplierInfo",  queryresult);
+        request.setAttribute("addmsg", "Supplier Updated: NEW SUPPLIER HAS BEEN ADDED");
         RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
         rd.forward(request, response);
         

@@ -73,6 +73,7 @@ import javax.servlet.annotation.WebServlet;
                Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
            }
         request.setAttribute("SupplierInfo",  queryresult);
+        request.setAttribute("DeleteMsg",  "Supplier has been deleted");
         RequestDispatcher rd = request.getRequestDispatcher("Supplier.jsp");
         rd.forward(request, response);
     }

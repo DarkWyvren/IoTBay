@@ -7,6 +7,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<%  
+                        Object ErrorMsg = request.getAttribute("EmailExistErr");
+                        if(ErrorMsg == null){
+                            ErrorMsg = "";
+                        }
+                        
+                        Object InfoErr =request.getAttribute("InfoMissinErr");
+                        if(InfoErr == null){
+                            InfoErr = "";
+                        }
+                    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <meta charset="utf-8">
@@ -33,7 +44,13 @@
                  </div>
                 <div class="col-sm-12 col-md-9 p-4">
                     <div class="jumbotron">
-                        <h2 class="float-right pb-8">Add new Supplier</h2>    
+                        <div class="row h2 text-right">
+                           <h2 class="float-right pb-8">Add new Supplier</h2> 
+                        </div>
+                        <div class="row h2 text-right">
+                          <p class="float-right pb-8 text-danger"> <%=InfoErr%></p>  
+                        </div>
+                        
                     </div>
                     <div class="jumbotron">
                         <form  method="POST" Action="AddNewSupplier">
@@ -64,11 +81,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputName">Email:</label>
+                                <label type ="hidden" class="text-danger"><%= ErrorMsg%></label>
                                 <input type="email" class="form-control" placeholder="Enter Email" name="CEmail">
                             </div>
-                            <div class="mx-auto align-middle">
-                                <input class="btn btn-secondary p-4 "  role="button" type="reset" >  
-                                <input  class="btn btn-primary p-4 "  role="button" type="submit" value="Register">
+                            <div class="float-right">
+                                <button class="btn btn-secondary p-2" type="reset" >Reset</button>
+                                <button class="btn btn-primary p-2"   type="submit" value="Register">Add Supplier</button>
                             </div> 
                         </form>
                     </div>
